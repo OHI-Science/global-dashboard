@@ -1,2 +1,1 @@
-# global-dashboard
-Shiny dashboard for OHI scores and data
+# ne-dashboard
