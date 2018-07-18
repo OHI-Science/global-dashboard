@@ -26,7 +26,8 @@ dashboardPage(
   dashboardBody(
     #adding this tag to make header longer, from here:https://rstudio.github.io/shinydashboard/appearance.html#long-titles
     tags$head(
-      tags$link(rel = "stylesheet", type = "text/css", href = "custom.css")),
+      tags$link(rel = "stylesheet", type = "text/css", href = "custom.css")
+      ),
     
 ### Side bar tabs
 
@@ -35,7 +36,9 @@ dashboardPage(
     ## Overall index scores ##
     
     tabItem(tabName = "dashboard",
-            h2("Index scores")),
+            h2("Index scores")
+            
+            ),
     
     ## Livelihood and economies ## 
     
@@ -43,7 +46,9 @@ dashboardPage(
             
             ## Livelihoods & Economies tab title ##
             tab_title_ui(goal_text = "LIVELIHOODS & ECONOMIES",
-                         commitment_text = "a high quantity and quality of ocean-dependent jobs and local revenue"),
+                         commitment_text = "a high quantity and quality of ocean-dependent jobs and local revenue")
+            
+            ),
 
             
     ## Tourism & recreation ##
@@ -52,7 +57,9 @@ dashboardPage(
             
             ## Tourism & Recreation tab title ##
             tab_title_ui(goal_text = "TOURISM & RECREATION",
-                         commitment_text = "opportunities for people to enjoy coastal areas through tourism and recreation")),
+                         commitment_text = "opportunities for people to enjoy coastal areas through tourism and recreation")
+            
+            ),
     
     ## Biodiversity ##
     
@@ -60,7 +67,9 @@ dashboardPage(
             
             ## Biodiversity tab title ##
             tab_title_ui(goal_text = "BIODIVERSITY",
-                         commitment_text = "a diversity of healthy marine species, habitats, and landscapes")),
+                         commitment_text = "a diversity of healthy marine species, habitats, and landscapes")
+            
+            ),
     
     ## Sense of Place ##
     
@@ -68,7 +77,9 @@ dashboardPage(
             
             ## Sense of Place tab title ##
             tab_title_ui(goal_text = "SENSE OF PLACE",
-                         commitment_text = "a deep sense of identity and belonging provided through connections with our marine communities")),
+                         commitment_text = "a deep sense of identity and belonging provided through connections with our marine communities")
+            
+            ),
     
     ## Local Fishing & Resource Access Opportunities  ##
     
@@ -76,7 +87,9 @@ dashboardPage(
             
             ## Local Fishing & Resource Access Opportunities tab title ##
             tab_title_ui(goal_text = "LOCAL FISHING & RESOURCE ACCESS OPPORTUNITIES",
-                         commitment_text = "opportunities for Native Americans and local community members to access local natural resources")),
+                         commitment_text = "opportunities for Native Americans and local community members to access local natural resources")
+            
+            ),
     
     ## Mariculture ##
     
@@ -84,7 +97,7 @@ dashboardPage(
             
             ## Food Provision tab title ##
             tab_title_ui(goal_text = "MARICULTURE",
-                         commitment_text = "sustainably harvested seafood from mariculture")),
+                         commitment_text = "sustainably harvested seafood from mariculture"),
     
     
             ## Annual Production ##
@@ -95,7 +108,9 @@ dashboardPage(
                     select_location = "above",
                     select_choices = unique(mar_harvest$country),
                     select_label = "Select Country",
-                    source_text = "Source: FAO"),
+                    source_text = "Source: FAO")
+            
+            ),
     
     
     
@@ -106,7 +121,9 @@ dashboardPage(
             
             ## Coastal Protection & Carbon Storage tab title ##
             tab_title_ui(goal_text = "COASTAL PROTECTION & CARBON STORAGE",
-                         commitment_text = "storage of carbon and protection of our coasts from storm damage by living natural habitats")),
+                         commitment_text = "storage of carbon and protection of our coasts from storm damage by living natural habitats")
+            
+            ),
     
     ## Pressures ##
     
@@ -118,8 +135,10 @@ dashboardPage(
     
             ##map for trash layer ##
             map_ui(id = "trash_map",
-                   title_text = "Trash pressure layer"))
+                   title_text = "Trash pressure layer")
+            
+            )
   )
     )
   )
-)
+
