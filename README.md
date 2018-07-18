@@ -1,1 +1,1 @@
-# ne-dashboard
+# global-dashboard

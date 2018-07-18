@@ -1,9 +1,9 @@
-#global
+##global
 
+## Set up environment ##
 
-source(file.path('~/github/ne-prep/src/R/common.R'))  ### an OHI-NE specific version of common.R
-
-dir_anx <- file.path(dir_M, 'git-annex/neprep')
+## source common.R
+source("https://raw.githubusercontent.com/OHI-Science/ohiprep_v2018/master/src/R/common.R")
 
 ## source modules
 source("modules/chart_card.R")
@@ -17,21 +17,43 @@ options(scipen = 999,
         digits = 2)
 
 ##libraries
-
+library(ohicore)
 library(tidyverse)
 library(shinydashboard)
+dir_M <- file.path(dir_M, 'git-annex/')
 
-## Data sources (change this to be organized by goal and then alphabetically?)
 
-# NOEP data for livelihoods & economies, tourism & recreation
-noep_data <- readxl::read_excel(file.path(dir_anx, '_raw_data/NOEP/New_England_ocean_series.xlsx'), sheet = "ENOW") %>%
-  mutate(Employment = as.integer(Employment),
-         Wages_2012 = as.integer(Wages_2012)/Employment) %>%
-  filter(str_detect(County, "All"),
-         !is.na(Employment),
-         !is.na(Wages_2012),
-         !is.na(GDP_2012))
 
-# Trash pressure layer
+## Data sources ##
 
-trash <- read_csv("~/github/ne-prep/prep/cw/scores/trash.csv")
+## FAO data for mariculture production
+## Prepare time-series data for graphing annual production per country
+mar_harvest <- read.csv("https://rawgit.com/OHI-Science/ohiprep_v2018/master/globalprep/mar/v2018/output/mar_harvest_tonnes.csv")
+
+## Get country names and their region id
+regions <- georegion_labels %>% 
+  select(rgn_id, region=r2_label, country=rgn_label)
+
+## Get marine harvest amount & tidy
+mar_harvest <- mar_harvest %>% 
+  left_join(regions, by="rgn_id") %>% 
+  mutate(species = str_replace(mar_harvest$taxa_code, "_[0-9]+", "")) %>% 
+  select(-taxa_code, -region, -rgn_id)
+
+## Save harvest (tonnes) data with country names
+write.csv(mar_harvest, "int/harvest_countries.csv")
+
+
+
+## Coastal population data
+
+
+## Trujillo sustainability data
+sust <- read.csv("https://rawgit.com/OHI-Science/ohiprep_v2018/master/globalprep/mar/v2018/output/mar_sustainability.csv") 
+
+sust <- sust %>% 
+  mutate(species = str_replace(sust$taxa_code, "_[0-9]+", "")) %>% 
+  select(-taxa_code)
+
+## Save tidied sustainability data
+write.csv(sust, "int/sust.csv")

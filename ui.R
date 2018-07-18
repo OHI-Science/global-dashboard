@@ -3,7 +3,7 @@ source("global.R")
 ###Setting up the dashboard page
 dashboardPage(
   dashboardHeader(
-    title = "Ocean Health Index for the US Northeast",
+    title = "Global Ocean Health Index",
     titleWidth = 375),
   
 ### Dashboard sidebar  
@@ -44,30 +44,8 @@ dashboardPage(
             ## Livelihoods & Economies tab title ##
             tab_title_ui(goal_text = "LIVELIHOODS & ECONOMIES",
                          commitment_text = "a high quantity and quality of ocean-dependent jobs and local revenue"),
+
             
-            ## Employment ##
-            card_ui(id = "le_emp",
-                    title_text = "Employment",
-                    sub_title_text = "",
-                    select_type = "drop_down",
-                    select_location = "above",
-                    select_choices = unique(noep_data$State),
-                    select_label = "Select State",
-                    source_text = "Source: National Ocean Economics Program"),
-    
-          ## Wages ##
-          card_ui(id = "le_wages",
-                  title_text = "Average annual wages",
-                  sub_title_text = "Wages in 2012 US Dollars",
-                  select_type = "drop_down",
-                  select_location = "above",
-                  select_choices = unique(noep_data$State),
-                  select_label = "Select State",
-                  source_text = "Source: National Ocean Economics Program")),
-            
-            
-           # liv_ecoUI("one")),
-    
     ## Tourism & recreation ##
     
     tabItem(tabName = "tr",
@@ -100,13 +78,27 @@ dashboardPage(
             tab_title_ui(goal_text = "LOCAL FISHING & RESOURCE ACCESS OPPORTUNITIES",
                          commitment_text = "opportunities for Native Americans and local community members to access local natural resources")),
     
-    ## Food Provision ##
+    ## Mariculture ##
     
-    tabItem(tabName = "fp",
+    tabItem(tabName = "mar",
             
             ## Food Provision tab title ##
-            tab_title_ui(goal_text = "FOOD PROVISION",
-                         commitment_text = "sustainably harvested seafood from wild-caught fisheries and mariculture")),
+            tab_title_ui(goal_text = "MARICULTURE",
+                         commitment_text = "sustainably harvested seafood from mariculture")),
+    
+    
+            ## Annual Production ##
+            card_ui(id = "mar_prod",
+                    title_text = "Production",
+                    sub_title_text = "",
+                    select_type = "drop_down",
+                    select_location = "above",
+                    select_choices = unique(mar_harvest$country),
+                    select_label = "Select Country",
+                    source_text = "Source: FAO"),
+    
+    
+    
     
     ## Coastal Protection & Carbon Storage ##
     
@@ -130,4 +122,4 @@ dashboardPage(
   )
     )
   )
-
+)
