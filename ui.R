@@ -15,7 +15,7 @@ dashboardPage(
       menuItem("Biodiversity", tabName = "bio", badgeLabel = "draft", badgeColor = "orange"),
       menuItem("Sense of Place", tabName = "sop", badgeLabel = "draft", badgeColor = "orange"),
       menuItem("Local Fishing & Resource Access Opportunities ", tabName = "ao", badgeLabel = "draft", badgeColor = "orange"),
-      menuItem("Food Provision", tabName = "fp", badgeLabel = "draft", badgeColor = "orange"),
+      menuItem("Mariculture", tabName = "mar", badgeLabel = "draft", badgeColor = "orange"),
       menuItem("Coastal Protection & Carbon Storage", tabName = "cpcs", badgeLabel = "draft", badgeColor = "orange"),
       menuItem("Pressures", tabName = "pressures", badgeLabel = "draft", badgeColor = "orange")
   ),

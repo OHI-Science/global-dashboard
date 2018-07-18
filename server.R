@@ -12,7 +12,7 @@ function(input, output, session) {
              plot_type = "scatter",
              mode = "lines+markers",
              tooltip_text = ~paste("Tonnes:", tonnes,
-                                   "<br>species:", species, sep=" "),
+                                   "<br>Species:", species, sep=" "),
              xaxis_label = "Year",
              yaxis_label = "Annual Production (tonnes)")
 
