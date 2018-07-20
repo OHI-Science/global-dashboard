@@ -1,0 +1,31 @@
+@import url('//fonts.googleapis.com/css?family=Questrial|Lato:400,700');
+
+.main-header .logo {
+  font-family: "Questrial";
+  font-weight: bold;
+  font-size: 24px;
+}
+
+/* main text elements */
+h1, h4, h2, h3{
+  font-family: 'Lato', sans-serif;
+  font-weight: 700;
+}
+
+.skin-blue .main-header .logo {
+  background-color: #3c8dbc;
+}
+
+.skin-blue .main-header .logo:hover {
+  background-color: #3c8dbc;
+}
+                  
+/* commitment text style */
+.commitment_text {
+	padding: 1%;
+	background-color: #acd1d4;
+	color: white;
+	border-radius: 5px;
+	border: solid #acd1d4;
+  border-width: 1px 1px;
+}

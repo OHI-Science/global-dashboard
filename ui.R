@@ -14,8 +14,10 @@ dashboardPage(
       menuItem("Tourism & Recreation", tabName = "tr", badgeLabel = "draft", badgeColor = "orange"),
       menuItem("Biodiversity", tabName = "bio", badgeLabel = "draft", badgeColor = "orange"),
       menuItem("Sense of Place", tabName = "sop", badgeLabel = "draft", badgeColor = "orange"),
-      menuItem("Local Fishing & Resource Access Opportunities ", tabName = "ao", badgeLabel = "draft", badgeColor = "orange"),
+      menuItem("Artisanal Fishing Opportunities", tabName = "ao", badgeLabel = "draft", badgeColor = "orange"),
+      menuItem("Food Provision", tabName = "fp", badgeLabel = "draft", badgeColor = "orange"),
       menuItem("Mariculture", tabName = "mar", badgeLabel = "draft", badgeColor = "orange"),
+      menuItem("Fisheries", tabName = "fis", badgeLabel = "draft", badgeColor = "orange"),
       menuItem("Coastal Protection & Carbon Storage", tabName = "cpcs", badgeLabel = "draft", badgeColor = "orange"),
       menuItem("Pressures", tabName = "pressures", badgeLabel = "draft", badgeColor = "orange")
   ),
@@ -36,6 +38,7 @@ dashboardPage(
     ## Overall index scores ##
     
     tabItem(tabName = "dashboard",
+            
             h2("Index scores")
             
             ),
@@ -91,29 +94,57 @@ dashboardPage(
             
             ),
     
+    ## Food Provision ##
+    
+    tabItem(tabName = "fp",
+            
+            ## Food Provision tab title ##
+            tab_title_ui(goal_text = "FOOD PROVISION",
+                         commitment_text = "sustainably harvested and wild-caught seafood from fisheries and mariculture")
+            
+    ),
+    
+    
     ## Mariculture ##
     
     tabItem(tabName = "mar",
             
-            ## Food Provision tab title ##
+            ## Mariculture tab title ##
             tab_title_ui(goal_text = "MARICULTURE",
                          commitment_text = "sustainably harvested seafood from mariculture"),
+            
+            
+            ## Mariculture baseline metrics
     
-    
-            ## Annual Production ##
+           metrics(goal = MAR,
+                   baseline_text = "Global Mariculture Score"),
+                    
+          
+            
+            ## Annual Mariculture Production ##
             card_ui(id = "mar_prod",
-                    title_text = "Production",
-                    sub_title_text = "",
+                    title_text = "Mariculture Production",
+                    sub_title_text = "Global mariculture production has significantly surpassed wild-caught fisheries since 1990. Making sure we sustainably harvest our oceans to provide food for communities is crucial to ensuring the health of our oceans.",
                     select_type = "drop_down",
                     select_location = "above",
                     select_choices = unique(mar_harvest$country),
                     select_label = "Select Country",
-                    source_text = "Source: FAO")
+                    source_text = "Source: Food and Agriculture Organization, Global Aquaculture Production Quantity 1950 - 2016 dataset (released March 2018)")
             
             ),
     
     
     
+    
+    ## Fisheries ##
+    
+    tabItem(tabName = "fis",
+            
+            ## Fisheries tab title ##
+            tab_title_ui(goal_text = "FISHERIES",
+                         commitment_text = "sustainably wild-caught seafood from fisheries")
+            
+    ),
     
     ## Coastal Protection & Carbon Storage ##
     
