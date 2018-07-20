@@ -14,7 +14,11 @@ function(input, output, session) {
              tooltip_text = ~paste("Tonnes:", tonnes,
                                    "<br>Species:", species, sep=" "),
              xaxis_label = "Year",
-             yaxis_label = "Annual Production (tonnes)")
+             yaxis_label = "Annual Production (tonnes)",
+             more_info = TRUE,
+             show_image = TRUE)
+  
+  
 
   
   
