@@ -52,29 +52,32 @@ mar_harvest <- mar_harvest %>%
 write.csv(mar_harvest, "int/harvest_countries.csv")
 
 ## Trujillo sustainability data
-sust <- read.csv("https://rawgit.com/OHI-Science/ohiprep_v2018/master/globalprep/mar/v2018/output/mar_sustainability.csv") 
-# Remove numeric code in species name
-sust <- sust %>% 
-  mutate(species = str_replace(sust$taxa_code, "_[0-9]+", "")) %>% 
-  select(-taxa_code)
-# Save tidied sustainability data
-write.csv(sust, "int/sust.csv")
+# sust <- read.csv("https://rawgit.com/OHI-Science/ohiprep_v2018/master/globalprep/mar/v2018/output/mar_sustainability.csv") 
+## Remove numeric code in species name
+# sust <- sust %>% 
+#   mutate(species = str_replace(sust$taxa_code, "_[0-9]+", "")) %>% 
+#   select(-taxa_code)
+## Save tidied sustainability data
+# write.csv(sust, "int/sust.csv")
+sust <- read.csv("int/sust.csv")
 
 
 ## BASELINE METRICS DATA SOURCES ##
 
 
 # List of all unique goal or sub-goals
-goal_names <- unique(scores$goal)
+goal_names <- as.character(unique(scores$goal))
 # Save the global score for each goal/sub-goal
-for(name in goal_names){
-
-  name <- scores %>%
-    filter(goal == name,
+for(i in 1:length(goal_names)){
+  
+  score_val <- scores %>%
+    filter(goal == goal_names[i],
            dimension == "score",
            rgn_id == 0,
            year == present_yr) %>%
     select(score) %>%
     .$score
+  
+  assign(goal_names[i],score_val)
 
 }
