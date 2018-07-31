@@ -39,8 +39,6 @@ scores <- scores %>%
 
 ## MAR DATA SOURCES ##
 ## Mariculture Production
-# Country-specific mariculture description
-countryInfo <- read_csv("int/country_desc.csv")
 # Prepare time-series data for graphing annual production per country
 mar_harvest <- read.csv("https://rawgit.com/OHI-Science/ohiprep_v2018/master/globalprep/mar/v2018/output/mar_harvest_tonnes.csv")
 # Get marine harvest amount & tidy

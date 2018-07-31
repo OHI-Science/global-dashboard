@@ -125,7 +125,7 @@ dashboardPage(
             card_ui(id = "mar_prod",
                     title_text = "Mariculture Production",
                     sub_title_text = "Global mariculture production has significantly surpassed wild-caught fisheries since 1990. Making sure we sustainably harvest our oceans to provide food for communities is crucial to ensuring the health of our oceans.",
-                    select_type = "drop_down",
+                    select_type = "search",
                     select_location = "above",
                     select_choices = unique(mar_harvest$country),
                     select_label = "Select Country",
