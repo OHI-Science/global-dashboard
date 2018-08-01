@@ -109,26 +109,29 @@ dashboardPage(
     
     tabItem(tabName = "mar",
             
-            ## Mariculture tab title ##
-            tab_title_ui(goal_text = "MARICULTURE",
-                         commitment_text = "sustainably harvested seafood from mariculture"),
+          ## Mariculture tab title ##
+          tab_title_ui(goal_text = "MARICULTURE",
+                       commitment_text = "maximizing the marine cultivation potential while minimizing impacts to the ecosystem"),
             
             
-            ## Mariculture baseline metrics
+          ## Mariculture baseline metrics
     
            metrics(goal = MAR,
-                   baseline_text = "Global Mariculture Score"),
-                    
+                   baseline_text = "Healthy oceans maximize the marine cultivation potential and minimize impacts to the ecosystem.",
+                   metric1 = mar_metric1,
+                   metric1_text = "contributes to the largest historic share by tonnes of mariculture produced for human consumption"),
+
+           ## Global mariculture production has significantly surpassed wild-caught fisheries since 1990. Making sure we sustainably harvest our oceans to provide food for communities is crucial to ensuring the health of our oceans.                    
           
             
             ## Annual Mariculture Production ##
             card_ui(id = "mar_prod",
                     title_text = "Mariculture Production",
-                    sub_title_text = "Global mariculture production has significantly surpassed wild-caught fisheries since 1990. Making sure we sustainably harvest our oceans to provide food for communities is crucial to ensuring the health of our oceans.",
+                    sub_title_text = "Select or search for a country. Click on names of species you want to hide. Hover over the lines to view tonnes and species harvested",
                     select_type = "search",
                     select_location = "above",
                     select_choices = unique(mar_harvest$country),
-                    select_label = "Select Country",
+                    select_label = NULL,
                     source_text = "Source: Food and Agriculture Organization, Global Aquaculture Production Quantity 1950 - 2016 dataset (released March 2018)")
             
             ),
