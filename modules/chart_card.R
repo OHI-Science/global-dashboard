@@ -70,12 +70,12 @@ library(assertthat)
 card_ui <- function(id, 
                     title_text = NULL,
                     sub_title_text = NULL,
-                    source_text = NULL,
                     select_type = c(NULL, "radio", "drop_down", "checkboxes"),
                     select_location = c(NULL, "above", "below"),
                     select_choices = c(""),
                     select_label = NULL, 
-                    selected = NULL) {
+                    selected = NULL,
+                    source_text = NULL) {
   
   ns <- NS(id)
   
@@ -107,6 +107,11 @@ card_ui <- function(id,
                             choices = select_choices,
                             label = p(select_label),
                             selected = selected)
+    } else if (select_type == "search") {
+      select <- selectizeInput(ns("select"),
+                               choices = select_choices,
+                               label = p(select_label),
+                               selected = selected)
     } else {
       select <- checkboxGroupInput(ns("select"),
                                    choices = select_choices,
@@ -129,7 +134,7 @@ card_ui <- function(id,
   
   
   # Put together in box
-  box_content <- list(h4(title_text), p(sub_title_text), items, p(source_text), br(textOutput(ns("info"))), imageOutput(ns("image")))
+  box_content <- list(h4(title_text), p(sub_title_text), items, p(source_text))
   
   # Return tagList with box content  
   fluidRow(
@@ -219,9 +224,7 @@ card_plot <- function(input,
                       xaxis_margin = NULL,
                       xaxis_categoryorder = NULL,
                       xaxis_categoryarray = NULL,
-                      add_traces = NULL,
-                      more_info = FALSE,
-                      show_image = FALSE) {
+                      add_traces = NULL) {
   
   # Get correct data
   if (df == "input") {
@@ -329,44 +332,7 @@ card_plot <- function(input,
   })
   
   
-  
-  
-  
-  
-  ## Add text about the selected country
-  output$info <- renderText({
 
-    if(!more_info) {
-      
-      return(paste("More information on", input$select, "coming soon!", sep=" "))
-      
-      } else {
-      
-        display_text <- countryInfo %>%
-          filter(country == input$select) %>%
-          select(description) %>%
-          .$description
-
-        return(display_text)
-
-              }
-    })
-
-  
-  ## Add mariculture image for selected country
-  ## Need to adjust size of image
-  output$image <- renderImage({
-  
-  
-      country_full <- input$select
-      country <- str_replace_all(tolower(country_full), " ", "")
-      
-      list(src = paste("images/mar/",country,".png",sep=""),
-           contentType = "image/png",
-           width = 400,
-           height = 300)
-   
-  },deleteFile=FALSE)
   
   return(data)
   
