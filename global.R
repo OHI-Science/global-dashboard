@@ -78,12 +78,12 @@ write.csv(mar_harvest, "int/harvest_countries.csv")
 
 ## Largest Share of Production
 # Determine which country produced the most mariculture regardless of species
-historic <- mar_harvest %>% 
-  #filter(year >= (max(mar_harvest$year)-5)) %>% 
+historic <- mar_harvest %>%
+  filter(year == 2016) %>% 
   summarize(total = sum(tonnes))
 
 top_cntry <- mar_harvest %>% 
-  #filter(year >= (max(mar_harvest$year)-5)) %>% 
+  filter(year == 2016) %>% 
   group_by(country) %>% 
   summarize(cntry_tot = sum(tonnes)) %>%
   ungroup() %>% 

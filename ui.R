@@ -109,19 +109,18 @@ dashboardPage(
     
     tabItem(tabName = "mar",
             
-          ## Mariculture tab title ##
+          ## Mariculture Tab Title ##
           tab_title_ui(goal_text = "MARICULTURE",
-                       commitment_text = "maximizing the marine cultivation potential while minimizing impacts to the ecosystem"),
+                       commitment_text = "Global mariculture production has significantly surpassed wild-caught fisheries since 1990. Making sure we sustainably harvest our oceans to provide food for communities is crucial to ensuring the health of our oceans."),
             
             
-          ## Mariculture baseline metrics
-    
+          ## Mariculture Baseline Metrics ##
            metrics(goal = MAR,
                    baseline_text = "Healthy oceans maximize the marine cultivation potential and minimize impacts to the ecosystem.",
                    metric1 = mar_metric1,
-                   metric1_text = "contributes to the largest historic share by tonnes of mariculture produced for human consumption"),
+                   metric1_text = "contributes the largest historic share by tonnes of mariculture produced for human consumption"),
 
-           ## Global mariculture production has significantly surpassed wild-caught fisheries since 1990. Making sure we sustainably harvest our oceans to provide food for communities is crucial to ensuring the health of our oceans.                    
+                
           
             
             ## Annual Mariculture Production ##
