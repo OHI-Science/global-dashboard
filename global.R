@@ -65,8 +65,10 @@ write.csv(sust, "int/sust.csv")
 
 
 # List of all unique goal or sub-goals
-goal_names <- unique(scores$goal)
+goal_names <- as.character(unique(scores$goal))
 # Save the global score for each goal/sub-goal
+# THIS FUNCTION DOESN'T WORK YET.. WORKS IF YOU SUB `MAR` for `name` FIX!
+# CAN IT GRAB THE RGN_ID DEPENDING ON THE SELECTED COUNTRY
 for(name in goal_names){
 
   name <- scores %>%
