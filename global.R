@@ -71,8 +71,8 @@ mar_harvest <- read.csv("https://rawgit.com/OHI-Science/ohiprep_v2018/master/glo
 mar_harvest <- mar_harvest %>% 
   left_join(regions, by="rgn_id") %>% 
   mutate(species = str_replace(mar_harvest$taxa_code, "_[0-9]+", "")) %>% 
-  select(-taxa_code, -region, -rgn_id)
-mar_harvest$country <- sort(mar_harvest$country) # Sort country alphabetically
+  select(-taxa_code, -region, -rgn_id) %>% 
+  arrange(country) # Sort country alphabetically
 # Save harvest (tonnes) data with country names
 write.csv(mar_harvest, "int/harvest_countries.csv")
 
