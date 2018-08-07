@@ -255,8 +255,8 @@ card_plot <- function(input,
   if (plot_type == "bar") {
     marker = list(line=list(color="#202C39", width=0))
   } else if (mode == "lines+markers") {
-    line = list(width=4)
-    marker = list(size=8)
+    line = list(width=3)
+    marker = list(size=6)
   } else if (mode == "markers") {
     line = list(width=0)
     marker = list(size=15, line=list(color="#202C39", width=1))

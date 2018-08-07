@@ -6,14 +6,23 @@
 library(ohicore)
 library(tidyverse)
 library(shinydashboard)
+library(RColorBrewer)
+
+## Color Palette
+ygb <- colorRampPalette(brewer.pal(5,'YlGnBu'))(200)
+cols <- ygb[19:200]
+
 ## source OHI common script
 source("https://raw.githubusercontent.com/OHI-Science/ohiprep_v2018/master/src/R/common.R")
+
 ## source modules
 source("modules/chart_card.R")
 source("modules/map_card.R")
 source("modules/baseline_metrics_card.R")
+
 ## source functions
 source("functions/tab_title.R")
+
 ## file paths
 dir_M <- file.path(dir_M, 'git-annex/')
 ## no scientific notation and round to 2 decimals

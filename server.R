@@ -9,6 +9,7 @@ function(input, output, session) {
              y = "tonnes",
              color_group = "species",
              filter_field = "country",
+             colors = cols,
              plot_type = "scatter",
              mode = "lines+markers",
              tooltip_text = ~paste("Tonnes:", tonnes,
