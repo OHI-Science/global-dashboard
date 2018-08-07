@@ -11,9 +11,9 @@ source("https://raw.githubusercontent.com/OHI-Science/ohiprep_v2018/master/src/R
 ## source modules
 source("modules/chart_card.R")
 source("modules/map_card.R")
+source("modules/baseline_metrics_card.R")
 ## source functions
 source("functions/tab_title.R")
-source("functions/baseline_metrics.R")
 ## file paths
 dir_M <- file.path(dir_M, 'git-annex/')
 ## no scientific notation and round to 2 decimals
@@ -30,11 +30,9 @@ present_yr <- 2018
 regions <- georegion_labels %>% 
   select(rgn_id, region=r2_label, country=rgn_label)
 
-
-
-
-
-## BASELINE METRICS DATA SOURCES ##
+# Empty Baseline Metrics Data Frame
+# baseline <- setNames(data.frame(matrix(ncol = 4, nrow = 0)),
+#                      c("country","goal","metric","description"))
 
 ## OHI Global scores
 scores <- read.csv("https://rawgit.com/OHI-Science/ohi-global/draft/eez/scores.csv")
@@ -60,8 +58,6 @@ for(i in 1:length(goal_names)){
 
 
 
-
-
 ## MAR DATA SOURCES ##
 
 ## Mariculture Production
@@ -74,7 +70,12 @@ mar_harvest <- mar_harvest %>%
   select(-taxa_code, -region, -rgn_id) %>% 
   arrange(country) # Sort country alphabetically
 # Save harvest (tonnes) data with country names
-write.csv(mar_harvest, "int/harvest_countries.csv")
+write.csv(mar_harvest, "int/harvest_countries.csv", row.names = FALSE)
+
+## Baseline Metrics: Statistics
+## MAR Global Score
+# mar_statistics <- data.frame("Global","MAR",MAR,"Global Mariculture Score")
+# baseline <- rbind(mar_statistics,baseline)
 
 ## Largest Share of Production
 # Determine which country produced the most mariculture regardless of species
@@ -90,12 +91,33 @@ top_cntry <- mar_harvest %>%
   mutate(rel_contrib = cntry_tot/historic$total) %>% 
   arrange(desc(rel_contrib))
 
-mar_metric1 <- list(
-  mar_perc <- paste(round(top_cntry$rel_contrib[1]*100),"%",sep=""),
-  cntry <- as.character(top_cntry$country[1])
-)
+# mar_metric1 <- list(
+#   mar_perc <- paste(round(top_cntry$rel_contrib[1]*100),"%",sep=""),
+#   cntry <- as.character(top_cntry$country[1])
+# )
 
 
+# Combine all metrics into baseline.csv
+# mar_statistics <- data.frame(
+#   country = c("Global",
+#                as.character(top_cntry$country[1]),
+#               "Chile"),
+#   goal = c("MAR",
+#            "MAR",
+#            "MAR"),
+#   metric = c(paste0(MAR,"%"),
+#               paste(round(top_cntry$rel_contrib[1]*100),"%",sep=""),
+#              "78 tonnes"),
+#   subtitle = c("Global Mariculture Score",
+#                    "Largest Share of Production",
+#                   "Seafood per Capita"),
+#   description = c("Healthy oceans maximize the marine cultivation potential and minimize impacts to the ecosystem.",
+#                   "contributes the largest historic share by tonnes of mariculture produced for human consumption",
+#                   "produces the most seafood per capita"))
+# 
+# baseline <- rbind(mar_statistics,baseline)
+# write.csv(baseline, "int/baseline.csv", row.names=FALSE)
+baseline <- read.csv("int/baseline.csv")
 
 ## Trujillo sustainability data
 sust <- read.csv("https://rawgit.com/OHI-Science/ohiprep_v2018/master/globalprep/mar/v2018/output/mar_sustainability.csv")

@@ -111,14 +111,13 @@ dashboardPage(
             
           ## Mariculture Tab Title ##
           tab_title_ui(goal_text = "MARICULTURE",
-                       commitment_text = "Global mariculture production has significantly surpassed wild-caught fisheries since 1990. Making sure we sustainably harvest our oceans to provide food for communities is crucial to ensuring the health of our oceans."),
-            
+                       commitment_text = "achieve sustainable harvest of seafood from mariculture practices."),
+        
+          ##Global mariculture production has significantly surpassed wild-caught fisheries since 1990. Making sure we sustainably harvest our oceans to provide food for communities is crucial to ensuring the health of our oceans.    
             
           ## Mariculture Baseline Metrics ##
-           metrics(goal = MAR,
-                   baseline_text = "Healthy oceans maximize the marine cultivation potential and minimize impacts to the ecosystem.",
-                   metric1 = mar_metric1,
-                   metric1_text = "contributes the largest historic share by tonnes of mariculture produced for human consumption"),
+           baseline_metrics_ui(id = "mar_baseline",
+                               number_boxes = 3),
 
                 
           
