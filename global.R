@@ -24,8 +24,6 @@ source("modules/baseline_metrics_card.R")
 ## source functions
 source("functions/tab_title.R")
 
-## file paths
-dir_M <- file.path(dir_M, 'git-annex/')
 ## no scientific notation and round to 2 decimals
 options(scipen = 999,
         digits = 2)
@@ -41,7 +39,7 @@ regions <- georegion_labels %>%
   select(rgn_id, region=r2_label, country=rgn_label)
 
 ## OHI Region Shapefile
-ohi_regions <- sf::st_read("shapefile", "regions_2017_update", quiet = T) %>%
+ohi_regions <- sf::st_read(file.path(dir_M,"git-annex/globalprep/spatial/v2017"), "regions_2017_update", quiet = T) %>%
   sf::st_transform(crs = '+proj=longlat +datum=WGS84')  # rgn_id, rgn_name
 
 rgns_leaflet <- ohi_regions %>%
