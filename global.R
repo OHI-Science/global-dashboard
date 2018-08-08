@@ -4,16 +4,26 @@
 
 ## libraries
 library(ohicore)
+library(sf)
 library(tidyverse)
 library(shinydashboard)
+library(RColorBrewer)
+
+## Color Palette
+ygb <- colorRampPalette(brewer.pal(5,'YlGnBu'))(200)
+cols <- ygb[19:200]
+
 ## source OHI common script
 source("https://raw.githubusercontent.com/OHI-Science/ohiprep_v2018/master/src/R/common.R")
+
 ## source modules
 source("modules/chart_card.R")
 source("modules/map_card.R")
 source("modules/baseline_metrics_card.R")
+
 ## source functions
 source("functions/tab_title.R")
+
 ## file paths
 dir_M <- file.path(dir_M, 'git-annex/')
 ## no scientific notation and round to 2 decimals
@@ -30,7 +40,16 @@ present_yr <- 2018
 regions <- georegion_labels %>% 
   select(rgn_id, region=r2_label, country=rgn_label)
 
-# Empty Baseline Metrics Data Frame
+## OHI Region Shapefile
+ohi_regions <- sf::st_read("shapefile", "regions_2017_update", quiet = T) %>%
+  sf::st_transform(crs = '+proj=longlat +datum=WGS84')  # rgn_id, rgn_name
+
+rgns_leaflet <- ohi_regions %>%
+  filter(rgn_type == "land", rgn_name != "Antarctica")
+
+
+
+## Empty Baseline Metrics Data Frame
 # baseline <- setNames(data.frame(matrix(ncol = 4, nrow = 0)),
 #                      c("country","goal","metric","description"))
 
@@ -53,7 +72,7 @@ for(i in 1:length(goal_names)){
     .$score
   
   assign(goal_names[i],score_val)
-
+  
 }
 
 

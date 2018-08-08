@@ -9,6 +9,7 @@ function(input, output, session) {
              y = "tonnes",
              color_group = "species",
              filter_field = "country",
+             colors = cols,
              plot_type = "scatter",
              mode = "lines+markers",
              tooltip_text = ~paste("Tonnes:", tonnes,
@@ -16,6 +17,8 @@ function(input, output, session) {
              xaxis_label = "Year",
              yaxis_label = "Annual Production (tonnes)")
   
+  
+  ## Mariculture Baseline Metrics ##
   callModule(baseline_metrics, "mar_baseline",
              goal_name = "MAR",
              first = "Global Mariculture Score",

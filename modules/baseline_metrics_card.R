@@ -39,6 +39,8 @@ baseline_metrics_ui <- function(id,
 }
 
 
+
+
 baseline_metrics <- function(input,
                              output,
                              session,
@@ -48,84 +50,44 @@ baseline_metrics <- function(input,
                              third,
                              icon,
                              color) {
-  
-  ## Streamline this code a little better
 
-  df <- baseline %>%
+  base_df <- baseline %>%
     filter(goal == goal_name)
   
-
-
-  first_df <- df %>% filter(subtitle == first)
-
-  first_list <- list(as.character(first_df$country),
-       as.character(first_df$goal),
-       as.character(first_df$metric),
-       as.character(first_df$subtitle),
-       as.character(first_df$description))
+  metrics <- c(first,second,third)
   
-  second_df <- df %>% filter(subtitle == second)
+  # lapply(metrics, function(b){
+  #   base_df <- base_df %>%
+  #     filter(subtitle == b)
+  #   if(!is.na(b)) {
+  #     box_id <- paste0("valuebox_",which(metrics == b))
+  #     output[[box_id]] <- renderValueBox({
+  #       valueBox(base_df$metric,
+  #                base_df$description,
+  #                icon = icon(icon),
+  #                color = color)
+  #       })}
+  #   })
   
-  second_list <- list(as.character(second_df$country),
-                     as.character(second_df$goal),
-                     as.character(second_df$metric),
-                     as.character(second_df$subtitle),
-                     as.character(second_df$description))
-  
-  third_df <- df %>% filter(subtitle == third)
-  
-  third_list <- list(as.character(third_df$country),
-                      as.character(third_df$goal),
-                      as.character(third_df$metric),
-                      as.character(third_df$subtitle),
-                      as.character(third_df$description))
-  
-  
-  ####
-
-  local({
-
-    if(!is.na(first)) {
-
-      box_id <- "valuebox_1"
-      output[[box_id]] <- renderValueBox({
-
-        valueBox(first_list[3],
-                 first_list[5],
-                 icon = icon(icon),
-                 color = color)
-        })
-    }
+  for(b in metrics){local({
     
-    if(!is.na(second)) {
+    base_df <- base_df %>%
+      filter(subtitle == b)
+#    if(!is.na(b)) {
       
-      box_id <- "valuebox_2"
-      output[[box_id]] <- renderValueBox({
-        
-        valueBox(second_list[3],
-                 second_list[5],
-                 icon = icon(icon),
-                 color = color)
-      })
-    }
-    
-    if(!is.na(third)) {
+    box_id <- paste0("valuebox_",which(metrics == b))
       
-      box_id <- "valuebox_3"
-      output[[box_id]] <- renderValueBox({
-        
-        valueBox(third_list[3],
-                 third_list[5],
+    output[[box_id]] <- renderValueBox({
+        valueBox(base_df$metric,
+                 base_df$description,
                  icon = icon(icon),
                  color = color)
       })
-    }
-    
-
-
-      })
-
+      #}
+  })
+  
   }    
+}
   
 #   baseline_metrics <- function(input,
 #                                output,

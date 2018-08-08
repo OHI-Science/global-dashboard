@@ -18,8 +18,8 @@ dashboardPage(
       menuItem("Food Provision", tabName = "fp", badgeLabel = "draft", badgeColor = "orange"),
       menuItem("Mariculture", tabName = "mar", badgeLabel = "draft", badgeColor = "orange"),
       menuItem("Fisheries", tabName = "fis", badgeLabel = "draft", badgeColor = "orange"),
-      menuItem("Coastal Protection & Carbon Storage", tabName = "cpcs", badgeLabel = "draft", badgeColor = "orange"),
-      menuItem("Pressures", tabName = "pressures", badgeLabel = "draft", badgeColor = "orange")
+      menuItem("Coastal Protection", tabName = "cp", badgeLabel = "draft", badgeColor = "orange"),
+      menuItem("Carbon Storage", tabName = "cs", badgeLabel = "draft", badgeColor = "orange")
   ),
   width = 350),
   
@@ -49,6 +49,7 @@ dashboardPage(
             
             ## Livelihoods & Economies tab title ##
             tab_title_ui(goal_text = "LIVELIHOODS & ECONOMIES",
+                         definition = "coastal and ocean-dependent livelihoods (job quantity and quality) and economies (revenues) produced by marine sectors",
                          commitment_text = "a high quantity and quality of ocean-dependent jobs and local revenue")
             
             ),
@@ -60,6 +61,7 @@ dashboardPage(
             
             ## Tourism & Recreation tab title ##
             tab_title_ui(goal_text = "TOURISM & RECREATION",
+                         definition = "the value people have for experiencing and enjoying coastal areas through activities such as sailing, recreational fishing, beach-going, and bird watching",
                          commitment_text = "opportunities for people to enjoy coastal areas through tourism and recreation")
             
             ),
@@ -70,6 +72,7 @@ dashboardPage(
             
             ## Biodiversity tab title ##
             tab_title_ui(goal_text = "BIODIVERSITY",
+                         definition = "the conservation status of native marine species and key habitats that serve as a proxy for the suite of species that depend upon them",
                          commitment_text = "a diversity of healthy marine species, habitats, and landscapes")
             
             ),
@@ -80,6 +83,7 @@ dashboardPage(
             
             ## Sense of Place tab title ##
             tab_title_ui(goal_text = "SENSE OF PLACE",
+                         definition = "the conservation status of iconic species (e.g., salmon, whales) and geographic locations that contribute to cultural identity",
                          commitment_text = "a deep sense of identity and belonging provided through connections with our marine communities")
             
             ),
@@ -89,7 +93,8 @@ dashboardPage(
     tabItem(tabName = "ao",
             
             ## Local Fishing & Resource Access Opportunities tab title ##
-            tab_title_ui(goal_text = "LOCAL FISHING & RESOURCE ACCESS OPPORTUNITIES",
+            tab_title_ui(goal_text = "ARTISANAL FISHING OPPORTUNITY",
+                         definition = "the opportunity for small-scale fishers to supply catch for their families, members of their local communities, or sell in local markets",
                          commitment_text = "opportunities for Native Americans and local community members to access local natural resources")
             
             ),
@@ -100,6 +105,7 @@ dashboardPage(
             
             ## Food Provision tab title ##
             tab_title_ui(goal_text = "FOOD PROVISION",
+                         definition = "the sustainable harvest of seafood from wild-caught fisheries and mariculture",
                          commitment_text = "sustainably harvested and wild-caught seafood from fisheries and mariculture")
             
     ),
@@ -111,17 +117,15 @@ dashboardPage(
             
           ## Mariculture Tab Title ##
           tab_title_ui(goal_text = "MARICULTURE",
-                       commitment_text = "achieve sustainable harvest of seafood from mariculture practices."),
+                       definition = "the sustainable harvest of seafood from mariculture practices",
+                       commitment_text = "Global mariculture production has significantly surpassed wild-caught fisheries since 1990. Making sure we sustainably harvest our oceans to provide food for communities is crucial to ensuring the health of our oceans."),
         
-          ##Global mariculture production has significantly surpassed wild-caught fisheries since 1990. Making sure we sustainably harvest our oceans to provide food for communities is crucial to ensuring the health of our oceans.    
             
           ## Mariculture Baseline Metrics ##
            baseline_metrics_ui(id = "mar_baseline",
                                number_boxes = 3),
-
                 
           
-            
             ## Annual Mariculture Production ##
             card_ui(id = "mar_prod",
                     title_text = "Mariculture Production",
@@ -143,33 +147,33 @@ dashboardPage(
             
             ## Fisheries tab title ##
             tab_title_ui(goal_text = "FISHERIES",
+                         definition = "the sustainable harvest of seafood from wild-caught fisheries",
                          commitment_text = "sustainably wild-caught seafood from fisheries")
             
     ),
     
-    ## Coastal Protection & Carbon Storage ##
+    ## Coastal Protection ##
     
-    tabItem(tabName = "cpcs",
+    tabItem(tabName = "cp",
             
-            ## Coastal Protection & Carbon Storage tab title ##
-            tab_title_ui(goal_text = "COASTAL PROTECTION & CARBON STORAGE",
+            ## Coastal Protection tab title ##
+            tab_title_ui(goal_text = "COASTAL PROTECTION",
+                         definition = "the amount of protection provided by marine and coastal habitats serving as natural buffers against incoming waves",
                          commitment_text = "storage of carbon and protection of our coasts from storm damage by living natural habitats")
             
             ),
     
-    ## Pressures ##
+    ## Carbon Storage ##
     
-    tabItem(tabName = "pressures",
+    tabItem(tabName = "cs",
             
-            ## Pressures tab title ##
-            tab_title_ui(goal_text = "Pressures",
-                         commitment_text = "pressures"),
+            ## Carbon Storage tab title ##
+            tab_title_ui(goal_text = "CARBON STORAGE",
+                         definition = "the condition of coastal habitats that store and sequester atmospheric carbon",
+                         commitment_text = "storage of carbon and protection of our coasts from storm damage by living natural habitats")
+            
+    )
     
-            ##map for trash layer ##
-            map_ui(id = "trash_map",
-                   title_text = "Trash pressure layer")
-            
-            )
   )
     )
   )

@@ -74,13 +74,14 @@ map_ui <- function(id,
                    select_choices = c(""),
                    select_label = NULL, 
                    selected = NULL,
-                   source_text = NULL) {
+                   source_text = NULL,
+                   box_width = 12) {
   
   ns <- NS(id)
   
   # Output w/o selection
   if (missing(select_type) == TRUE) {
-    items <- leafletOutput(ns("plot"))
+    items <- leafletOutput(ns("plot"), height=450)
   } 
   else {
     # Select layout
@@ -105,9 +106,9 @@ map_ui <- function(id,
     # Chart layout
     if (select_location == "above") {
       items <- list(select,
-                    leafletOutput(ns("plot")))
+                    leafletOutput(ns("plot"), height=450))
     } else if (select_location == "below") {
-      items <- list(leafletOutput(ns("plot")),
+      items <- list(leafletOutput(ns("plot"), height=450),
                     select)
     }
   }
@@ -118,7 +119,7 @@ map_ui <- function(id,
   # Return tagList with box content  
   fluidRow(
     tagList(
-      box(box_content, width = 12)
+      box(box_content, width = box_width)
     )
   )
   
@@ -164,7 +165,7 @@ card_map <- function(input,
                      field,
                      filter_field = NULL,
                      display_field = NULL,
-                     color_palette = "Spectral",
+                     color_palette = rev(colorRampPalette(brewer.pal(11, 'Spectral'))(255)),
                      legend_title = NA,
                      popup_title = NA,
                      popup_add_field = NA,
@@ -178,7 +179,8 @@ card_map <- function(input,
     output$plot <- renderLeaflet({
       # get color pal
       pal <- colorNumeric(palette = color_palette,
-                          domain = data_shp[[field]])
+                          domain = data_shp[[field]],
+                          na.color = "#00000000")
       
       # get popup
       popup_text <- paste("<h5><strong>", popup_title, "</strong>" , data_shp[[field]], "</h5>",
@@ -186,8 +188,8 @@ card_map <- function(input,
       
       leaflet(data_shp,
               options = leafletOptions(zoomControl = FALSE)) %>%
-        addPolygons(color = "#444444", 
-                    weight = 1, 
+        addPolygons(color = "#A9A9A9", 
+                    weight = 0.5, 
                     smoothFactor = 0.5,
                     opacity = 1.0, 
                     fillOpacity = 0.7,
@@ -201,8 +203,10 @@ card_map <- function(input,
                   values = data_shp[[field]],
                   title = legend_title,
                   opacity = 1,
-                  layerId = "colorLegend") %>%
-        addProviderTiles(providers$CartoDB.Positron) 
+                  layerId = "colorLegend",
+                  labFormat = labelFormat(transform = function(x) sort(x, decreasing = TRUE))) %>%
+        addProviderTiles(providers$CartoDB.Positron) %>%
+        setView(-70.0589, 41.5, zoom = 6)
     })
     
   } else {
@@ -221,7 +225,8 @@ card_map <- function(input,
       
       # get color pal
       pal <- colorNumeric(palette = color_palette,
-                          domain = selected_data()[[display_field]])
+                          domain = selected_data()[[display_field]],
+                          na.color = "#00000000")
       
       # get popup
       popup_text <- paste("<h5><strong>", popup_title, "</strong>" , selected_data()[[display_field]], "</h5>",
@@ -229,8 +234,8 @@ card_map <- function(input,
       
       leaflet(selected_data(),
               options = leafletOptions(zoomControl = FALSE)) %>%
-        addPolygons(color = "#444444", 
-                    weight = 1, 
+        addPolygons(color = "#A9A9A9", 
+                    weight = 0.5, 
                     smoothFactor = 0.5,
                     opacity = 1.0, 
                     fillOpacity = 0.7,
@@ -244,8 +249,10 @@ card_map <- function(input,
                   values = selected_data()[[display_field]],
                   title = legend_title,
                   opacity = 1,
-                  layerId = "colorLegend") %>%
-        addProviderTiles(providers$CartoDB.Positron) 
+                  layerId = "colorLegend",
+                  labFormat = labelFormat(transform = function(x) sort(x, decreasing = TRUE))) %>%
+        addProviderTiles(providers$CartoDB.Positron) %>%
+        setView(-70.0589, 41.5, zoom = 6)
     })
     
   }
