@@ -79,15 +79,29 @@ for(i in 1:length(goal_names)){
 
 ## Mariculture Production
 # Prepare time-series data for graphing annual production per country
-mar_harvest <- read.csv("https://rawgit.com/OHI-Science/ohiprep_v2018/master/globalprep/mar/v2018/output/mar_harvest_tonnes.csv")
-# Get marine harvest amount & tidy
-mar_harvest <- mar_harvest %>% 
+mar_all <- read.csv("https://raw.githubusercontent.com/OHI-Science/ohiprep_v2018/master/globalprep/mar/v2018/output/MAR_FP_data.csv")
+mar_harvest <- mar_all %>% 
   left_join(regions, by="rgn_id") %>% 
-  mutate(species = str_replace(mar_harvest$taxa_code, "_[0-9]+", "")) %>% 
-  select(-taxa_code, -region, -rgn_id) %>% 
+  select(rgn_id, country, species, Taxon_code, year, value) %>% 
   arrange(country) # Sort country alphabetically
 # Save harvest (tonnes) data with country names
 write.csv(mar_harvest, "int/harvest_countries.csv", row.names = FALSE)
+
+## Prepare data for map: total produced per population
+## Subset seaweed production for ohi-science article
+seaweed <- mar_harvest %>% 
+  filter(Taxon_code == "AL")
+
+top <- seaweed %>% 
+  filter(year %in% c(2011:2015)) %>%
+  group_by(country) %>% 
+  rename(tonnes = value) %>% 
+  dplyr::summarise(tot_edible_sw = sum(tonnes))%>% 
+  dplyr::arrange(desc(tot_edible_sw)) %>% 
+  ungroup()
+
+
+
 
 ## Baseline Metrics: Statistics
 ## MAR Global Score
