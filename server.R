@@ -36,6 +36,17 @@ function(input, output, session) {
   #                        "low- and middle-income households spend 50% or more of their income on housing"),
   #            icon = "home"
   #            )
+  
+  ## Mariculture Global Map ##
+  callModule(card_map, "mar_global_map",
+             data = mar_global_map,
+             field = "input",
+             filter_field = type,
+             display_field = "map_data",
+             legend_title = "Seafood Production per Capita",
+             popup_title = "Map Data:",
+             popup_add_field = "country",
+             popup_add_field_title = "")
 
   
 

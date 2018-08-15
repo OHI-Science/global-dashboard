@@ -118,7 +118,7 @@ dashboardPage(
           ## Mariculture Tab Title ##
           tab_title_ui(goal_text = "MARICULTURE",
                        definition = "the sustainable harvest of seafood from mariculture practices",
-                       commitment_text = "Global mariculture production has significantly surpassed wild-caught fisheries since 1990. Making sure we sustainably harvest our oceans to provide food for communities is crucial to ensuring the health of our oceans."),
+                       commitment_text = "Global mariculture production has been rising rapidly since the 1980s and is now supplying about half of all seafood consumed globally. Making sure we sustainably harvest our oceans to provide food for communities is crucial to ensuring the health of our oceans."),
         
             
           ## Mariculture Baseline Metrics ##
@@ -134,9 +134,23 @@ dashboardPage(
                     select_location = "above",
                     select_choices = unique(mar_harvest$country),
                     select_label = NULL,
-                    source_text = "Source: Food and Agriculture Organization, Global Aquaculture Production Quantity 1950 - 2016 dataset (released March 2018)")
+                    source_text = "Source: Food and Agriculture Organization, Global Aquaculture Production Quantity 1950 - 2016 dataset (released March 2018)"),
+          
+          
+          ## Mariculture Global Map
+          map_ui(id = "mar_global_map",
+                 title_text = "Mariculture Global Production",
+                 sub_title_text = "",
+                 select_type = "drop_down",
+                 select_location = "above",
+                 select_choices = c("All Production (tonnes)" = "prodAllTaxon",
+                                    "Production per Capita" = "prodPerCap"),
+                 select_label = "Select data to view.",
+                 box_width = 12)
             
             ),
+    
+    
     
     
     
