@@ -111,8 +111,23 @@ mar_harvest$Taxon <- as.factor(mar_harvest$Taxon)
 write.csv(mar_harvest, "int/harvest_countries.csv", row.names = FALSE)
 
 
-## Baseline Metrics: Statistics ##
+## Prepare data for map: total produced per population
+## Subset seaweed production for ohi-science article
+# seaweed <- mar_harvest %>% 
+#   filter(Taxon_code == "AL")
+# 
+# top <- seaweed %>% 
+#   filter(year %in% c(2011:2015)) %>%
+#   group_by(country) %>% 
+#   rename(tonnes = value) %>% 
+#   dplyr::summarise(tot_edible_sw = sum(tonnes))%>% 
+#   dplyr::arrange(desc(tot_edible_sw)) %>% 
+#   ungroup()
 
+
+
+
+## Baseline Metrics: Statistics ##
 ## MAR Global Score
 # mar_statistics <- data.frame("Global","MAR",MAR,"Global Mariculture Score")
 # baseline <- rbind(mar_statistics,baseline)
