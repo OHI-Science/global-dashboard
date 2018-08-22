@@ -165,7 +165,6 @@ card_map <- function(input,
                      color_palette = ygb,
                      legend_title = NA,
                      popup_title = NA,
-                     popup_units = NA,
                      popup_add_field = NA,
                      popup_add_field_title = NA) {
   
@@ -178,13 +177,12 @@ card_map <- function(input,
     output$plot <- renderLeaflet({
      
       # get popup
-      popup_text <- paste("<h5><strong>", popup_title, "</strong>" , data_shp[[field]], data_shp[[popup_units]], "</h5>",
+      popup_text <- paste("<h5><strong>", paste(data_shp[[popup_title]],": ", sep=""), "</strong>", data_shp[[field]], "</h5>",
                           "<h5><strong>", popup_add_field_title, "</strong>", data_shp[[popup_add_field]], "</h5>", sep=" ")
       
       # get color pal
       pal <- colorQuantile(palette = color_palette,
                           domain = data_shp[[field]],
-                          n = 5,
                           na.color = "#00000000",
                           alpha = 0.4)
       
@@ -227,13 +225,12 @@ card_map <- function(input,
     output$plot <- renderLeaflet({
 
       # get popup
-      popup_text <- paste("<h5><strong>", popup_title, "</strong>" , selected_data()[[display_field]], selected_data()[[popup_units]], "</h5>",
+      popup_text <- paste("<h5><strong>", selected_data()[[popup_title]], ": ", "</strong>" , selected_data()[[display_field]], "</h5>",
                           "<h5><strong>", popup_add_field_title, "</strong>", selected_data()[[popup_add_field]], "</h5>", sep=" ")
       
       # get color pal
       pal <- colorQuantile(palette = color_palette,
                           domain = selected_data()[[display_field]],
-                          n = 5,
                           na.color = "#00000000",
                           alpha = 0.4)
       

@@ -125,20 +125,21 @@ mar_global_map <- food_pop %>%
   mutate(prodTonnesAll = sum(tonnes, na.rm=TRUE)) %>% # Total production per year and country in tonnes
   mutate(prodPerCap = sum(pounds, na.rm=TRUE)/popsum) %>% # 
   ungroup() %>% 
-  # group_by(Taxon, country, year) %>% 
-  # mutate(prodPerTaxonCap = sum(pounds, na.rm=TRUE)/popsum) %>% 
-  # ungroup() %>% 
   gather(type,map_data,c(prodTonnesAll, prodPerCap),na.rm=TRUE) %>% 
   # mutate(units = case_when(
   #   type == "prodTonnesAll" ~ "tonnes",
-  #   type == "prodPerCap" ~ "lb per person"
-  # )) %>% 
+  #   type == "prodPerCap" ~ "lb/person"
+  # )) %>%
   filter(year == 2016) %>% # plotting only 2016 data
   select(rgn_id, country, type, map_data) %>% 
   distinct() %>% 
-  mutate(map_data = as.numeric(format(round(map_data, 2), nsmall=2)))  # round to two decimal places
+  mutate(map_data = as.numeric(format(round(map_data, 2), nsmall=2))) 
+# %>%   # round to two decimal places
+#   mutate(map_data = ifelse(map_data == 0, NA, map_data)) # so visually values < 0.1 are greyed out
 
-# ## Trujillo sustainability data -- incorporate into global map!
+
+
+## Trujillo sustainability data -- incorporate into global map!
 # sust <- read.csv("https://rawgit.com/OHI-Science/ohiprep_v2018/master/globalprep/mar/v2018/output/mar_sustainability.csv")
 # # Remove numeric code in species name
 # sust <- sust %>%

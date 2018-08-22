@@ -1,40 +1,53 @@
-## CONSIDER USING ST_SIMPLIFY TO INCREASE SPEED OF PLOTTING
-# ohi_regions <- sf::st_read(file.path(dir_M,"git-annex/globalprep/spatial/v2017"), "regions_2017_update", quiet = T) %>%
-#   sf::st_transform(crs = '+proj=longlat +datum=WGS84') %>% # rgn_id, rgn_name
-#   sf::st_simplify()
-# save(ohi_regions, file = "tmp/global_map.RData")
+# Test leaflet plot of global map
 
-# library(rgdal)
-# library(dplyr)
-# library(leaflet)
+## Setup
+library(rgdal)
+library(dplyr)
+library(leaflet)
 
-## May want to save it onto mazu or global-dashboard in the future so people can easily access it
-# ohi_regions <-  sf::st_read('../ohiprep/globalprep/spatial/downres', "rgn_all_gcs_low_res")
-# 
-# ohi_regions <- ohi_regions %>%
-#   filter(rgn_typ == "eez")
-# 
-# plot(ohi_regions)
+ygb <- colorRampPalette(brewer.pal(5,'YlGnBu'))(200); cols <- ygb[19:200]
 
-# data <- mar_global_map
+source("global.R")
 
-# data_shp <- ohi_regions %>%
-#   left_join(data, by = "rgn_id") %>% 
-#   filter(type == "prodPerCap")
 
-# pal <- colorNumeric(palette = ygb,
-#                     domain = data_shp$map_data,
-#                     na.color = "#00000000",
-#                     alpha = 0.4)
+## OHI Region Shapefile - is there a way to read in the shapefile with the github url?
+ohi_regions <-  sf::st_read('../ohiprep/globalprep/spatial/downres', "rgn_all_gcs_low_res")
+rgns_leaflet <- ohi_regions %>%
+  filter(rgn_typ == "eez")
 
-# legend_title = "Map Stuff"
-# 
-#  popup_title = "Seafood Production: "
-#  popup_add_field_title = "Country EEZ: "
-#  
-#  popup_text <- paste("<h5><strong>", popup_title, "</strong>", as.character(signif(data_shp$map_data,3)), "lb/person", "</h5>",
-#                      "<h5><strong>", popup_add_field_title, "</strong>", data_shp$rgn_nam, "</h5>", sep=" ")
+## Identify arguments for map_card
+data = mar_global_map
+filter_field = data$type
+display_field = "map_data"
+color_palette = ygb
+legend_title = "Legend"
+popup_title = "Seafood Production: "
+popup_units = "pounds/person"
+popup_add_field = "rgn_nam"
+popup_add_field_title = "EEZ: "
 
+## Attach data to rgn shapefile - select for just production per capita to test
+data_shp <- rgns_leaflet %>%
+  full_join(data, by = "rgn_id") %>% 
+  filter(type == "prodPerCap")
+
+
+
+# Get color pal
+pal <- colorQuantile(palette = color_palette,
+                     domain = data_shp$map_data,
+                     na.color = "#00000000",
+                     alpha = 0.4)
+
+
+## Popup attributes
+popup_title = "Seafood Production: "
+popup_add_field_title = "Country EEZ: "
+
+popup_text <- paste("<h5><strong>", popup_title, "</strong>", as.character(signif(data_shp$map_data,3)), "lb/person", "</h5>",
+                    "<h5><strong>", popup_add_field_title, "</strong>", data_shp$rgn_nam, "</h5>", sep=" ")
+
+## Plot with leaflet!
 leaflet(data_shp,
         options = leafletOptions(zoomControl = FALSE)) %>%
   addPolygons(color = "#A9A9A9", 

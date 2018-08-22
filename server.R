@@ -36,10 +36,7 @@ function(input, output, session) {
              display_field = "map_data",
              color_palette = ygb,
              legend_title = "Legend",
-             popup_title = "Seafood Production: ",
-             popup_units = "pounds/person",
-             popup_add_field = "rgn_nam",
-             popup_add_field_title = "EEZ: ")
+             popup_title = "rgn_nam")
 
   
 
