@@ -1,6 +1,7 @@
-## global
+## global variables
 
-## Set up environment ##
+
+## SET UP ENVIRONMENT ##
 
 ## libraries
 library(ohicore)
@@ -29,34 +30,26 @@ source("modules/baseline_metrics_card.R")
 
 ## source functions
 source("functions/tab_title.R")
+source("functions/front_page.R")
 
 ## no scientific notation and round to 2 decimals
 options(scipen = 999,
-        digits = 2)
+        digits = 5)
 ## variables
 present_yr <- 2018
 
 
 
-## GLOBAL OHI DATA SOURCES ##
+## GLOBAL OHI REGION DATA SOURCES ##
 
 ## OHI Region ID and Names
 regions <- georegion_labels %>% 
   select(rgn_id, region=r2_label, country=rgn_label)
 
-## OHI Region Shapefile
-## CONSIDER USING ST_SIMPLIFY TO INCREASE SPEED OF PLOTTING
-ohi_regions <- sf::st_read(file.path(dir_M,"git-annex/globalprep/spatial/v2017"), "regions_2017_update", quiet = T) %>%
-  sf::st_transform(crs = '+proj=longlat +datum=WGS84')  # rgn_id, rgn_name
-
+## OHI Region Shapefile - is there a way to read in the shapefile with the github url?
+ohi_regions <-  sf::st_read('../ohiprep/globalprep/spatial/downres', "rgn_all_gcs_low_res")
 rgns_leaflet <- ohi_regions %>%
-  filter(rgn_type == "land", rgn_name != "Antarctica")
-
-
-
-## Empty Baseline Metrics Data Frame
-# baseline <- setNames(data.frame(matrix(ncol = 4, nrow = 0)),
-#                      c("country","goal","metric","description"))
+  filter(rgn_typ == "eez")
 
 ## OHI Global scores
 scores <- read.csv("https://rawgit.com/OHI-Science/ohi-global/draft/eez/scores.csv")
@@ -94,45 +87,77 @@ mar_harvest <- mar_out %>%
   select(rgn_id, country, species, Taxon_code, year, value) %>% 
   rename(tonnes = value) %>% 
   arrange(country) %>%  # Sort country alphabetically
-  mutate(Taxon = ifelse(Taxon_code == "F", "Fish", 
-                 ifelse(Taxon_code == "SH", "Crustacean",
-                 ifelse(Taxon_code == "BI", "Bivalve and Molluscs",
-                 ifelse(Taxon_code == "INV", "Invertebrate",
-                 ifelse(Taxon_code == "CRUST", "Crustacean",
-                 ifelse(Taxon_code == "MOLL", "Bivalve and Molluscs",
-                 ifelse(Taxon_code == "AL", "Seaweed",
-                 ifelse(Taxon_code == "NS-INV", "Invertebrate",
-                 ifelse(Taxon_code == "URCH", "Invertebrate",
-                 ifelse(Taxon_code == "CEPH", "Bivalve and Molluscs",
-                 ifelse(Taxon_code == "TUN", "Invertebrate",NA))))))))))))
+  mutate(Taxon = case_when(
+    Taxon_code == "F" ~ "Fish", 
+    Taxon_code == "SH" ~ "Crustacean",
+    Taxon_code == "BI" ~ "Bivalve and Molluscs",
+    Taxon_code == "INV" ~ "Invertebrate",
+    Taxon_code == "CRUST" ~ "Crustacean",
+    Taxon_code == "MOLL" ~ "Bivalve and Molluscs",
+    Taxon_code == "AL" ~ "Seaweed",
+    Taxon_code == "NS-INV" ~ "Invertebrate",
+    Taxon_code == "URCH" ~ "Invertebrate",
+    Taxon_code == "CEPH" ~ "Bivalve and Molluscs",
+    Taxon_code == "TUN" ~ "Invertebrate"))
 mar_harvest$Taxon <- as.factor(mar_harvest$Taxon)
                  
 # Save harvest (tonnes) data with country names
 write.csv(mar_harvest, "int/harvest_countries.csv", row.names = FALSE)
 
 
-## Prepare data for map: total produced per population
-## Subset seaweed production for ohi-science article
-# seaweed <- mar_harvest %>% 
-#   filter(Taxon_code == "AL")
-# 
-# top <- seaweed %>% 
-#   filter(year %in% c(2011:2015)) %>%
-#   group_by(country) %>% 
-#   rename(tonnes = value) %>% 
-#   dplyr::summarise(tot_edible_sw = sum(tonnes))%>% 
-#   dplyr::arrange(desc(tot_edible_sw)) %>% 
-#   ungroup()
+
+
+## GLOBAL MAP SUMMARY DATA ##
+
+## Top Producing Countries (Seafood/Capita)
+mar_pop <- read.csv("https://rawgit.com/OHI-Science/ohiprep_v2018/master/globalprep/mar_prs_population/v2018/output/mar_pop_25mi.csv") %>% 
+  na.omit()
+
+## Join coastal population and mariculture production tables
+food_pop <- mar_harvest %>% 
+  mutate(pounds = tonnes*2204.62) %>% 
+  left_join(mar_pop, by=c("rgn_id","year")) %>% 
+  na.omit()
+
+## Summarize all production per country-year, production/capita for each country-year, and per capita for each taxon-country-year
+mar_global_map <- food_pop %>%
+  group_by(country,year) %>%
+  mutate(prodTonnesAll = sum(tonnes, na.rm=TRUE)) %>% # Total production per year and country in tonnes
+  mutate(prodPerCap = sum(pounds, na.rm=TRUE)/popsum) %>% # 
+  ungroup() %>% 
+  # group_by(Taxon, country, year) %>% 
+  # mutate(prodPerTaxonCap = sum(pounds, na.rm=TRUE)/popsum) %>% 
+  # ungroup() %>% 
+  gather(type,map_data,c(prodTonnesAll, prodPerCap),na.rm=TRUE) %>% 
+  # mutate(units = case_when(
+  #   type == "prodTonnesAll" ~ "tonnes",
+  #   type == "prodPerCap" ~ "lb per person"
+  # )) %>% 
+  filter(year == 2016) %>% # plotting only 2016 data
+  select(rgn_id, country, type, map_data) %>% 
+  distinct() %>% 
+  mutate(map_data = as.numeric(format(round(map_data, 2), nsmall=2)))  # round to two decimal places
+
+# ## Trujillo sustainability data -- incorporate into global map!
+# sust <- read.csv("https://rawgit.com/OHI-Science/ohiprep_v2018/master/globalprep/mar/v2018/output/mar_sustainability.csv")
+# # Remove numeric code in species name
+# sust <- sust %>%
+#   mutate(species = str_replace(sust$taxa_code, "_[0-9]+", "")) %>%
+#   select(-taxa_code) %>% 
+#   left_join(regions[,1:2], by="rgn_id")
+# # Save tidied sustainability data
+# write.csv(sust, "int/sust.csv", row.names=FALSE)
+# sust <- read.csv("int/sust.csv")
 
 
 
+## BASELINE METRICS ##
 
-## Baseline Metrics: Statistics ##
-## MAR Global Score
-# mar_statistics <- data.frame("Global","MAR",MAR,"Global Mariculture Score")
-# baseline <- rbind(mar_statistics,baseline)
+## Empty Baseline Metrics Data Frame ##
+# baseline <- setNames(data.frame(matrix(ncol = 4, nrow = 0)),
+#                      c("country","goal","metric","description"))
 
-## Largest Share of Production
+## Second Metric: Largest Share of Production
 # Determine which country produced the most mariculture regardless of species
 historic <- mar_harvest %>%
   filter(year == 2016) %>% 
@@ -146,62 +171,43 @@ top_cntry <- mar_harvest %>%
   mutate(rel_contrib = cntry_tot/historic$total) %>% 
   arrange(desc(rel_contrib))
 
-## Combine all metrics into baseline.csv
-mar_statistics <- data.frame(
-  country = c("Global",
-               as.character(top_cntry$country[1]),
-              "Chile"),
-  goal = c("MAR",
-           "MAR",
-           "MAR"),
-  metric = c(paste0(MAR,"%"),
-              paste(round(top_cntry$rel_contrib[1]*100),"%",sep=""),
-             "78 tonnes"),
-  subtitle = c("Global Mariculture Score",
-                   "Largest Share of Production",
-                  "Seafood per Capita"),
-  description = c("Healthy oceans maximize the marine cultivation potential and minimize impacts to the ecosystem.",
-                  "contributes the largest historic share by tonnes of mariculture produced for human consumption",
-                  "produces the most seafood per capita"))
+## Third Metric - Most recent year
+perCap <- mar_global_map %>% 
+  filter(type == "prodPerCap") %>% 
+  arrange(desc(map_data))
+  
 
-#baseline <- rbind(mar_statistics,baseline)
-write.csv(mar_statistics, "int/baseline.csv", row.names=FALSE)
-baseline <- read.csv("int/baseline.csv")
+## Combine Metrics
+baseline <- data.frame(
+  country = c(
+    "Global",
+    as.character(top_cntry$country[1]),
+    as.character(perCap$country[1])
+    ),
+  goal = c(
+    "MAR",
+    "MAR",
+    "MAR"
+    ),
+  metric = c(
+    paste0(MAR,"%"),
+    paste(round(top_cntry$rel_contrib[1]*100),"%",sep=""),
+    paste(formatC(round(perCap$map_data[1]), big.mark=","), "lb pp", sep = " ")
+    ),
+  subtitle = c(
+    "Global Mariculture Score",
+    "Largest Share of Production",
+    "Seafood per Capita"
+    ),
+  description = c(
+    "Healthy oceans maximize the marine cultivation potential and minimize impacts to the ecosystem.",
+    paste("In 2016,", top_cntry$country[1],"contributed the largest share (in tonnes) of mariculture produced for human consumption",sep=" "),
+    paste(perCap$country[1],"produces the most seafood per capita", sep=" ")
+    ))
 
-## Trujillo sustainability data
-sust <- read.csv("https://rawgit.com/OHI-Science/ohiprep_v2018/master/globalprep/mar/v2018/output/mar_sustainability.csv")
-# Remove numeric code in species name
-sust <- sust %>%
-  mutate(species = str_replace(sust$taxa_code, "_[0-9]+", "")) %>%
-  select(-taxa_code) %>% 
-  left_join(regions[,1:2], by="rgn_id")
-# Save tidied sustainability data
-write.csv(sust, "int/sust.csv", row.names=FALSE)
-sust <- read.csv("int/sust.csv")
+write.csv(baseline, "int/baseline.csv", row.names=FALSE)
 
 
-## MAR: Global Map Summary Data ##
-## Top Producing Countries (Seafood/Capita)
-mar_pop <- read.csv("https://rawgit.com/OHI-Science/ohiprep_v2018/master/globalprep/mar_prs_population/v2018/output/mar_pop_25mi.csv") %>% 
-  na.omit()
 
-## Join coastal population and mariculture production tables
-food_pop <- mar_harvest %>% 
-  left_join(mar_pop, by=c("rgn_id","year")) %>% 
-  na.omit()
 
-## Summarize all production per country-year, production/capita for each country-year, and per capita for each taxon-country-year
-mar_global_map <- food_pop %>%
-  group_by(country,year) %>%
-  mutate(prodAllTaxon = sum(tonnes, na.rm=TRUE)) %>% # Total production per year and country
-  mutate(prodPerCap = sum(tonnes, na.rm=TRUE)/popsum) %>% 
-  ungroup() %>% 
-  group_by(Taxon, country, year) %>% 
-  mutate(prodPerTaxonCap = sum(tonnes, na.rm=TRUE)/popsum) %>% 
-  ungroup() %>% 
-  gather(type,map_data,c(prodAllTaxon, prodPerCap,prodPerTaxonCap),na.rm=TRUE) %>% 
-  filter(year == 2016) %>% 
-  select(rgn_id, country, type, map_data) %>% 
-  distinct() %>% 
-  filter(type != "prodPerTaxonCap")
 

@@ -27,26 +27,19 @@ function(input, output, session) {
              icon = "fish",
              color = "light-blue") # see ?validColors
   
-  # 
-  # callModule(baseline_metrics,"mar_baseline",
-  #            number_boxes = 3,
-  #            statistic = list("21.9%", "68%", "50,000"),
-  #            text = list("Global Mariculture Score: healthy oceans maximize the marine cultivation potential and minimize impacts to the ecosystem",
-  #                        "China contributes the largest historic share by tonnes of mariculture produced for human consumption",
-  #                        "low- and middle-income households spend 50% or more of their income on housing"),
-  #            icon = "home"
-  #            )
-  
+
   ## Mariculture Global Map ##
   callModule(card_map, "mar_global_map",
              data = mar_global_map,
              field = "input",
-             filter_field = type,
+             filter_field = type, # type of data to plot
              display_field = "map_data",
-             legend_title = "Seafood Production per Capita",
-             popup_title = "Map Data:",
-             popup_add_field = "country",
-             popup_add_field_title = "")
+             color_palette = ygb,
+             legend_title = "Legend",
+             popup_title = "Seafood Production: ",
+             popup_units = "pounds/person",
+             popup_add_field = "rgn_nam",
+             popup_add_field_title = "EEZ: ")
 
   
 

@@ -56,24 +56,11 @@ baseline_metrics <- function(input,
   
   metrics <- c(first,second,third)
   
-  # lapply(metrics, function(b){
-  #   base_df <- base_df %>%
-  #     filter(subtitle == b)
-  #   if(!is.na(b)) {
-  #     box_id <- paste0("valuebox_",which(metrics == b))
-  #     output[[box_id]] <- renderValueBox({
-  #       valueBox(base_df$metric,
-  #                base_df$description,
-  #                icon = icon(icon),
-  #                color = color)
-  #       })}
-  #   })
   
   for(b in metrics){local({
     
     base_df <- base_df %>%
       filter(subtitle == b)
-#    if(!is.na(b)) {
       
     box_id <- paste0("valuebox_",which(metrics == b))
       
@@ -83,35 +70,9 @@ baseline_metrics <- function(input,
                  icon = icon(icon),
                  color = color)
       })
-      #}
+
   })
   
   }    
 }
-  
-#   baseline_metrics <- function(input,
-#                                output,
-#                                session,
-#                                number_boxes,
-#                                statistic,
-#                                text,
-#                                icon
-#   ) {
-# 
-#     for(x in 1:number_boxes) {local({
-#       i <- x
-#       box_id <- paste("valuebox", as.character(i), sep="_")
-#       output[[box_id]] <- renderValueBox({
-#         valueBox(statistic[i],
-#                  paste0(text[i]),
-#                  icon = icon(icon),
-#                  color = "light-blue")
-#       })
-#     })}
-# 
-# 
-#   
-# }
-# 
-# 
-# 
+ 

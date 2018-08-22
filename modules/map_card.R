@@ -14,6 +14,8 @@
 library(shiny)
 library(shinydashboard)
 library(leaflet)
+library(rgdal)
+library(dplyr)
 
 #'
 #' @title map_ui function
@@ -75,7 +77,7 @@ map_ui <- function(id,
                    select_label = NULL, 
                    selected = NULL,
                    source_text = NULL,
-                   box_width = 12) {
+                   box_width = NULL) {
   
   ns <- NS(id)
   
@@ -160,27 +162,31 @@ card_map <- function(input,
                      field,
                      filter_field = NULL,
                      display_field = NULL,
-                     color_palette = viridis,
+                     color_palette = ygb,
                      legend_title = NA,
                      popup_title = NA,
+                     popup_units = NA,
                      popup_add_field = NA,
                      popup_add_field_title = NA) {
   
-  #attach data to rgn shapefile
+  # attach data to rgn shapefile
   data_shp <- rgns_leaflet %>%
     full_join(data)
-  
-  # get color pal
-  pal <- colorNumeric(palette = color_palette,
-                      domain = NULL,
-                      na.color = "#00000000")
-  
+
+  # if not allowing user to select multiple inputs
   if (field != "input") {
     output$plot <- renderLeaflet({
-      
+     
       # get popup
-      popup_text <- paste("<h5><strong>", popup_title, "</strong>" , data_shp[[field]], "</h5>",
+      popup_text <- paste("<h5><strong>", popup_title, "</strong>" , data_shp[[field]], data_shp[[popup_units]], "</h5>",
                           "<h5><strong>", popup_add_field_title, "</strong>", data_shp[[popup_add_field]], "</h5>", sep=" ")
+      
+      # get color pal
+      pal <- colorQuantile(palette = color_palette,
+                          domain = data_shp[[field]],
+                          n = 5,
+                          na.color = "#00000000",
+                          alpha = 0.4)
       
       leaflet(data_shp,
               options = leafletOptions(zoomControl = FALSE)) %>%
@@ -205,6 +211,7 @@ card_map <- function(input,
     
   } else {
     
+    # if allowing user to select multiple input data
     filter_field <- enquo(filter_field)
     
     selected_data <- reactive({
@@ -212,14 +219,23 @@ card_map <- function(input,
       df <- data_shp %>% filter(!!filter_field == input$select)
       
       return(df)
-      
+    
     })
     
+  
+    # render the map plot based on the selected data
     output$plot <- renderLeaflet({
-      
+
       # get popup
-      popup_text <- paste("<h5><strong>", popup_title, "</strong>" , selected_data()[[display_field]], "</h5>",
+      popup_text <- paste("<h5><strong>", popup_title, "</strong>" , selected_data()[[display_field]], selected_data()[[popup_units]], "</h5>",
                           "<h5><strong>", popup_add_field_title, "</strong>", selected_data()[[popup_add_field]], "</h5>", sep=" ")
+      
+      # get color pal
+      pal <- colorQuantile(palette = color_palette,
+                          domain = selected_data()[[display_field]],
+                          n = 5,
+                          na.color = "#00000000",
+                          alpha = 0.4)
       
       leaflet(selected_data(),
               options = leafletOptions(zoomControl = FALSE)) %>%
@@ -239,7 +255,8 @@ card_map <- function(input,
                   title = legend_title,
                   opacity = 1,
                   layerId = "colorLegend") %>%
-        addProviderTiles(providers$CartoDB.Positron)
+        addProviderTiles(providers$CartoDB.Positron,
+                         options = providerTileOptions(noWrap = TRUE))
     })
     
   }

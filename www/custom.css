@@ -1,25 +1,65 @@
-@import url('//fonts.googleapis.com/css?family=Questrial|Lato:400,700');
-
-.main-header .logo {
-  font-family: "Questrial";
-  font-weight: bold;
-  font-size: 24px;
-}
+@import url('//fonts.googleapis.com/css?family=Rokkitt|Lato:400,700');
 
 /* main text elements */
-h1, h4, h2, h3{
+h1, h2, h3, h4{
   font-family: 'Lato', sans-serif;
   font-weight: 700;
 }
 
-.skin-blue .main-header .logo {
-  background-color: #3c8dbc;
+/* main header text */
+.main-header .logo {
+  font-family: "Rokkitt";
+  font-weight: bold;
+  font-size: 24px;
 }
 
-.skin-blue .main-header .logo:hover {
-  background-color: #3c8dbc;
+/* main header */
+.skin-blue .main-header .logo {
+  background-color: #123752;
 }
-                  
+
+/* main header when hovered*/
+.skin-blue .main-header .logo:hover {
+  background-color: #123752;
+}
+
+/* navbar (rest of the header) */
+.skin-blue .main-header .navbar {
+  background-color: #123752;
+}
+
+/* main sidebar */
+.skin-blue .main-sidebar {
+  background-color: #708FA3;
+}
+
+/* active selected tab in the sidebarmenu */
+.skin-blue .main-sidebar .sidebar .sidebar-menu .active a{
+  background-color: #708FA3;
+}
+
+/* other links in the sidebarmenu */
+.skin-blue .main-sidebar .sidebar .sidebar-menu a{
+  background-color: #708FA3;
+  color: white;
+}
+
+/* other links in the sidebarmenu when hovered */
+.skin-blue .main-sidebar .sidebar .sidebar-menu a:hover{
+  background-color: #123752;
+}
+
+/* toggle button when hovered  */                  
+.skin-blue .main-header .navbar .sidebar-toggle:hover{
+  background-color: #123752;
+}
+
+
+
+
+
+
+
 /* commitment text style */
 .commitment_text {
 	padding: 1%;
@@ -29,3 +69,88 @@ h1, h4, h2, h3{
 	border: solid #acd1d4;
   border-width: 1px 1px;
 }
+
+
+
+/* Testing front banner style, front-banner works and creates height of section */
+.front-banner-test {
+   position: relative;
+   max-width: 1000px;
+   margin: 0 auto; /* Center it */
+}
+
+.front-banner-test .content {
+   font-family: 'Lato', sans-serif;
+   font-size: 30px;
+   position: absolute; /* Position the background text */
+   top: 0; /* At the top. Use bottom:0 to append it to the top */
+   background: rgba(0, 0, 0, 0.5); /* Black background with 0.5 opacity */
+   color: #f1f1f1; /* Grey text */
+   width: 45%; /* Full width */
+   height: 20%; /* Adjusts height, not working */
+}
+  
+/* Intro text */
+.intro-text {
+   font-family: 'Lato', sans-serif;
+   font-weight: 700;
+   font-size: 18px;
+   color: black;
+}
+
+
+/* Intro divider style */
+.intro-divider {
+   height: 6px;
+   background: linear-gradient(to left, #DCF1C3 0%, #253494 100%);
+   margin-top: 20px;
+   margin-bottom: 20px;
+}
+
+
+
+/* Home page box settings */ 
+.box-con {
+   height: 130px;
+   margin-top: 10px;
+   margin-bottom: 10px;
+}
+
+.box {
+   height: 100%;
+   padding: 12px;
+   padding-top: 15px;
+}
+
+/* First homepage box */ 
+.box-more {
+   float: left;
+   width: 33%;
+   color: #3F3F3F;
+   background-color: #D6E8F7;
+   border-top: 2px solid transparent;
+}
+.box-more:hover {
+   color: #FFFFFF;
+   background-color: #3F3F3F;
+}
+
+
+/* Second homepage box*/ 
+.box-rear {
+   float: right;
+   width: 64%;
+   color: #3F3F3F;
+   background-color: #e0e5cc;
+   border-top: 2px solid transparent;
+}
+
+.box-rear:hover {
+   color: #FFFFFF;
+   background-color: #3F3F3F;
+} 
+
+
+
+
+
