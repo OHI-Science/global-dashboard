@@ -126,16 +126,15 @@ mar_global_map <- food_pop %>%
   mutate(prodPerCap = sum(pounds, na.rm=TRUE)/popsum) %>% # 
   ungroup() %>% 
   gather(type,map_data,c(prodTonnesAll, prodPerCap),na.rm=TRUE) %>% 
-  # mutate(units = case_when(
-  #   type == "prodTonnesAll" ~ "tonnes",
-  #   type == "prodPerCap" ~ "lb/person"
-  # )) %>%
+  mutate(units = case_when(
+    type == "prodTonnesAll" ~ "tonnes",
+    type == "prodPerCap" ~ "lb/person"
+  )) %>%
   filter(year == 2016) %>% # plotting only 2016 data
-  select(rgn_id, country, type, map_data) %>% 
+  select(rgn_id, country, type, map_data,units) %>% 
   distinct() %>% 
-  mutate(map_data = as.numeric(format(round(map_data, 2), nsmall=2))) 
-# %>%   # round to two decimal places
-#   mutate(map_data = ifelse(map_data == 0, NA, map_data)) # so visually values < 0.1 are greyed out
+  mutate(map_data = as.numeric(format(round(map_data, 2), nsmall=2))) %>%   # round to two decimal places
+  mutate(map_data = ifelse(map_data == 0, NA, map_data)) # so visually values < 0.1 are greyed out
 
 
 

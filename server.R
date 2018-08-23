@@ -34,6 +34,7 @@ function(input, output, session) {
              field = "input",
              filter_field = type, # type of data to plot
              display_field = "map_data",
+             display_units = "units",
              color_palette = ygb,
              legend_title = "Legend",
              popup_title = "rgn_nam")

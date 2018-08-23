@@ -162,11 +162,13 @@ card_map <- function(input,
                      field,
                      filter_field = NULL,
                      display_field = NULL,
+                     display_units = NULL,
                      color_palette = ygb,
                      legend_title = NA,
-                     popup_title = NA,
-                     popup_add_field = NA,
-                     popup_add_field_title = NA) {
+                     popup_title = NA
+                     # popup_add_field = NA,
+                     # popup_add_field_title = NA
+                     ) {
   
   # attach data to rgn shapefile
   data_shp <- rgns_leaflet %>%
@@ -176,9 +178,12 @@ card_map <- function(input,
   if (field != "input") {
     output$plot <- renderLeaflet({
      
-      # get popup
-      popup_text <- paste("<h5><strong>", paste(data_shp[[popup_title]],": ", sep=""), "</strong>", data_shp[[field]], "</h5>",
-                          "<h5><strong>", popup_add_field_title, "</strong>", data_shp[[popup_add_field]], "</h5>", sep=" ")
+      # get popup for a single line
+      popup_text <- paste("<h5><strong>", paste(data_shp[[popup_title]],": ", sep=""), "</strong>", data_shp[[field]], data_shp[[display_units]], "</h5>")
+      
+      # get popup for two lines
+      # popup_text <- paste("<h5><strong>", paste(data_shp[[popup_title]],": ", sep=""), "</strong>", data_shp[[field]], data_shp[[display_units]], "</h5>",
+      #                     "<h5><strong>", popup_add_field_title, "</strong>", data_shp[[popup_add_field]], "</h5>", sep=" ")
       
       # get color pal
       pal <- colorQuantile(palette = color_palette,
@@ -223,10 +228,14 @@ card_map <- function(input,
   
     # render the map plot based on the selected data
     output$plot <- renderLeaflet({
+      
+      
+      # get popup for a single line
+      popup_text <- paste("<h5><strong>", selected_data()[[popup_title]], ": ", "</strong>" , selected_data()[[display_field]], selected_data()[[display_units]], "</h5>")
 
-      # get popup
-      popup_text <- paste("<h5><strong>", selected_data()[[popup_title]], ": ", "</strong>" , selected_data()[[display_field]], "</h5>",
-                          "<h5><strong>", popup_add_field_title, "</strong>", selected_data()[[popup_add_field]], "</h5>", sep=" ")
+      # get popup for two lines
+      # popup_text <- paste("<h5><strong>", selected_data()[[popup_title]], ": ", "</strong>" , selected_data()[[display_field]], selected_data()[[display_units]], "</h5>",
+      #                     "<h5><strong>", popup_add_field_title, "</strong>", selected_data()[[popup_add_field]], "</h5>", sep=" ")
       
       # get color pal
       pal <- colorQuantile(palette = color_palette,
