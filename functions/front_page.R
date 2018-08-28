@@ -4,7 +4,7 @@ frontp = function()
       # Create homepage title banner and image
       div(class = "front-banner-test",
           tags$img(src = "bluestriped.jpg", style="width:100%"),
-            div(class = "content", ("Explore the Data Behind the Global Ocean Health Index"))
+          div(class = "content", ("Explore the Data Behind the Global Ocean Health Index"))
         ),
       
       

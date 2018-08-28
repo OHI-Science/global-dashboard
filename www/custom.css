@@ -89,7 +89,8 @@ h1, h2, h3, h4{
    width: 45%; /* Full width */
    height: 20%; /* Adjusts height, not working */
 }
-  
+
+
 /* Intro text */
 .intro-text {
    font-family: 'Lato', sans-serif;
