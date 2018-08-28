@@ -17,11 +17,17 @@ library(viridis)
 ygb <- colorRampPalette(brewer.pal(5,'YlGnBu'))(200); cols <- ygb[19:200] # blue shades
 # cols <- rev(colorRampPalette(brewer.pal(11, 'Spectral'))(255)) # rainbow 
 
+## Define Annually Changing Variables
+prep_repo <- "ohiprep_v2018"
+present_yr <- 2018
+assess_yr <- "v2018"
+data_yr <- 2016
+
 
 ## source OHI script
-source("https://raw.githubusercontent.com/OHI-Science/ohiprep_v2018/master/src/R/common.R")
-source("https://raw.githubusercontent.com/OHI-Science/ohiprep_v2018/master/src/R/fao_fxn.R")
-source("https://raw.githubusercontent.com/OHI-Science/ohiprep_v2018/master/globalprep/mar/v2018/mar_fxs.R")
+source(paste0("https://raw.githubusercontent.com/OHI-Science/", prep_repo, "/master/src/R/common.R"))
+source(paste0("https://raw.githubusercontent.com/OHI-Science/", prep_repo, "/master/src/R/fao_fxn.R"))
+source(paste0("https://raw.githubusercontent.com/OHI-Science/", prep_repo, "/master/globalprep/mar/", assess_yr, "/mar_fxs.R"))
 
 ## source modules
 source("modules/chart_card.R")
@@ -35,8 +41,6 @@ source("functions/front_page.R")
 ## no scientific notation and round to 2 decimals
 options(scipen = 999,
         digits = 5)
-## variables
-present_yr <- 2018
 
 
 
@@ -51,35 +55,13 @@ ohi_regions <-  sf::st_read('../ohiprep/globalprep/spatial/downres', "rgn_all_gc
 rgns_leaflet <- ohi_regions %>%
   filter(rgn_typ == "eez")
 
-## OHI Global scores
-scores <- read.csv("https://rawgit.com/OHI-Science/ohi-global/draft/eez/scores.csv")
-scores <- scores %>%
-  rename(rgn_id = "region_id") %>%
-  left_join(regions, by="rgn_id")
-# List of all unique goal or sub-goals
-goal_names <- as.character(unique(scores$goal))
-# Save the global score for each goal/sub-goal
-for(i in 1:length(goal_names)){
-  
-  score_val <- scores %>%
-    filter(goal == goal_names[i],
-           dimension == "score",
-           rgn_id == 0,
-           year == present_yr) %>%
-    select(score) %>%
-    .$score
-  
-  assign(goal_names[i],score_val)
-  
-}
-
 
 
 ## MAR DATA SOURCES ##
 
 ## Mariculture Production
 # Prepare time-series data for graphing annual production per country
-mar_out <- read.csv("https://rawgit.com/OHI-Science/ohiprep_v2018/master/globalprep/mar/v2018/output/MAR_FP_data.csv")
+mar_out <- read.csv(paste0("https://rawgit.com/OHI-Science/", prep_repo, "/master/globalprep/mar/", assess_yr, "/output/MAR_FP_data.csv"))
 
 # Get marine harvest amount & tidy
 mar_harvest <- mar_out %>% 
@@ -110,7 +92,7 @@ write.csv(mar_harvest, "int/harvest_countries.csv", row.names = FALSE)
 ## GLOBAL MAP SUMMARY DATA ##
 
 ## Top Producing Countries (Seafood/Capita)
-mar_pop <- read.csv("https://rawgit.com/OHI-Science/ohiprep_v2018/master/globalprep/mar_prs_population/v2018/output/mar_pop_25mi.csv") %>% 
+mar_pop <- read.csv(paste0("https://rawgit.com/OHI-Science/", prep_repo,"/master/globalprep/mar_prs_population/", assess_yr, "/output/mar_pop_25mi.csv")) %>% 
   na.omit()
 
 ## Join coastal population and mariculture production tables
@@ -130,7 +112,7 @@ mar_global_map <- food_pop %>%
     type == "prodTonnesAll" ~ "tonnes",
     type == "prodPerCap" ~ "lb/person"
   )) %>%
-  filter(year == 2016) %>% # plotting only 2016 data
+  filter(year == data_yr) %>% # plotting only 2016 data
   select(rgn_id, country, type, map_data,units) %>% 
   distinct() %>% 
   mutate(map_data = as.numeric(format(round(map_data, 2), nsmall=2))) %>%   # round to two decimal places
@@ -148,66 +130,6 @@ mar_global_map <- food_pop %>%
 # # Save tidied sustainability data
 # write.csv(sust, "int/sust.csv", row.names=FALSE)
 # sust <- read.csv("int/sust.csv")
-
-
-
-## BASELINE METRICS ##
-
-## Empty Baseline Metrics Data Frame ##
-# baseline <- setNames(data.frame(matrix(ncol = 4, nrow = 0)),
-#                      c("country","goal","metric","description"))
-
-## Second Metric: Largest Share of Production
-# Determine which country produced the most mariculture regardless of species
-historic <- mar_harvest %>%
-  filter(year == 2016) %>% 
-  summarize(total = sum(tonnes))
-
-top_cntry <- mar_harvest %>% 
-  filter(year == 2016) %>% 
-  group_by(country) %>% 
-  summarize(cntry_tot = sum(tonnes)) %>%
-  ungroup() %>% 
-  mutate(rel_contrib = cntry_tot/historic$total) %>% 
-  arrange(desc(rel_contrib))
-
-## Third Metric - Most recent year
-perCap <- mar_global_map %>% 
-  filter(type == "prodPerCap") %>% 
-  arrange(desc(map_data))
-  
-
-## Combine Metrics
-baseline <- data.frame(
-  country = c(
-    "Global",
-    as.character(top_cntry$country[1]),
-    as.character(perCap$country[1])
-    ),
-  goal = c(
-    "MAR",
-    "MAR",
-    "MAR"
-    ),
-  metric = c(
-    paste0(MAR,"%"),
-    paste(round(top_cntry$rel_contrib[1]*100),"%",sep=""),
-    paste(formatC(round(perCap$map_data[1]), big.mark=","), "lb pp", sep = " ")
-    ),
-  subtitle = c(
-    "Global Mariculture Score",
-    "Largest Share of Production",
-    "Seafood per Capita"
-    ),
-  description = c(
-    "Healthy oceans maximize the marine cultivation potential and minimize impacts to the ecosystem.",
-    paste("In 2016,", top_cntry$country[1],"contributed the largest share (in tonnes) of mariculture produced for human consumption",sep=" "),
-    paste(perCap$country[1],"produces the most seafood per capita", sep=" ")
-    ))
-
-write.csv(baseline, "int/baseline.csv", row.names=FALSE)
-
-
 
 
 
