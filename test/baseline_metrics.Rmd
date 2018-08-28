@@ -1,0 +1,61 @@
+---
+title: "Testing Baseline Metrics"
+author: "Iwen Su"
+output: html_document
+---
+
+# Setup
+
+```{r}
+source("global.R")
+```
+
+# Mariculture
+
+Code used to calculate baseline metrics based on most recent available Mariculture data.
+
+Data Sources for Metrics:
+
+* FAO Global Aquaculture Production Quantity 1950_2016 ([download data](http://www.fao.org/fishery/statistics/software/fishstatj/en#downlApp))
+* Watson 2018 ([paper](https://www.sciencedirect.com/science/article/pii/S0308597X18300605) and [original data download](http://data.imas.utas.edu.au/portal/search?uuid=ff1274e1-c0ab-411b-a8a2-5a12eb27f2c0))
+
+## Set Common Variables
+```{r}
+yr <- 2016
+```
+
+## First Metric
+
+Percentage contribution of mariculture to food provision (versus fisheries) using OHI tailored FAO data and Watson 2018 data.
+
+```{r}
+
+```
+
+## Second Metric
+```{r}
+historic <- mar_harvest %>%
+  filter(year == yr) %>% 
+  summarize(total = sum(tonnes))
+top_cntry <- mar_harvest %>% 
+  filter(year == yr) %>% 
+  group_by(country) %>% 
+  summarize(cntry_tot = sum(tonnes)) %>%
+  ungroup() %>% 
+  mutate(rel_contrib = cntry_tot/historic$total) %>% 
+  arrange(desc(rel_contrib))
+top_cntry$country[1]
+paste(round(top_cntry$rel_contrib[1]*100),"%",sep="")
+```
+
+## Third Metric - Most recent year
+
+```{r}
+perCap <- mar_global_map %>% 
+  filter(type == "prodPerCap") %>% 
+  arrange(desc(map_data))
+perCap$country[1]
+paste(formatC(round(perCap$map_data[1]), big.mark=","), "lb pp", sep = " ")
+
+```
+
