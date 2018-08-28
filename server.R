@@ -20,12 +20,11 @@ function(input, output, session) {
   
   ## Mariculture Baseline Metrics ##
   callModule(baseline_metrics, "mar_baseline",
-             goal_name = "MAR",
-             first = "Global Mariculture Score",
-             second = "Largest Share of Production",
-             third = "Seafood per Capita",
-             icon = "fish",
-             color = "light-blue") # see ?validColors
+             number_boxes = 3,
+             statistic = list("21.9%", "68%", "2,727 lb pp"),
+             text = list("Healthy oceans maximize the marine cultivation potential and minimize impacts to the ecosystem.",
+                         "In 2016 China contributed the largest share (in tonnes) of mariculture produced for human consumption",
+                         "Faeroe Islands produces the most seafood per capita"))
   
 
   ## Mariculture Global Map ##
