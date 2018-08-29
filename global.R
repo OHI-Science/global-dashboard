@@ -1,4 +1,6 @@
 ## global variables
+## prepares data for map and chart modules
+## defines global variables, source code, etc
 
 
 ## SET UP ENVIRONMENT ##
@@ -15,14 +17,6 @@ library(viridis)
 
 ## Color Palettes
 ygb <- colorRampPalette(brewer.pal(5,'YlGnBu'))(200); cols <- ygb[19:200] # blue shades
-# cols <- rev(colorRampPalette(brewer.pal(11, 'Spectral'))(255)) # rainbow 
-
-## Define Annually Changing Variables
-prep_repo <- "ohiprep_v2018"
-present_yr <- 2018
-assess_yr <- "v2018"
-data_yr <- 2016
-
 
 ## source OHI script
 source(paste0("https://raw.githubusercontent.com/OHI-Science/", prep_repo, "/master/src/R/common.R"))
@@ -44,6 +38,15 @@ options(scipen = 999,
 
 
 
+## DEFINE ANNUALLY CHANGING VARIABLES ##
+
+prep_repo <- "ohiprep_v2018"
+present_yr <- 2018
+assess_yr <- "v2018"
+data_yr <- 2016
+
+
+
 ## GLOBAL OHI REGION DATA SOURCES ##
 
 ## OHI Region ID and Names
@@ -53,19 +56,22 @@ regions <- georegion_labels %>%
 ## OHI Region Shapefile - is there a way to read in the shapefile with the github url?
 ohi_regions <-  sf::st_read('../ohiprep/globalprep/spatial/downres', "rgn_all_gcs_low_res")
 rgns_leaflet <- ohi_regions %>%
-  filter(rgn_typ == "eez")
+  filter(rgn_typ == "eez", rgn_id != 213, rgn_id <= 250) %>% # remove Antarctica 
+  select(-are_km2, -ant_typ, -ant_id, -rgn_key)
 
 
 
 ## MAR DATA SOURCES ##
 
 ## Mariculture Production
-# Prepare time-series data for graphing annual production per country
+# Prepare time-series data for graphing annual production per country; read in gapfilled and tidied mariculture production data set
 mar_out <- read.csv(paste0("https://rawgit.com/OHI-Science/", prep_repo, "/master/globalprep/mar/", assess_yr, "/output/MAR_FP_data.csv"))
 
 # Get marine harvest amount & tidy
 mar_harvest <- mar_out %>% 
   left_join(regions, by="rgn_id") %>% 
+  mutate(country = as.character(country)) %>% # convert factor to character to do next step
+  mutate(country = ifelse(country == "R_union", "Reunion", country)) %>% 
   select(rgn_id, country, species, Taxon_code, year, value) %>% 
   rename(tonnes = value) %>% 
   arrange(country) %>%  # Sort country alphabetically
@@ -101,13 +107,31 @@ food_pop <- mar_harvest %>%
   left_join(mar_pop, by=c("rgn_id","year")) %>% 
   na.omit()
 
-## Summarize all production per country-year, production/capita for each country-year, and per capita for each taxon-country-year
-mar_global_map <- food_pop %>%
+## Summarize all production per country-year, production/capita for each country-year
+summary_food <- food_pop %>%
   group_by(country,year) %>%
   mutate(prodTonnesAll = sum(tonnes, na.rm=TRUE)) %>% # Total production per year and country in tonnes
-  mutate(prodPerCap = sum(pounds, na.rm=TRUE)/popsum) %>% # 
-  ungroup() %>% 
-  gather(type,map_data,c(prodTonnesAll, prodPerCap),na.rm=TRUE) %>% 
+  mutate(prodPerCap = sum(pounds, na.rm=TRUE)/popsum) %>% # NAs may cuase issues in calc
+  ungroup()
+
+
+## Add missing regions back into food production data frame
+temp_rgns <- rgns_leaflet %>% 
+  select(rgn_id, rgn_nam)
+st_geometry(temp_rgns) <- NULL # remove geometry so it is just a data frame
+
+food_all_countries <- summary_food %>% 
+  full_join(temp_rgns, by = "rgn_id") %>% # add in all regions from temp
+  mutate(rgn_nam = as.character(rgn_nam)) %>% 
+  mutate(country = ifelse(is.na(country), rgn_nam, country)) %>% 
+  select(-rgn_nam)
+
+## Tidy data into long format so it's ready for plotting
+yr_range <- min(food_all_countries$year,na.rm=T):max(food_all_countries$year,na.rm=T)
+
+mar_global_map <- food_all_countries %>% 
+  complete(year = yr_range, nesting(country, rgn_id)) %>% # add in all years even if no value reported
+  gather(type,map_data,c(prodTonnesAll, prodPerCap)) %>% 
   mutate(units = case_when(
     type == "prodTonnesAll" ~ "tonnes",
     type == "prodPerCap" ~ "lb/person"

@@ -170,7 +170,7 @@ card_map <- function(input,
   
   # attach data to rgn shapefile
   data_shp <- rgns_leaflet %>%
-    full_join(data)
+    left_join(data, by = "rgn_id") 
 
   # if not allowing user to select multiple inputs
   if (field != "input") {

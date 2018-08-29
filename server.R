@@ -36,7 +36,7 @@ function(input, output, session) {
              display_units = "units",
              color_palette = ygb,
              legend_title = "Percentile",
-             popup_title = "rgn_nam")
+             popup_title = "country")
 
   
 
