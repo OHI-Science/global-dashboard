@@ -15,6 +15,14 @@ library(plotly)
 library(sunburstR)
 library(viridis)
 
+## DEFINE ANNUALLY CHANGING VARIABLES ##
+
+prep_repo <- "ohiprep_v2018"
+present_yr <- 2018
+assess_yr <- "v2018"
+
+
+
 ## Color Palettes
 ygb <- colorRampPalette(brewer.pal(5,'YlGnBu'))(200); cols <- ygb[19:200] # blue shades
 
@@ -38,18 +46,6 @@ options(scipen = 999,
 
 
 
-## DEFINE ANNUALLY CHANGING VARIABLES ##
-
-prep_repo <- "ohiprep_v2018"
-present_yr <- 2018
-assess_yr <- "v2018"
-
-
-
-## DEFINE GLOBAL MAR VARIABLES ##
-data_yr <- 2016
-
-
 
 ## GLOBAL OHI REGION DATA SOURCES ##
 
@@ -58,12 +54,15 @@ regions <- georegion_labels %>%
   select(rgn_id, region=r2_label, country=rgn_label)
 
 ## OHI Region Shapefile - is there a way to read in the shapefile with the github url?
-ohi_regions <-  sf::st_read('../ohiprep/globalprep/spatial/downres', "rgn_all_gcs_low_res")
+ohi_regions <-  sf::st_read("int/spatial", "rgn_all_gcs_low_res")
 rgns_leaflet <- ohi_regions %>%
   filter(rgn_typ == "eez", rgn_id != 213, rgn_id <= 250) %>% # remove Antarctica 
   select(-are_km2, -ant_typ, -ant_id, -rgn_key)
 
 
+
+## DEFINE GLOBAL MAR VARIABLES ##
+data_yr <- 2016
 
 ## MAR DATA SOURCES ##
 
