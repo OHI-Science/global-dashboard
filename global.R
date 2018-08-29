@@ -43,6 +43,10 @@ options(scipen = 999,
 prep_repo <- "ohiprep_v2018"
 present_yr <- 2018
 assess_yr <- "v2018"
+
+
+
+## DEFINE GLOBAL MAR VARIABLES ##
 data_yr <- 2016
 
 

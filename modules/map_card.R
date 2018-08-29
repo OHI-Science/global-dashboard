@@ -64,7 +64,7 @@ library(dplyr)
 #' @param source_text character or list, optional. Data source information for map. If 
 #' additional notes need to be added beyond data source information below the map 
 #' they can be added by passing a list or html elements to this function 
-#' (e.g. source_text = list(p("Note 1), p("Note 2"), p("Data Source: 2010 Census")))
+#' (e.g. source_text = list(p("Note 1"), p("Note 2"), p("Data Source: 2010 Census")))
 #' 
 
 ## Card UI Function ##
@@ -172,7 +172,7 @@ card_map <- function(input,
   data_shp <- rgns_leaflet %>%
     left_join(data, by = "rgn_id") 
 
-  # if not allowing user to select multiple inputs
+  # if not allowing user to select multiple inputs?
   if (field != "input") {
     output$plot <- renderLeaflet({
      

@@ -60,17 +60,6 @@ h1, h2, h3, h4{
 
 
 
-/* commitment text style */
-.commitment_text {
-	padding: 1%;
-	background-color: #acd1d4;
-	color: white;
-	border-radius: 5px;
-	border: solid #acd1d4;
-  border-width: 1px 1px;
-}
-
-
 
 /* Testing front banner style, front-banner works and creates height of section */
 .front-banner-test {
@@ -154,4 +143,17 @@ h1, h2, h3, h4{
 
 
 
+
+
+
+
+/* commitment text style */
+.goal_description {
+	padding: 1.2%;
+	background-color: #acd1d4;
+	color: white;
+	border-radius: 5px;
+	border: solid #acd1d4;
+  border-width: 1px 1px;
+}
 

@@ -1,13 +1,14 @@
 library(shiny)
 library(shinydashboard)
 
-tab_title_ui <- function(goal_text, definition, commitment_text) {
+tab_title_ui <- function(goal_text, definition, goal_description) {
   
   fluidRow(box(
     h1(strong(goal_text)),
-    tags$div(class = "commitment_text", 
-             h3(class="commitment", commitment_text)),
-    h4(definition),
+    tags$div(class = "goal_description", h3(goal_description)),
+    tags$br(),
+    h4(paste("Defining Goal Status:")),
+    tags$i(definition),
     width = 12)
   )
   

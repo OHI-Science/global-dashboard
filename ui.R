@@ -65,7 +65,7 @@ dashboardPage(
     #         ## Livelihoods & Economies tab title ##
     #         tab_title_ui(goal_text = "LIVELIHOODS & ECONOMIES",
     #                      definition = "coastal and ocean-dependent livelihoods (job quantity and quality) and economies (revenues) produced by marine sectors",
-    #                      commitment_text = "a high quantity and quality of ocean-dependent jobs and local revenue")
+    #                      goal_description = "a high quantity and quality of ocean-dependent jobs and local revenue")
     #         
     #         ),
     # 
@@ -77,7 +77,7 @@ dashboardPage(
     #         ## Tourism & Recreation tab title ##
     #         tab_title_ui(goal_text = "TOURISM & RECREATION",
     #                      definition = "the value people have for experiencing and enjoying coastal areas through activities such as sailing, recreational fishing, beach-going, and bird watching",
-    #                      commitment_text = "opportunities for people to enjoy coastal areas through tourism and recreation")
+    #                      goal_description = "opportunities for people to enjoy coastal areas through tourism and recreation")
     #         
     #         ),
     # 
@@ -88,7 +88,7 @@ dashboardPage(
     #         ## Biodiversity tab title ##
     #         tab_title_ui(goal_text = "BIODIVERSITY",
     #                      definition = "the conservation status of native marine species and key habitats that serve as a proxy for the suite of species that depend upon them",
-    #                      commitment_text = "a diversity of healthy marine species, habitats, and landscapes")
+    #                      goal_description = "a diversity of healthy marine species, habitats, and landscapes")
     #         
     #         ),
     # 
@@ -99,7 +99,7 @@ dashboardPage(
     #         ## Sense of Place tab title ##
     #         tab_title_ui(goal_text = "SENSE OF PLACE",
     #                      definition = "the conservation status of iconic species (e.g., salmon, whales) and geographic locations that contribute to cultural identity",
-    #                      commitment_text = "a deep sense of identity and belonging provided through connections with our marine communities")
+    #                      goal_description = "a deep sense of identity and belonging provided through connections with our marine communities")
     #         
     #         ),
     # 
@@ -110,7 +110,7 @@ dashboardPage(
     #         ## Local Fishing & Resource Access Opportunities tab title ##
     #         tab_title_ui(goal_text = "ARTISANAL FISHING OPPORTUNITY",
     #                      definition = "the opportunity for small-scale fishers to supply catch for their families, members of their local communities, or sell in local markets",
-    #                      commitment_text = "opportunities for Native Americans and local community members to access local natural resources")
+    #                      goal_description = "opportunities for Native Americans and local community members to access local natural resources")
     #         
     #         ),
     # 
@@ -121,7 +121,7 @@ dashboardPage(
     #         ## Food Provision tab title ##
     #         tab_title_ui(goal_text = "FOOD PROVISION",
     #                      definition = "the sustainable harvest of seafood from wild-caught fisheries and mariculture",
-    #                      commitment_text = "sustainably harvested and wild-caught seafood from fisheries and mariculture")
+    #                      goal_description = "sustainably harvested and wild-caught seafood from fisheries and mariculture")
     #         
     # ),
     
@@ -132,8 +132,8 @@ dashboardPage(
             
           ## Mariculture Tab Title ##
           tab_title_ui(goal_text = "MARICULTURE",
-                       commitment_text = "Global mariculture production has been rising since the 1980s while wild-caught fisheries growth has stagnated.",
-                       definition = "The Global Index measures the sustainable harvest of seafood from mariculture practices. The mariculture status of each country is calculated by taking tonnes of seafood produced, weighting it by a sustainability score from Trujillo Marine Sustainability Index (2008), and dividing it by the country's coastal population to scale it across the global. Since OHI also defines higher mariculture statuses as those that are maximizing sustainable harvest from the oceans, we compare the production per coastal population to the highest global historic production capacity."),
+                       goal_description = "Global mariculture production has been rising since the 1980s while wild-caught fisheries growth has stagnated.",
+                       definition = list("The Global Index measures the sustainable harvest of seafood from mariculture practices. The mariculture status of each country is calculated by taking tonnes of seafood produced, weighting it by the Mariculture Sustainability Index derived from ", tags$a(href="https://circle.ubc.ca/handle/2429/40933", "Trujillo (2008)"), ", and dividing it by the country's coastal population to scale it across the global. Since OHI also defines higher mariculture statuses as those that are maximizing sustainable harvest from the oceans, we compare the production per coastal population to the highest global historic production capacity.")),
         
             
           ## Mariculture Baseline Metrics ##
@@ -142,23 +142,33 @@ dashboardPage(
                 
           ## Mariculture Global Map
           map_ui(id = "mar_global_map",
-                 title_text = "Mariculture Global Production per Capita in 2016",
+                 title_text = paste0("Global Map of Mariculture Production in ", data_yr),
                  sub_title_text = "",
                  select_type = "drop_down",
                  select_location = "above",
                  select_choices = c("All Production" = "prodTonnesAll",
                                     "Production per Capita" = "prodPerCap"),
-                 select_label = "Select data to view & click on EEZ regions to see more information."),
+                 select_label = "Select different data to view on the map & click on EEZ regions to see country and values.",
+                 source_text = list(
+                   p("Sources:"),
+                   p(tags$sup("1."), tags$a(href="http://www.fao.org/fishery/statistics/software/fishstatj/en", "Food and Agriculture Organization"), ", Global Aquaculture Production Quantity (March 2018)"),
+                   p(tags$sup("2."), tags$a(href="http://sedac.ciesin.columbia.edu/data/collection/gpw-v4/documentation","Center for International Earth Science Information Network"), ", Gridded Population of the World, V4 (2016).")
+                   )
+                 ),
           
           ## Annual Mariculture Production ##
            card_ui(id = "mar_prod",
-                    title_text = "Mariculture Production",
-                    sub_title_text = "Select or search for a country. Click on names of species you want to hide. Hover over the lines to view tonnes and species harvested",
+                    title_text = "Historic Mariculture Production by Country",
+                    sub_title_text = "Select or type in a country of interest. Click on names of species you want to remove from the plot. Hover over the points to view tonnes and species harvested.",
                     select_type = "search",
                     select_location = "above",
                     select_choices = unique(mar_harvest$country),
                     select_label = NULL,
-                    source_text = "Source: Food and Agriculture Organization, Global Aquaculture Production Quantity 1950 - 2016 dataset (released March 2018)")
+                    source_text = list(
+                      p("Sources:"),
+                      p(tags$sup("1."), tags$a(href="http://www.fao.org/fishery/statistics/software/fishstatj/en", "Food and Agriculture Organization"), ", Global Aquaculture Production Quantity (March 2018)"))
+                      
+                     )
 
             )
     #,
@@ -175,7 +185,7 @@ dashboardPage(
     #         ## Fisheries tab title ##
     #         tab_title_ui(goal_text = "FISHERIES",
     #                      definition = "the sustainable harvest of seafood from wild-caught fisheries",
-    #                      commitment_text = "sustainably wild-caught seafood from fisheries")
+    #                      goal_description = "sustainably wild-caught seafood from fisheries")
     #         
     # ),
     # 
@@ -186,7 +196,7 @@ dashboardPage(
     #         ## Coastal Protection tab title ##
     #         tab_title_ui(goal_text = "COASTAL PROTECTION",
     #                      definition = "the amount of protection provided by marine and coastal habitats serving as natural buffers against incoming waves",
-    #                      commitment_text = "storage of carbon and protection of our coasts from storm damage by living natural habitats")
+    #                      goal_description = "storage of carbon and protection of our coasts from storm damage by living natural habitats")
     #         
     #         ),
     # 
@@ -197,7 +207,7 @@ dashboardPage(
     #         ## Carbon Storage tab title ##
     #         tab_title_ui(goal_text = "CARBON STORAGE",
     #                      definition = "the condition of coastal habitats that store and sequester atmospheric carbon",
-    #                      commitment_text = "storage of carbon and protection of our coasts from storm damage by living natural habitats")
+    #                      goal_description = "storage of carbon and protection of our coasts from storm damage by living natural habitats")
     #         
     # )
     
