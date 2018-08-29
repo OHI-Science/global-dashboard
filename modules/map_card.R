@@ -166,8 +166,6 @@ card_map <- function(input,
                      color_palette = ygb,
                      legend_title = NA,
                      popup_title = NA
-                     # popup_add_field = NA,
-                     # popup_add_field_title = NA
                      ) {
   
   # attach data to rgn shapefile
@@ -179,11 +177,7 @@ card_map <- function(input,
     output$plot <- renderLeaflet({
      
       # get popup for a single line
-      popup_text <- paste("<h5><strong>", paste(data_shp[[popup_title]],": ", sep=""), "</strong>", data_shp[[field]], data_shp[[display_units]], "</h5>")
-      
-      # get popup for two lines
-      # popup_text <- paste("<h5><strong>", paste(data_shp[[popup_title]],": ", sep=""), "</strong>", data_shp[[field]], data_shp[[display_units]], "</h5>",
-      #                     "<h5><strong>", popup_add_field_title, "</strong>", data_shp[[popup_add_field]], "</h5>", sep=" ")
+      popup_text <- paste("<h5><strong>", paste(data_shp[[popup_title]],": ", sep=""), "</strong>", prettyNum(signif(data_shp[[field]],3), big.mark=",", scientific=FALSE), data_shp[[display_units]], "</h5>")
       
       # get color pal
       pal <- colorQuantile(palette = color_palette,
@@ -209,7 +203,8 @@ card_map <- function(input,
                   title = legend_title,
                   opacity = 1,
                   layerId = "colorLegend") %>%
-        addProviderTiles(providers$CartoDB.Positron) 
+        addProviderTiles(providers$CartoDB.Positron) %>%
+        setView(-9.718568, 34.331989, zoom = 2) 
     })
     
   } else {
@@ -231,11 +226,8 @@ card_map <- function(input,
       
       
       # get popup for a single line
-      popup_text <- paste("<h5><strong>", selected_data()[[popup_title]], ": ", "</strong>" , selected_data()[[display_field]], selected_data()[[display_units]], "</h5>")
+      popup_text <- paste("<h5><strong>", selected_data()[[popup_title]], ": ", "</strong>" ,       prettyNum(signif(selected_data()[[display_field]],3), big.mark=",", scientific=FALSE), selected_data()[[display_units]], "</h5>")
 
-      # get popup for two lines
-      # popup_text <- paste("<h5><strong>", selected_data()[[popup_title]], ": ", "</strong>" , selected_data()[[display_field]], selected_data()[[display_units]], "</h5>",
-      #                     "<h5><strong>", popup_add_field_title, "</strong>", selected_data()[[popup_add_field]], "</h5>", sep=" ")
       
       # get color pal
       pal <- colorQuantile(palette = color_palette,
@@ -261,8 +253,10 @@ card_map <- function(input,
                   title = legend_title,
                   opacity = 1,
                   layerId = "colorLegend") %>%
-        addProviderTiles(providers$CartoDB.Positron,
-                         options = providerTileOptions(noWrap = TRUE))
+        addProviderTiles(providers$CartoDB.Positron
+                         #,options = providerTileOptions(noWrap = TRUE) ## prevents global
+                          ) %>%
+        setView(-9.718568, 34.331989, zoom = 2)
     })
     
   }

@@ -23,6 +23,19 @@ dashboardPage(
       # menuItem("Coastal Protection", tabName = "cp", badgeLabel = "draft", badgeColor = "orange"),
       # menuItem("Carbon Storage", tabName = "cs", badgeLabel = "draft", badgeColor = "orange")
   ),
+  
+  # Footer tag, include hyperlink
+  tags$a(href="http://ohi-science.org/globalfellows/fellows.html", 
+  tags$footer("\u00a9 Iwen Su, OHI Global Fellow", align = "right", style = "
+              position:absolute;
+              bottom:0;
+              width:100%;
+              height:50px;   /* Height of the footer */
+              color: white;
+              padding: 10px;
+              z-index: 1000;")
+  ),
+  
   width = 200),
   
   
@@ -119,8 +132,8 @@ dashboardPage(
             
           ## Mariculture Tab Title ##
           tab_title_ui(goal_text = "MARICULTURE",
-                       definition = "the sustainable harvest of seafood from mariculture practices.",
-                       commitment_text = "Global mariculture production has been rising since the 1980s while wild-caught fisheries growth has stagnated."),
+                       commitment_text = "Global mariculture production has been rising since the 1980s while wild-caught fisheries growth has stagnated.",
+                       definition = "The Global Index measures the sustainable harvest of seafood from mariculture practices. The mariculture status of each country is calculated by taking tonnes of seafood produced, weighting it by a sustainability score from Trujillo Marine Sustainability Index (2008), and dividing it by the country's coastal population to scale it across the global. Since OHI also defines higher mariculture statuses as those that are maximizing sustainable harvest from the oceans, we compare the production per coastal population to the highest global historic production capacity."),
         
             
           ## Mariculture Baseline Metrics ##

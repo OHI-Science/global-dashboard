@@ -62,6 +62,8 @@ popup_add_field_title = "Country EEZ: "
 
 popup_text <- paste("<h5><strong>", popup_title, "</strong>", as.character(signif(data_shp$map_data,3)), "lb/person", "</h5>",
                     "<h5><strong>", popup_add_field_title, "</strong>", data_shp$rgn_nam, "</h5>", sep=" ")
+
+prettyNum(data_shp[[field]], big.mark=",", scientific=FALSE)
 ```
 
 ## Plot with leaflet!
@@ -84,7 +86,8 @@ leaflet(data_shp,
             title = legend_title,
             opacity = 1,
             layerId = "colorLegend") %>%
-  addProviderTiles(providers$CartoDB.Positron)
+  addProviderTiles(providers$CartoDB.Positron) %>%
+      setView(-9.718568, 34.331989, zoom = 2)
 ```
 
 # Test Seaweed Mariculture Map
