@@ -29,7 +29,7 @@ baseline_metrics_ui <- function(id,
   }
   
   fluidRow(class = "valuebox",
-           box(h4("BASELINE METRICS"),
+           box(h4("Did You Know?"),
                valueboxes,
                class = "baseline",
                width = 12)

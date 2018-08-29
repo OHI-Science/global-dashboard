@@ -120,7 +120,7 @@ dashboardPage(
           ## Mariculture Tab Title ##
           tab_title_ui(goal_text = "MARICULTURE",
                        definition = "the sustainable harvest of seafood from mariculture practices.",
-                       commitment_text = "Global mariculture production has been rising rapidly since the 1980s and is now supplying about half of all seafood consumed globally."),
+                       commitment_text = "Global mariculture production has been rising since the 1980s while wild-caught fisheries growth has stagnated."),
         
             
           ## Mariculture Baseline Metrics ##

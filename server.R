@@ -21,10 +21,10 @@ function(input, output, session) {
   ## Mariculture Baseline Metrics ##
   callModule(baseline_metrics, "mar_baseline",
              number_boxes = 3,
-             statistic = list("21.9%", "68%", "2,727 lb pp"),
-             text = list("Healthy oceans maximize the marine cultivation potential and minimize impacts to the ecosystem.",
-                         "In 2016 China contributed the largest share (in tonnes) of mariculture produced for human consumption",
-                         "Faeroe Islands produces the most seafood per capita"))
+             statistic = list("53%", "68%", "51%"),
+             text = list("of global seafood comes from aquaculture. Mariculture, which excludes inland production, contributes 19% to all seafood provision.",
+                         "of mariculture produced in 2016 for human consumption came from China. They are followed by South Korea at only 4%!",
+                         "of mariculture is comprised of shellfish production by weight. The remaining 33% is from seaweed and 15% from fish."))
   
 
   ## Mariculture Global Map ##

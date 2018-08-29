@@ -22,19 +22,36 @@ Data Sources for Metrics:
 ## Set Common Variables
 ```{r}
 yr <- 2016
+common_yr <- 2015 # most recent shared available fisheries and mariculture data year
 ```
 
 ## First Metric
 
-Percentage contribution of mariculture to food provision (versus fisheries) using OHI tailored FAO data and Watson 2018 data.
+Percentage contribution of mariculture to food provision (versus fisheries) using OHI tailored FAO data and Watson 2018 data. 
+
+Note: OHI data is filtered differently for Mariculture and Fisheries, so it's difficult to compare using OHI data. Instead for this first metric, I use the FAO reported statistics for all inland aquaculture, marine aquaculture, and total seafood production by fisheries and aquaculture. FAO statistics indicate all aquaculture represents 53% of seafood production (exclude non-food uses), with caveats such as exclusion of seaweed (see [FAO SOFIA 2018 Report](http://www.fao.org/state-of-fisheries-aquaculture/en/)). Based on the FAO SOFIA 2018 Report, mariculture represented about 36% of all aquaculture production in both 2015 and 2016 and 19% of all seafood production in 2016.
 
 ```{r}
+
+## FAO Data from SOFIA 2018 Report: Units in Millions of Tonnes
+total_aquaculture <- 80.0
+mariculture <- 28.7
+food_use_only <- 151.2 # total_seafood_prod <- 170.9
+
+mariculture/food_use_only
+total_aquaculture/food_use_only
+
+## FAO statistics show that mariculture contribute about 19% to all seafood production; all aquauculture contributes 53%
 
 ```
 
 ## Second Metric
+
+Which country contributed the most to mariculture (by tonnes) in 2016.
+
 ```{r}
-historic <- mar_harvest %>%
+
+allProd <- mar_harvest %>%
   filter(year == yr) %>% 
   summarize(total = sum(tonnes))
 top_cntry <- mar_harvest %>% 
@@ -42,13 +59,48 @@ top_cntry <- mar_harvest %>%
   group_by(country) %>% 
   summarize(cntry_tot = sum(tonnes)) %>%
   ungroup() %>% 
-  mutate(rel_contrib = cntry_tot/historic$total) %>% 
+  mutate(rel_contrib = cntry_tot/allProd$total) %>% 
   arrange(desc(rel_contrib))
 top_cntry$country[1]
 paste(round(top_cntry$rel_contrib[1]*100),"%",sep="")
+
 ```
 
-## Third Metric - Most recent year
+## Third Metric
+
+Break down of taxa contribtution in 2016.
+
+```{r}
+
+fish <- mar_harvest %>% 
+  filter(Taxon == "Fish", year == yr) %>% 
+  summarize(total = sum(tonnes))
+
+shellfish <- mar_harvest %>% 
+  filter(Taxon %in% c("Crustacean", "Bivalve and Molluscs"), year == yr) %>% 
+  summarize(total = sum(tonnes))
+
+## inverts include jellyfish, sea cucumbers, sea urchins, sea squirt
+invertebrate <- mar_harvest %>% 
+  filter(Taxon == "Invertebrate", year == yr) %>% 
+  summarize(total = sum(tonnes))
+
+algae <- mar_harvest %>% 
+  filter(Taxon == "Seaweed", year == yr) %>% 
+  summarize(total = sum(tonnes))
+
+## Mariculture
+paste(round((algae/allProd)[[1]]*100), "%", sep = "")
+paste(round((invertebrate/allProd)[[1]]*100), "%", sep = "")
+paste(round((shellfish/allProd)[[1]]*100), "%", sep = "")
+paste(round((fish/allProd)[[1]]*100), "%", sep = "")
+
+```
+
+
+## Extra Metric
+
+Which country is producing the most seafood per coastal population in 2016.
 
 ```{r}
 perCap <- mar_global_map %>% 
