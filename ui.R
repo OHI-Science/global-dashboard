@@ -132,7 +132,7 @@ dashboardPage(
             
           ## Mariculture Tab Title ##
           tab_title_ui(goal_text = "MARICULTURE",
-                       goal_description = "Global mariculture production has been rising since the 1980s while wild-caught fisheries growth has stagnated.",
+                       goal_description = "The growth of global mariculture production has surpassed wild-caught fisheries since the 1980s.",
                        definition = list("Mariculture measures the ability to reach the highest levels of seafood gained from farm-raised facilities without damaging the ocean’s ability to provide fish sustainably now and in the future. The status of each country is calculated by taking tonnes of seafood produced, weighting it by the Mariculture Sustainability Index derived from ", tags$a(href="https://circle.ubc.ca/handle/2429/40933", "Trujillo (2008)"), ", and dividing it by the country's coastal population to scale it across the global. Since OHI also defines higher mariculture statuses as those that are maximizing sustainable harvest from the oceans, we compare the production per coastal population to the highest global historic production capacity. The mariculture and fisheries status both contribute equally to measuring the OHI Food Provisions goal.")),
         
             
