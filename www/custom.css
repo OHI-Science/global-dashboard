@@ -35,7 +35,7 @@ h1, h2, h3, h4{
 
 /* active selected tab in the sidebarmenu */
 .skin-blue .main-sidebar .sidebar .sidebar-menu .active a{
-  background-color: #708FA3;
+  background-color: #123752;
 }
 
 /* other links in the sidebarmenu */
@@ -44,7 +44,7 @@ h1, h2, h3, h4{
   color: white;
 }
 
-/* other links in the sidebarmenu when hovered */
+/* links in the sidebarmenu when hovered */
 .skin-blue .main-sidebar .sidebar .sidebar-menu a:hover{
   background-color: #123752;
 }
@@ -70,13 +70,15 @@ h1, h2, h3, h4{
 
 .front-banner-test .content {
    font-family: 'Lato', sans-serif;
-   font-size: 30px;
+   font-size: 27px;
    position: absolute; /* Position the background text */
    top: 0; /* At the top. Use bottom:0 to append it to the top */
+   right: 0;
    background: rgba(0, 0, 0, 0.5); /* Black background with 0.5 opacity */
    color: #f1f1f1; /* Grey text */
+   height: 20px; /* Adjusts height, not working */
    width: 45%; /* Full width */
-   height: 20%; /* Adjusts height, not working */
+   
 }
 
 

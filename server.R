@@ -21,8 +21,8 @@ function(input, output, session) {
   ## Mariculture Baseline Metrics ##
   callModule(baseline_metrics, "mar_baseline",
              number_boxes = 3,
-             statistic = list("53%", "68%", "51%"),
-             text = list("of global seafood comes from aquaculture. Mariculture, which excludes inland production, contributes 19% to all seafood provision.",
+             statistic = list("19%", "68%", "51%"),
+             text = list("of global seafood comes from mariculture. Aquaculture, which includes marine and inland production, contributes 53% to all seafood provision.",
                          "of mariculture produced in 2016 for human consumption came from China. They are followed by South Korea at only 4%!",
                          "of mariculture is comprised of shellfish production by weight. The remaining 33% is from seaweed and 15% from fish."))
   

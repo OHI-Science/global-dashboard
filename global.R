@@ -14,6 +14,7 @@ library(RColorBrewer)
 library(plotly)
 library(sunburstR)
 library(viridis)
+library(stringr)
 
 ## DEFINE ANNUALLY CHANGING VARIABLES ##
 
@@ -27,7 +28,6 @@ assess_yr <- "v2018"
 ygb <- colorRampPalette(brewer.pal(5,'YlGnBu'))(200); cols <- ygb[19:200] # blue shades
 
 ## source OHI script
-source(paste0("https://raw.githubusercontent.com/OHI-Science/", prep_repo, "/master/src/R/common.R"))
 source(paste0("https://raw.githubusercontent.com/OHI-Science/", prep_repo, "/master/src/R/fao_fxn.R"))
 source(paste0("https://raw.githubusercontent.com/OHI-Science/", prep_repo, "/master/globalprep/mar/", assess_yr, "/mar_fxs.R"))
 
