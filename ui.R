@@ -132,8 +132,8 @@ dashboardPage(
             
           ## Mariculture Tab Title ##
           tab_title_ui(goal_text = "MARICULTURE",
-                       goal_description = "Global mariculture production has been growing impressively since the 1980s, matching wild-caught fisheries contribution to the supply of seafood.",
-                       definition = list("Mariculture measures the ability to reach the highest levels of seafood gained from farm-raised facilities without damaging the ocean’s ability to provide fish sustainably now and in the future. The status of each country is calculated by taking tonnes of seafood produced, weighting it by the Mariculture Sustainability Index derived from ", tags$a(href="https://circle.ubc.ca/handle/2429/40933", "Trujillo (2008)"), ", and dividing it by the country's coastal population to scale it across the global. Since OHI also defines higher mariculture statuses as those that are maximizing sustainable harvest from the oceans, we compare the production per coastal population to the highest global historic production capacity. The mariculture and fisheries status both contribute equally to measuring the OHI Food Provisions goal.")),
+                       goal_description = "Global mariculture has been growing impressively since the 1980s, while wild-caught fishery production has remained relatively static.",
+                       definition = list("Mariculture measures the ability to reach the highest levels of seafood gained from farm-raised facilities without damaging the ocean’s ability to provide fish sustainably now and in the future. The status of each country is calculated by taking tonnes of seafood produced, weighting it for sustainability and dividing it by the country's coastal population to scale it across the global. Since OHI also defines higher mariculture statuses as those that are maximizing sustainable harvest from the oceans, we compare the production per coastal population to the highest global historic production capacity. The mariculture and fisheries status both contribute equally to measuring the OHI Food Provisions goal.")),
         
             
           ## Mariculture Baseline Metrics ##
@@ -158,7 +158,7 @@ dashboardPage(
           
           ## Annual Mariculture Production ##
            card_ui(id = "mar_prod",
-                    title_text = "Historic Mariculture Production by Country",
+                    title_text = "Tonnes of Species Harvested by Country",
                     sub_title_text = "Select or type in a country of interest. Click on names of species you want to remove from the plot. Hover over the points to view tonnes and species harvested.",
                     select_type = "search",
                     select_location = "above",

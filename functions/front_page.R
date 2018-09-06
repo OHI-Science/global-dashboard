@@ -9,7 +9,7 @@ frontp = function()
       
       
       # Home page text
-      tags$p(h4("The Ocean Health Index Global Data Explorer is a tool for interacting with the data behind the most recent assessment.")),
+      tags$p(h4("The Ocean Health Index Global Data Explorer lets you interact with the data behind the most recent assessment.")),
       
       div(class = "intro-divider"), 
       
