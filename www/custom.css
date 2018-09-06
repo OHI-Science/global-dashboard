@@ -145,15 +145,12 @@ h1, h2, h3, h4{
 
 
 
-
-
-
-
 /* commitment text style */
 .goal_description {
 	padding: 1.2%;
-	background-color: #acd1d4;
-	color: white;
+	background-image: url("img/fao_aq_capture_fig.gif");
+	background-size: contain; /* try 'cover' */
+	color: black;
 	border-radius: 5px;
 	border: solid #acd1d4;
   border-width: 1px 1px;
