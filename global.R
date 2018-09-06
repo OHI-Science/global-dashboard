@@ -140,11 +140,18 @@ mar_global_map <- food_all_countries %>%
     type == "prodPerCap" ~ "lb/person"
   )) %>%
   filter(year == data_yr) %>% # plotting only 2016 data
-  select(rgn_id, country, type, map_data,units) %>% 
+  select(rgn_id, country, type, map_data, units, Taxon) %>% 
   distinct() %>% 
   mutate(map_data = as.numeric(format(round(map_data, 2), nsmall=2))) %>%   # round to two decimal places
   mutate(map_data = ifelse(map_data == 0, NA, map_data)) # so visually values < 0.1 are greyed out
 
+## Top Seaweed Producers
+# seaweed <- mar_global_map %>%
+#   filter(Taxon == "Seaweed")
+# 
+# top_seaweed <- seaweed %>%
+#   filter(type == "prodPerCap")%>%
+#   dplyr::arrange(desc(map_data))
 
 
 ## Trujillo sustainability data -- incorporate into global map!

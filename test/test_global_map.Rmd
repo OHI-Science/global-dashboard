@@ -10,9 +10,11 @@ library(rgdal)
 library(dplyr)
 library(leaflet)
 
+source("global.R")
+
+## Define color palette
 ygb <- colorRampPalette(brewer.pal(5,'YlGnBu'))(200); cols <- ygb[19:200]
 
-source("global.R")
 ```
 
 # Test Global Mariculture Map
@@ -39,6 +41,11 @@ popup_add_field_title = "EEZ: "
 ```
 
 ## Attach data to rgn shapefile
+
+Define data table: `mar_global_map` is prepared in global.R
+```{r}
+data <- mar_global_map
+```
 
 Select for just production per capita to test
 ```{r}
@@ -89,21 +96,3 @@ leaflet(data_shp,
   addProviderTiles(providers$CartoDB.Positron) %>%
       setView(-9.718568, 34.331989, zoom = 2)
 ```
-
-# Test Seaweed Mariculture Map
-
-```{r}
-## Prepare data for map: total produced per population
-## Subset seaweed production for ohi-science article
-# seaweed <- mar_harvest %>% 
-#   filter(Taxon_code == "AL")
-# 
-# top <- seaweed %>% 
-#   filter(year %in% c(2011:2015)) %>%
-#   group_by(country) %>% 
-#   rename(tonnes = value) %>% 
-#   dplyr::summarise(tot_edible_sw = sum(tonnes))%>% 
-#   dplyr::arrange(desc(tot_edible_sw)) %>% 
-#   ungroup()
-```
-
