@@ -144,11 +144,11 @@ dashboardPage(
           map_ui(id = "mar_global_map",
                  title_text = paste0("Global Map of Mariculture Production in ", data_yr),
                  sub_title_text = "",
-                 select_type = "drop_down",
+                 select_type = "radio",
                  select_location = "above",
                  select_choices = c("All Production" = "prodTonnesAll",
                                     "Production per Capita" = "prodPerCap"),
-                 select_label = "Select different data to view on the map & click on EEZ regions to see country and values.",
+                 select_label = "Select different data to view on the map & click on EEZ regions to see country and values (may take a few seconds to load).",
                  source_text = list(
                    p("Sources:"),
                    p(tags$sup("1."), tags$a(href="http://www.fao.org/fishery/statistics/software/fishstatj/en", "Food and Agriculture Organization"), ", Global Aquaculture Production Quantity (March 2018)"),
