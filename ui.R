@@ -143,12 +143,12 @@ dashboardPage(
           ## Mariculture Global Map
           map_ui(id = "mar_global_map",
                  title_text = paste0("Global Map of Mariculture Production in ", data_yr),
-                 sub_title_text = "",
+                 sub_title_text = "Start exploring! Select different data to view on the map & click on EEZ regions to see country and values (may take a few seconds to load).",
                  select_type = "radio",
                  select_location = "above",
                  select_choices = c("All Production" = "prodTonnesAll",
                                     "Production per Capita" = "prodPerCap"),
-                 select_label = "Select different data to view on the map & click on EEZ regions to see country and values (may take a few seconds to load).",
+                 select_label = "",
                  source_text = list(
                    p("Sources:"),
                    p(tags$sup("1."), tags$a(href="http://www.fao.org/fishery/statistics/software/fishstatj/en", "Food and Agriculture Organization"), ", Global Aquaculture Production Quantity (March 2018)"),
@@ -159,7 +159,7 @@ dashboardPage(
           ## Annual Mariculture Production ##
            card_ui(id = "mar_prod",
                     title_text = "Tonnes of Species Harvested by Country",
-                    sub_title_text = "Select or type in a country of interest. Click on names of species you want to remove from the plot. Hover over the points to view tonnes and species harvested.",
+                    sub_title_text = "Start exploring! Select or type in a country of interest. Click on names of species you want to remove from the plot. Hover over the points to view tonnes and species harvested.",
                     select_type = "search",
                     select_location = "above",
                     select_choices = unique(mar_harvest$country),

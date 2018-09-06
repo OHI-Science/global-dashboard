@@ -165,6 +165,7 @@ card_map <- function(input,
                      display_units = NULL,
                      color_palette = ygb,
                      legend_title = NA,
+                     labels = NA,
                      popup_title = NA
                      ) {
   
@@ -202,6 +203,7 @@ card_map <- function(input,
                   values = data_shp[[field]],
                   title = legend_title,
                   opacity = 1,
+                  labels = labels,
                   layerId = "colorLegend") %>%
         addProviderTiles(providers$CartoDB.Positron) %>%
         setView(-9.718568, 34.331989, zoom = 2) 
@@ -234,6 +236,7 @@ card_map <- function(input,
                           domain = selected_data()[[display_field]],
                           na.color = "#00000000",
                           alpha = 0.4)
+
       
       leaflet(selected_data(),
               options = leafletOptions(zoomControl = FALSE)) %>%
@@ -252,6 +255,7 @@ card_map <- function(input,
                   values = selected_data()[[display_field]],
                   title = legend_title,
                   opacity = 1,
+                  labels = labels,
                   layerId = "colorLegend") %>%
         addProviderTiles(providers$CartoDB.Positron
                          #,options = providerTileOptions(noWrap = TRUE) ## prevents global

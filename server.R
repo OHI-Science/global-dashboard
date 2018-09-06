@@ -35,7 +35,7 @@ function(input, output, session) {
              display_field = "map_data",
              display_units = "units",
              color_palette = ygb,
-             legend_title = "Percentile",
+             legend_title = "Legend",
              popup_title = "country")
 
   
