@@ -1,8 +1,7 @@
 ---
 title: "Introduction to Shiny Modules"
-subtitle: "OHI Cheatsheet"
-author: ""
-date: "`r Sys.Date()`"
+author: "du.iwensu@gmail.com"
+date: "2018"
 output:
   xaringan::moon_reader:
     lib_dir: libs
@@ -11,8 +10,11 @@ output:
       highlightLines: true
       countIncrementalSlides: false
       output:
-    css: ["default", "rladies", "rladies-fonts"]
+    css: ["default", "rladies-fonts"]
 ---
+
+background-image: url(img/fish-background.jpg)
+background-size: cover
 
 ```{r setup, include=FALSE}
 options(htmltools.dir.version = FALSE)
@@ -21,42 +23,175 @@ options(htmltools.dir.version = FALSE)
 #devtools::install_github('yihui/xaringan') 
 ```
 
-# Overview of Global-Dashboard
+---
+name: toc
 
-## Main Components:
-* ui.R
-* server.R
-* global.R
+# Table of Contents
 
---- 
+1. [Overview of Global Dashboard](https://mazu.nceas.ucsb.edu/rstudio/files/github/global-dashboard/slidedeck/modules_slidedeck.html#overview)
+2. [Structure of Repository](https://mazu.nceas.ucsb.edu/rstudio/files/github/global-dashboard/slidedeck/modules_slidedeck.html#structure)
+3. [User Interface](https://mazu.nceas.ucsb.edu/rstudio/files/github/global-dashboard/slidedeck/modules_slidedeck.html#ui)
 
-class: inverse, center, middle
+---
+name: overview
 
-# The Plan
+# Overview of Global Dashboard
+
+The global dashboard was created to provide OHI Global users a way to explore the data that went into calculating each of the 10 goals. 
+
+<br>
+
+In these slide decks I walk through the general structure of the global-dashboard repository. There are short tutorial videos at the end of each section as well if you'd rather not read.
+
+---
+name: structure
+class: middle, center
+
+# Structure of Repository
+
+Main Components
+<br>
+Folders
 
 
+---
+name: main
 
-# `ggplot2` with National Parks data
+# Main Components
 
-We'll be coding together with `ggplot2`, and a bit of `dplyr`
-
-
-
-- `ggplot` is a graphics package specifically built to help you iteratively create customized graphs
-
+* **ui.R**: _User interface for the shiny app, including layout and text elements_
+* **server.R**: _Server for shiny app, where you add custom, interactive charts and maps for each goal_
+* **global.R**: _Stores global variables and settings that will be used in the UI and server_
+* **front_page.R**: _Customize home page text and layout. Aesthetics are specified using CSS/HTML in the www folder_
 
 
-- `dplyr` is a package for data wrangling; it has 5 main functions to do frequent tasks
+.footnote[Back to [Table of Contents](https://mazu.nceas.ucsb.edu/rstudio/files/github/global-dashboard/slidedeck/modules_slidedeck.html#3)]
+---
+name: folders
 
-We'll be exploring data for visits to US National Parks. 
+# Folders
+
+* dataprep: _Prepare data for each goal to be plotted or mapped here. Each goal will have it's own script_
+* functions: _Functions to replicate pieces of the dashboard that are infrequently modified_
+* int: _Data tables stored from the dataprep scripts_
+* modules: _Collection of functions that allow for customization of maps and graphs across goals_
+* rsconnect: _You can ignore this_
+* slidedeck: _Folder that contains everything that made this slide deck_
+* test: _Scripts for testing code to plot, graph, etc_
+* www: _The CSS/HTML customization and images_
+
+.footnote[Back to [Table of Contents](https://mazu.nceas.ucsb.edu/rstudio/files/github/global-dashboard/slidedeck/modules_slidedeck.html#3)]
+---
+name: ui
+class: middle, center
+
+# User Interface (ui.R)
+Adding a New Tab in the Sidebar
+<br>
+Contents within Tabs
 
 ---
 
-# More about `ggplot2`
+## Adding a New Tab in the Sidebar
 
+Currently there are only two tabs: "The OHI Story" and "Mariculture". Uncomment and edit corresponding `menuItem`s to create a tab section in the side bar.
+```
+  dashboardSidebar(
+    
+    sidebarMenu(
+      menuItem("The OHI Story", tabName = "dashboard", icon = icon("globe", lib="glyphicon")),
+     
+      # menuItem("Livelihoods & Economies", tabName = "liveco"),
+      # menuItem("Tourism & Recreation", tabName = "tr"),
+      # menuItem("Biodiversity", tabName = "bio"),
+      # menuItem("Sense of Place", tabName = "sop"),
+      # menuItem("Artisanal Opportunities", tabName = "ao"),
+      # menuItem("Food Provision", tabName = "fp"),
+      
+      menuItem("Mariculture", tabName = "mar")
+      
+      #,
+      # menuItem("Fisheries", tabName = "fis"),
+      # menuItem("Coastal Protection", tabName = "cp"),
+      # menuItem("Carbon Storage", tabName = "cs")
+  )
+```
+
+.footnote[Back to [Table of Contents](https://mazu.nceas.ucsb.edu/rstudio/files/github/global-dashboard/slidedeck/modules_slidedeck.html#3)]
 ---
 
-# More about National Parks data
+## Contents within Tabs
+
+Inside `tabItems` is where you define the text and layout for each `tabItem`. Currently we just have a `tabItem` for the home page and one for the Mariculture sub-goal. 
+
+Each OHI goal `tabItem` can have a `tab_title_ui()`, `baseline_metrics_ui()`, `map_ui()`, and a `card_ui()`. I simplified the code so you can see all the individual elements. See outputs on the next page.
+
+```
+tabItems(
+ ## Mariculture ##
+    tabItem(tabName = "mar",
+          ## Mariculture Tab Title ##
+          tab_title_ui(),
+        
+          ## Mariculture Baseline Metrics ##
+          baseline_metrics_ui(),
+                
+          ## Mariculture Global Map
+          map_ui(),
+          
+          ## Annual Mariculture Production ##
+          card_ui()
+          )
+)
+```
+
+.footnote[Back to [Table of Contents](https://mazu.nceas.ucsb.edu/rstudio/files/github/global-dashboard/slidedeck/modules_slidedeck.html#3)]
+---
+
+.pull-left[
+`tab_title`
+<br>
+![](img/tab_title.jpg)
+
+<br>
+
+`card`
+<br>
+![](img/card.jpg)
+]
+
+.pull-right[
+`map`
+<br>
+![](img/map.jpg)
+
+<br>
+
+`baseline_metrics`
+<br>
+![](img/baseline_metrics.jpg)
+]
+
+---
+name:ui_notes
+
+# Final Remarks
+
+* You can create as many cards, maps, baseline metrics, and title sections as you want, but I tend to avoid cluttering the shiny dashboard, so you can direct the user's attention towards specific visuals without overwhelming them
+* The four different elements you just saw are created by 4 different modules. Each module has a ui function as well as a server function. Without both, you can't create the outputs you just saw in the previous slide
+
+---
+name: ui_video
+
+# Demo Video
+
+Check back soon for the UI video!
+
+---
+name: server
+class: middle, center
+
+# Server (server.R)
 
 ---
 

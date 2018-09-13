@@ -3,9 +3,9 @@
   <head>
     <title>Introduction to Shiny Modules</title>
     <meta charset="utf-8">
-    <meta name="date" content="2018-09-13" />
+    <meta name="author" content="du.iwensu@gmail.com" />
+    <meta name="date" content="2018-01-01" />
     <link href="libs/remark-css/default.css" rel="stylesheet" />
-    <link href="libs/remark-css/rladies.css" rel="stylesheet" />
     <link href="libs/remark-css/rladies-fonts.css" rel="stylesheet" />
     <script src="libs/htmlwidgets/htmlwidgets.js"></script>
     <script src="libs/jquery/jquery.min.js"></script>
@@ -29,48 +29,186 @@
 class: center, middle, inverse, title-slide
 
 # Introduction to Shiny Modules
-## OHI Cheatsheet
-### 2018-09-13
+### <a href="mailto:du.iwensu@gmail.com">du.iwensu@gmail.com</a>
+### 2018
 
 ---
 
 
-
-
-class: center, middle
-
-# Mob Programming
-
-[A quick primer](https://github.com/R-Meetup-SB/hackathon-201806/blob/master/mob-programming.Rmd)
-
-
-class: inverse, center, middle
-
-# The Plan
+background-image: url(img/fish-background.jpg)
+background-size: cover
 
 
 
-# `ggplot2` with National Parks data
+---
+name: toc
 
-We'll be coding together with `ggplot2`, and a bit of `dplyr`
+# Table of Contents
+
+1. [Overview of Global Dashboard](https://mazu.nceas.ucsb.edu/rstudio/files/github/global-dashboard/slidedeck/modules_slidedeck.html#overview)
+2. [Structure of Repository](https://mazu.nceas.ucsb.edu/rstudio/files/github/global-dashboard/slidedeck/modules_slidedeck.html#structure)
+3. [User Interface](https://mazu.nceas.ucsb.edu/rstudio/files/github/global-dashboard/slidedeck/modules_slidedeck.html#ui)
+
+---
+name: overview
+
+# Overview of Global Dashboard
+
+The global dashboard was created to provide OHI Global users a way to explore the data that went into calculating each of the 10 goals. 
+
+&lt;br&gt;
+
+In these slide decks I walk through the general structure of the global-dashboard repository. There are short tutorial videos at the end of each section as well if you'd rather not read.
+
+---
+name: structure
+class: middle, center
+
+# Structure of Repository
+
+Main Components
+&lt;br&gt;
+Folders
 
 
+---
+name: main
 
-- `ggplot` is a graphics package specifically built to help you iteratively create customized graphs
+# Main Components
+
+* **ui.R**: _User interface for the shiny app, including layout and text elements_
+* **server.R**: _Server for shiny app, where you add custom, interactive charts and maps for each goal_
+* **global.R**: _Stores global variables and settings that will be used in the UI and server_
+* **front_page.R**: _Customize home page text and layout. Aesthetics are specified using CSS/HTML in the www folder_
 
 
+.footnote[Back to [Table of Contents](https://mazu.nceas.ucsb.edu/rstudio/files/github/global-dashboard/slidedeck/modules_slidedeck.html#3)]
+---
+name: folders
 
-- `dplyr` is a package for data wrangling; it has 5 main functions to do frequent tasks
+# Folders
 
-We'll be exploring data for visits to US National Parks. 
+* dataprep: _Prepare data for each goal to be plotted or mapped here. Each goal will have it's own script_
+* functions: _Functions to replicate pieces of the dashboard that are infrequently modified_
+* int: _Data tables stored from the dataprep scripts_
+* modules: _Collection of functions that allow for customization of maps and graphs across goals_
+* rsconnect: _You can ignore this_
+* slidedeck: _Folder that contains everything that made this slide deck_
+* test: _Scripts for testing code to plot, graph, etc_
+* www: _The CSS/HTML customization and images_
+
+.footnote[Back to [Table of Contents](https://mazu.nceas.ucsb.edu/rstudio/files/github/global-dashboard/slidedeck/modules_slidedeck.html#3)]
+---
+name: ui
+class: middle, center
+
+# User Interface (ui.R)
+Adding a New Tab in the Sidebar
+&lt;br&gt;
+Contents within Tabs
 
 ---
 
-# More about `ggplot2`
+## Adding a New Tab in the Sidebar
 
+Currently there are only two tabs: "The OHI Story" and "Mariculture". Uncomment and edit corresponding `menuItem`s to create a tab section in the side bar.
+```
+  dashboardSidebar(
+    
+    sidebarMenu(
+      menuItem("The OHI Story", tabName = "dashboard", icon = icon("globe", lib="glyphicon")),
+     
+      # menuItem("Livelihoods &amp; Economies", tabName = "liveco"),
+      # menuItem("Tourism &amp; Recreation", tabName = "tr"),
+      # menuItem("Biodiversity", tabName = "bio"),
+      # menuItem("Sense of Place", tabName = "sop"),
+      # menuItem("Artisanal Opportunities", tabName = "ao"),
+      # menuItem("Food Provision", tabName = "fp"),
+      
+      menuItem("Mariculture", tabName = "mar")
+      
+      #,
+      # menuItem("Fisheries", tabName = "fis"),
+      # menuItem("Coastal Protection", tabName = "cp"),
+      # menuItem("Carbon Storage", tabName = "cs")
+  )
+```
+
+.footnote[Back to [Table of Contents](https://mazu.nceas.ucsb.edu/rstudio/files/github/global-dashboard/slidedeck/modules_slidedeck.html#3)]
 ---
 
-# More about National Parks data
+## Contents within Tabs
+
+Inside `tabItems` is where you define the text and layout for each `tabItem`. Currently we just have a `tabItem` for the home page and one for the Mariculture sub-goal. 
+
+Each OHI goal `tabItem` can have a `tab_title_ui()`, `baseline_metrics_ui()`, `map_ui()`, and a `card_ui()`. I simplified the code so you can see all the individual elements. See outputs on the next page.
+
+```
+tabItems(
+ ## Mariculture ##
+    tabItem(tabName = "mar",
+          ## Mariculture Tab Title ##
+          tab_title_ui(),
+        
+          ## Mariculture Baseline Metrics ##
+          baseline_metrics_ui(),
+                
+          ## Mariculture Global Map
+          map_ui(),
+          
+          ## Annual Mariculture Production ##
+          card_ui()
+          )
+)
+```
+
+.footnote[Back to [Table of Contents](https://mazu.nceas.ucsb.edu/rstudio/files/github/global-dashboard/slidedeck/modules_slidedeck.html#3)]
+---
+
+.pull-left[
+`tab_title`
+&lt;br&gt;
+![](img/tab_title.jpg)
+
+&lt;br&gt;
+
+`card`
+&lt;br&gt;
+![](img/card.jpg)
+]
+
+.pull-right[
+`map`
+&lt;br&gt;
+![](img/map.jpg)
+
+&lt;br&gt;
+
+`baseline_metrics`
+&lt;br&gt;
+![](img/baseline_metrics.jpg)
+]
+
+---
+name:ui_notes
+
+# Final Remarks
+
+* You can create as many cards, maps, baseline metrics, and title sections as you want, but I tend to avoid cluttering the shiny dashboard, so you can direct the user's attention towards specific visuals without overwhelming them
+* The four different elements you just saw are created by 4 different modules. Each module has a ui function as well as a server function. Without both, you can't create the outputs you just saw in the previous slide
+
+---
+name: ui_video
+
+# Demo Video
+
+Check back soon for the UI video!
+
+---
+name: server
+class: middle, center
+
+# Server (server.R)
 
 ---
 
@@ -327,8 +465,8 @@ library(leaflet)
 leaflet() %&gt;% addTiles() %&gt;% setView(-93.65, 42.0285, zoom = 17)
 ```
 
-<div id="htmlwidget-b53bbe7c3fa292810c1a" style="width:100%;height:432px;" class="leaflet html-widget"></div>
-<script type="application/json" data-for="htmlwidget-b53bbe7c3fa292810c1a">{"x":{"options":{"crs":{"crsClass":"L.CRS.EPSG3857","code":null,"proj4def":null,"projectedBounds":null,"options":{}}},"calls":[{"method":"addTiles","args":["//{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",null,null,{"minZoom":0,"maxZoom":18,"tileSize":256,"subdomains":"abc","errorTileUrl":"","tms":false,"noWrap":false,"zoomOffset":0,"zoomReverse":false,"opacity":1,"zIndex":1,"detectRetina":false,"attribution":"&copy; <a href=\"http://openstreetmap.org\">OpenStreetMap<\/a> contributors, <a href=\"http://creativecommons.org/licenses/by-sa/2.0/\">CC-BY-SA<\/a>"}]}],"setView":[[42.0285,-93.65],17,[]]},"evals":[],"jsHooks":[]}</script>
+<div id="htmlwidget-fa041fc2a801b2c0f184" style="width:100%;height:432px;" class="leaflet html-widget"></div>
+<script type="application/json" data-for="htmlwidget-fa041fc2a801b2c0f184">{"x":{"options":{"crs":{"crsClass":"L.CRS.EPSG3857","code":null,"proj4def":null,"projectedBounds":null,"options":{}}},"calls":[{"method":"addTiles","args":["//{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",null,null,{"minZoom":0,"maxZoom":18,"tileSize":256,"subdomains":"abc","errorTileUrl":"","tms":false,"noWrap":false,"zoomOffset":0,"zoomReverse":false,"opacity":1,"zIndex":1,"detectRetina":false,"attribution":"&copy; <a href=\"http://openstreetmap.org\">OpenStreetMap<\/a> contributors, <a href=\"http://creativecommons.org/licenses/by-sa/2.0/\">CC-BY-SA<\/a>"}]}],"setView":[[42.0285,-93.65],17,[]]},"evals":[],"jsHooks":[]}</script>
 
 ---
 
@@ -340,8 +478,8 @@ DT::datatable(
 )
 ```
 
-<div id="htmlwidget-26954dbaebd44364976d" style="width:100%;height:auto;" class="datatables html-widget"></div>
-<script type="application/json" data-for="htmlwidget-26954dbaebd44364976d">{"x":{"filter":"none","fillContainer":false,"data":[["1","2","3","4","5","6","7","8","9","10"],[5.1,4.9,4.7,4.6,5,5.4,4.6,5,4.4,4.9],[3.5,3,3.2,3.1,3.6,3.9,3.4,3.4,2.9,3.1],[1.4,1.4,1.3,1.5,1.4,1.7,1.4,1.5,1.4,1.5],[0.2,0.2,0.2,0.2,0.2,0.4,0.3,0.2,0.2,0.1],["setosa","setosa","setosa","setosa","setosa","setosa","setosa","setosa","setosa","setosa"]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th> <\/th>\n      <th>Sepal.Length<\/th>\n      <th>Sepal.Width<\/th>\n      <th>Petal.Length<\/th>\n      <th>Petal.Width<\/th>\n      <th>Species<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"pageLength":8,"columnDefs":[{"className":"dt-right","targets":[1,2,3,4]},{"orderable":false,"targets":0}],"order":[],"autoWidth":false,"orderClasses":false,"lengthMenu":[8,10,25,50,100]}},"evals":[],"jsHooks":[]}</script>
+<div id="htmlwidget-0c7bc511ff407a7ab5c6" style="width:100%;height:auto;" class="datatables html-widget"></div>
+<script type="application/json" data-for="htmlwidget-0c7bc511ff407a7ab5c6">{"x":{"filter":"none","fillContainer":false,"data":[["1","2","3","4","5","6","7","8","9","10"],[5.1,4.9,4.7,4.6,5,5.4,4.6,5,4.4,4.9],[3.5,3,3.2,3.1,3.6,3.9,3.4,3.4,2.9,3.1],[1.4,1.4,1.3,1.5,1.4,1.7,1.4,1.5,1.4,1.5],[0.2,0.2,0.2,0.2,0.2,0.4,0.3,0.2,0.2,0.1],["setosa","setosa","setosa","setosa","setosa","setosa","setosa","setosa","setosa","setosa"]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th> <\/th>\n      <th>Sepal.Length<\/th>\n      <th>Sepal.Width<\/th>\n      <th>Petal.Length<\/th>\n      <th>Petal.Width<\/th>\n      <th>Species<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"pageLength":8,"columnDefs":[{"className":"dt-right","targets":[1,2,3,4]},{"orderable":false,"targets":0}],"order":[],"autoWidth":false,"orderClasses":false,"lengthMenu":[8,10,25,50,100]}},"evals":[],"jsHooks":[]}</script>
 
 ---
 

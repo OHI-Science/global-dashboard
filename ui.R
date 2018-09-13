@@ -6,22 +6,22 @@ dashboardPage(
     title = "OHI Global Data Explorer",
     titleWidth = 300),
   
-### Dashboard sidebar  
+### Dashboard Sidebar  
   dashboardSidebar(
     
     sidebarMenu(
       menuItem("The OHI Story", tabName = "dashboard", icon = icon("globe", lib="glyphicon")),
-      # menuItem("Livelihoods & Economies", tabName = "liveco", badgeLabel = "draft", badgeColor = "orange"),
-      # menuItem("Tourism & Recreation", tabName = "tr", badgeLabel = "draft", badgeColor = "orange"),
-      # menuItem("Biodiversity", tabName = "bio", badgeLabel = "draft", badgeColor = "orange"),
-      # menuItem("Sense of Place", tabName = "sop", badgeLabel = "draft", badgeColor = "orange"),
-      # menuItem("Artisanal Opportunities", tabName = "ao", badgeLabel = "draft", badgeColor = "orange"),
-      # menuItem("Food Provision", tabName = "fp", badgeLabel = "draft", badgeColor = "orange"),
+      # menuItem("Livelihoods & Economies", tabName = "liveco"),
+      # menuItem("Tourism & Recreation", tabName = "tr"),
+      # menuItem("Biodiversity", tabName = "bio"),
+      # menuItem("Sense of Place", tabName = "sop"),
+      # menuItem("Artisanal Opportunities", tabName = "ao"),
+      # menuItem("Food Provision", tabName = "fp"),
       menuItem("Mariculture", tabName = "mar")
       #,
-      # menuItem("Fisheries", tabName = "fis", badgeLabel = "draft", badgeColor = "orange"),
-      # menuItem("Coastal Protection", tabName = "cp", badgeLabel = "draft", badgeColor = "orange"),
-      # menuItem("Carbon Storage", tabName = "cs", badgeLabel = "draft", badgeColor = "orange")
+      # menuItem("Fisheries", tabName = "fis"),
+      # menuItem("Coastal Protection", tabName = "cp"),
+      # menuItem("Carbon Storage", tabName = "cs")
   ),
   
   # Footer tag, include hyperlink
@@ -46,8 +46,7 @@ dashboardPage(
       tags$link(rel = "stylesheet", type = "text/css", href = "custom.css")
       ),
     
-### Side bar tabs
-
+### Side Bar Tabs
   tabItems(
     
     ## The OHI Story ##
@@ -58,15 +57,15 @@ dashboardPage(
             
             ),
     
+    ## FOR BUILDING OUT FUTURE GOALS ##
     # ## Livelihood and economies ## 
     # 
     # tabItem(tabName = "liveco",
     #         
     #         ## Livelihoods & Economies tab title ##
     #         tab_title_ui(goal_text = "LIVELIHOODS & ECONOMIES",
-    #                      definition = "coastal and ocean-dependent livelihoods (job quantity and quality) and economies (revenues) produced by marine sectors",
-    #                      goal_description = "a high quantity and quality of ocean-dependent jobs and local revenue")
-    #         
+    #                      definition = "",
+    #                      goal_description = "")
     #         ),
     # 
     #         
@@ -76,8 +75,8 @@ dashboardPage(
     #         
     #         ## Tourism & Recreation tab title ##
     #         tab_title_ui(goal_text = "TOURISM & RECREATION",
-    #                      definition = "the value people have for experiencing and enjoying coastal areas through activities such as sailing, recreational fishing, beach-going, and bird watching",
-    #                      goal_description = "opportunities for people to enjoy coastal areas through tourism and recreation")
+    #                      definition = "",
+    #                      goal_description = "")
     #         
     #         ),
     # 
@@ -87,8 +86,8 @@ dashboardPage(
     #         
     #         ## Biodiversity tab title ##
     #         tab_title_ui(goal_text = "BIODIVERSITY",
-    #                      definition = "the conservation status of native marine species and key habitats that serve as a proxy for the suite of species that depend upon them",
-    #                      goal_description = "a diversity of healthy marine species, habitats, and landscapes")
+    #                      definition = "",
+    #                      goal_description = "")
     #         
     #         ),
     # 
@@ -98,8 +97,8 @@ dashboardPage(
     #         
     #         ## Sense of Place tab title ##
     #         tab_title_ui(goal_text = "SENSE OF PLACE",
-    #                      definition = "the conservation status of iconic species (e.g., salmon, whales) and geographic locations that contribute to cultural identity",
-    #                      goal_description = "a deep sense of identity and belonging provided through connections with our marine communities")
+    #                      definition = "",
+    #                      goal_description = "")
     #         
     #         ),
     # 
@@ -109,8 +108,8 @@ dashboardPage(
     #         
     #         ## Local Fishing & Resource Access Opportunities tab title ##
     #         tab_title_ui(goal_text = "ARTISANAL FISHING OPPORTUNITY",
-    #                      definition = "the opportunity for small-scale fishers to supply catch for their families, members of their local communities, or sell in local markets",
-    #                      goal_description = "opportunities for Native Americans and local community members to access local natural resources")
+    #                      definition = "",
+    #                      goal_description = "")
     #         
     #         ),
     # 
@@ -120,8 +119,8 @@ dashboardPage(
     #         
     #         ## Food Provision tab title ##
     #         tab_title_ui(goal_text = "FOOD PROVISION",
-    #                      definition = "the sustainable harvest of seafood from wild-caught fisheries and mariculture",
-    #                      goal_description = "sustainably harvested and wild-caught seafood from fisheries and mariculture")
+    #                      definition = "",
+    #                      goal_description = "")
     #         
     # ),
     
@@ -134,8 +133,7 @@ dashboardPage(
           tab_title_ui(goal_text = "MARICULTURE",
                        goal_description = "Global mariculture has been growing impressively since the 1980s, while wild-caught fishery production has remained relatively static.",
                        definition = list("Mariculture measures the ability to reach the highest levels of seafood gained from farm-raised facilities without damaging the ocean’s ability to provide fish sustainably now and in the future. The status of each country is calculated by taking tonnes of seafood produced, weighting it for sustainability and dividing it by the country's coastal population to scale it across the global. Since OHI also defines higher mariculture statuses as those that are maximizing sustainable harvest from the oceans, we compare the production per coastal population to the highest global historic production capacity. The mariculture and fisheries status both contribute equally to measuring the OHI Food Provisions goal.")),
-        
-            
+          
           ## Mariculture Baseline Metrics ##
            baseline_metrics_ui(id = "mar_baseline",
                                number_boxes = 3),
