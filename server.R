@@ -19,7 +19,7 @@ function(input, output, session) {
   
   
   ## Mariculture Baseline Metrics ##
-  callModule(baseline_metrics, "mar_baseline",
+  callModule(summary_stats, "mar_baseline",
              number_boxes = 3,
              statistic = list("19%", "68%", "51%"),
              text = list("of global seafood comes from mariculture. Aquaculture, which includes marine and inland production, contributes 53% to all seafood provision.",

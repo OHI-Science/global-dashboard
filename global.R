@@ -41,7 +41,7 @@ source(paste0("https://raw.githubusercontent.com/OHI-Science/", prep_repo, "/mas
 ## source modules
 source("modules/chart_card.R")
 source("modules/map_card.R")
-source("modules/baseline_metrics_card.R")
+source("modules/summary_stats_card.R")
 
 ## source functions
 source("functions/tab_title.R")

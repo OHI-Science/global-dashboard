@@ -2,7 +2,7 @@ library(shiny)
 library(shinydashboard)
 library(rlang)
 
-baseline_metrics_ui <- function(id,
+summary_stats_ui <- function(id,
                                 number_boxes = c(1, 2, 3, 4)) {
   
   ns <- NS(id)
@@ -37,7 +37,7 @@ baseline_metrics_ui <- function(id,
   
 }
 
-baseline_metrics <- function(input,
+summary_stats <- function(input,
                              output,
                              session,
                              number_boxes,

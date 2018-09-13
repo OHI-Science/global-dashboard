@@ -135,7 +135,7 @@ dashboardPage(
                        definition = list("Mariculture measures the ability to reach the highest levels of seafood gained from farm-raised facilities without damaging the ocean’s ability to provide fish sustainably now and in the future. The status of each country is calculated by taking tonnes of seafood produced, weighting it for sustainability and dividing it by the country's coastal population to scale it across the global. Since OHI also defines higher mariculture statuses as those that are maximizing sustainable harvest from the oceans, we compare the production per coastal population to the highest global historic production capacity. The mariculture and fisheries status both contribute equally to measuring the OHI Food Provisions goal.")),
           
           ## Mariculture Baseline Metrics ##
-           baseline_metrics_ui(id = "mar_baseline",
+          summary_stats_ui(id = "mar_baseline",
                                number_boxes = 3),
                 
           ## Mariculture Global Map

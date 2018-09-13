@@ -59,10 +59,14 @@ name: main
 
 # Main Components
 
+**The UI and Server are best friends and without telling them both that you want to create something, such as a map, your map will not generate.**
 * **ui.R**: _User interface for the shiny app, including layout and text elements_
 * **server.R**: _Server for shiny app, where you add custom, interactive charts and maps for each goal_
-* **global.R**: _Stores global variables and settings that will be used in the UI and server_
-* **front_page.R**: _Customize home page text and layout. Aesthetics are specified using CSS/HTML in the www folder_
+
+<br><br>
+
+To wrangle your data so that it's ready to visualize for the next OHI goal, you want to create a script for your OHI goal, like fis.R, clean_waters.r, or bio.r:
+* **dataprep** folder: _Prepare data for each goal to be plotted or mapped here. Each goal will have it's own script_
 
 
 .footnote[Back to [Table of Contents](https://mazu.nceas.ucsb.edu/rstudio/files/github/global-dashboard/slidedeck/modules_slidedeck.html#3)]
@@ -71,7 +75,7 @@ name: folders
 
 # Folders
 
-* dataprep: _Prepare data for each goal to be plotted or mapped here. Each goal will have it's own script_
+* **global.R**: _Stores global variables and settings that will be used in the UI and server_
 * functions: _Functions to replicate pieces of the dashboard that are infrequently modified_
 * int: _Data tables stored from the dataprep scripts_
 * modules: _Collection of functions that allow for customization of maps and graphs across goals_
@@ -124,7 +128,7 @@ Currently there are only two tabs: "The OHI Story" and "Mariculture". Uncomment 
 
 Inside `tabItems` is where you define the text and layout for each `tabItem`. Currently we just have a `tabItem` for the home page and one for the Mariculture sub-goal. 
 
-Each OHI goal `tabItem` can have a `tab_title_ui()`, `baseline_metrics_ui()`, `map_ui()`, and a `card_ui()`. I simplified the code so you can see all the individual elements. See outputs on the next page.
+Each OHI goal `tabItem` can have a `tab_title_ui()`, `summary_stats_ui()`, `map_ui()`, and a `card_ui()`. I simplified the code so you can see all the individual elements. Three of these are modules, and one of them is just a stand alone function (see Modules). See outputs on the next page.
 
 ```
 tabItems(
@@ -134,7 +138,7 @@ tabItems(
           tab_title_ui(),
         
           ## Mariculture Baseline Metrics ##
-          baseline_metrics_ui(),
+          summary_stats_ui(),
                 
           ## Mariculture Global Map
           map_ui(),
@@ -167,16 +171,17 @@ tabItems(
 
 <br>
 
-`baseline_metrics`
+`summary_stats`
 <br>
-![](img/baseline_metrics.jpg)
+![](img/summary_stats.jpg)
 ]
 
 ---
 name:ui_notes
 
-# Final Remarks
+# Notes about UI
 
+* The UI only creates the layout, sets the text for the content, you'll need to define matching module functions in the server for the outputs to be created
 * You can create as many cards, maps, baseline metrics, and title sections as you want, but I tend to avoid cluttering the shiny dashboard, so you can direct the user's attention towards specific visuals without overwhelming them
 * The four different elements you just saw are created by 4 different modules. Each module has a ui function as well as a server function. Without both, you can't create the outputs you just saw in the previous slide
 
@@ -195,6 +200,79 @@ class: middle, center
 
 ---
 
+## Server, Simplified
+
+This is the basic code that exists in the server that communicates with the ui to generate the plot, the summary statistics, and map.
+```
+function(input, output, session) {
+
+  callModule(card_plot, id),
+  callModule(summary_stats, id),
+  callModule(card_map, id)
+
+}
+
+```
+
+---
+
+## Card Plot
+
+This is the module that creates plots. The current options for plots include: bar graph, line graph, or scatterplot. This can be customized in the modules folder.
+
+```
+## Mariculture Production ##
+  callModule(card_plot, "mar_prod",
+             df = mar_harvest,
+             x = "year",
+             y = "tonnes",
+             color_group = "species",
+             filter_field = "country",
+             colors = cols,
+             plot_type = "scatter",
+             mode = "lines+markers",
+             tooltip_text = ~paste("Tonnes:", tonnes,
+                                   "<br>Species:", species, sep=" "),
+             xaxis_label = "Year",
+             yaxis_label = "Annual Production (tonnes)")
+```
+
+---
+
+## Summary Statistics
+
+This is the module that creates summary statistics. It's the most flexible module as you can directly type in the statistics and the descriptions.
+
+```
+## Mariculture Baseline Metrics ##
+  callModule(summary_stats, "mar_baseline",
+             number_boxes = 3,
+             statistic = list("19%", "68%", "51%"),
+             text = list("of global seafood comes from mariculture. Aquaculture, which includes marine and inland production, contributes 53% to all seafood provision.",
+                         "of mariculture produced in 2016 for human consumption came from China. They are followed by South Korea at only 4%!",
+                         "of mariculture is comprised of shellfish production by weight. The remaining 33% is from seaweed and 15% from fish."))
+```
+
+---
+
+## Global Map
+
+This is the module that creates summary statistics. It's the most flexible module as you can directly type in the statistics and the descriptions.
+
+```
+## Mariculture Global Map ##
+  callModule(card_map, "mar_global_map",
+             data = mar_global_map,
+             field = "input",
+             filter_field = type, # type of data to plot
+             display_field = "map_data",
+             display_units = "units",
+             color_palette = ygb,
+             legend_title = "Legend",
+             popup_title = "country")
+```
+
+---
 # Quick demo
 
 This is what your team will do:
