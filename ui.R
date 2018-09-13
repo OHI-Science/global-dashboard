@@ -54,7 +54,7 @@ dashboardPage(
     
     tabItem(tabName = "dashboard",
           
-            frontp() # content is in functions/front_page.R
+            frontp() # content is in front_page.R
             
             ),
     
