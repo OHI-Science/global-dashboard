@@ -9,8 +9,19 @@ data_yr <- 2016
 # Prepare time-series data for graphing annual production per country; read in gapfilled and tidied mariculture production data set
 mar_out <- read.csv(paste0("https://rawgit.com/OHI-Science/", prep_repo, "/master/globalprep/mar/", assess_yr, "/output/MAR_FP_data.csv"))
 
+# Fix species names
+# If species name contains "(=..)" remove it
+mar_fix_sp <- mar_out %>% 
+  mutate(species = as.character(species)) %>% 
+  mutate(test = case_when(
+    str_detect(mar_out$species, "(=.*)") ~ str_replace(mar_out$species, "\\(\\=.*\\)","")
+  )) %>% 
+  mutate(species = ifelse(!is.na(test), test, species)) %>% 
+  select(-test)
+
+
 # Get marine harvest amount & tidy
-mar_harvest <- mar_out %>% 
+mar_harvest <- mar_fix_sp %>% 
   left_join(regions, by="rgn_id") %>% 
   mutate(country = as.character(country)) %>% # convert factor to character to do next step
   mutate(country = ifelse(country == "R_union", "Reunion", country)) %>% 
