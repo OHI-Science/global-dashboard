@@ -141,7 +141,7 @@ dashboardPage(
           ## Mariculture Global Map
           map_ui(id = "mar_global_map",
                  title_text = paste0("Global Map of Mariculture Production in ", data_yr),
-                 sub_title_text = "Start exploring! Select different data to view on the map & click on EEZ regions to see country and values (may take a few seconds to load).",
+                 sub_title_text = "Start exploring! Select data to view on the map & click on EEZ regions to see country and values. It may take a few seconds to load. The data in the map categorizes countries into 4 quantiles with 75-100% being the top producing countries.",
                  select_type = "radio",
                  select_location = "above",
                  select_choices = c("All Production" = "prodTonnesAll",

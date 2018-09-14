@@ -12,7 +12,7 @@ function(input, output, session) {
              colors = cols,
              plot_type = "scatter",
              mode = "lines+markers",
-             tooltip_text = ~paste("Tonnes:", prettyNum(tonnes, big.mark=","),
+             tooltip_text = ~paste("Tonnes:", prettyNum(tonnes, big.mark=","), # format numbers > 1,000
                                    "<br>Species:", species, sep=" "),
              xaxis_label = "Year",
              yaxis_label = "Annual Production (tonnes)")

@@ -1,5 +1,19 @@
 # global-dashboard
 
+The OHI Global Dashboard is a data exploration tool for visualizing data used to calculate each of the goal scores.
+
+# Future Considerations
+- **Map Module**: add a date range component option to map if possible at the bottom? allow for year selection OR play button to see change over time
+- **Map Module**: currently color scheme set to colorQuantile, could be interesting to add option to select colorQuantile, colorNumeric or other in setting pal (palette)
+- **Map Module**: Customize popup message on global map to allow for optional 2nd row (currently you must specify the argument otherwise it reads NA)
+- **Map Module**: would be cool to have data sources be reactive to the type of data the user picks since may have different data sources. At the moment all data sources listed at once (if possible).
+- **Mariculture**: visualize Trujillo Sustainability Scores data
+- **Mariculture**: production per capita more interesting to see over time (per consultation with Halley), may or may not be appropriate for the dashboard. Want to keep it uncluttered!!
+- **General**: Jamie's figure fis v mariculture gif?? incorporate somewhere?
+- **General**: Mariculture is a sub-goal that feeds into Food Provision. Is there way to have subheadings in the subheader?? So that you differentiate between goals and sub-goals?
+
+
+# Repository Structure 
 **ui.R, server.R**
 
 Main components of the shiny dashboard. The UI is the user interface for the shiny app, including layout and text elements. The server for shiny app is where you add custom, interactive charts and maps for each goal.
