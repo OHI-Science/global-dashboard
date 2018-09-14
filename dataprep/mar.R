@@ -4,6 +4,9 @@
 data_yr <- 2016
 
 ## MAR DATA SOURCES ##
+## The two data tables produced in this script are `mar_harvest` and `mar_global_map`
+
+
 
 ## Mariculture Production
 # Prepare time-series data for graphing annual production per country; read in gapfilled and tidied mariculture production data set
@@ -41,9 +44,6 @@ mar_harvest <- mar_fix_sp %>%
     Taxon_code == "CEPH" ~ "Bivalve and Molluscs",
     Taxon_code == "TUN" ~ "Invertebrate"))
 mar_harvest$Taxon <- as.factor(mar_harvest$Taxon)
-
-# Save harvest (tonnes) data with country names
-write.csv(mar_harvest, "int/harvest_countries.csv", row.names = FALSE)
 
 
 
