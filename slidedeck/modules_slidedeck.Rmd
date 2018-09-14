@@ -140,7 +140,7 @@ class: middle, center
 
 but all the main components of each sidebar section will be specified inside `tabItems( )`
 
-```
+```{r, eval=FALSE}
 tabItems(
  ## Home Page ##
    tabItem(tabName = "dashboard", # unique identifier
@@ -183,7 +183,7 @@ class: middle, center
 
 This is the basic code that exists in the server that communicates with the ui to generate the plot, the summary statistics, and map.
 
-```
+```{r, eval=FALSE}
 function(input, output, session) {
 
   callModule(card_plot, id),
@@ -216,7 +216,7 @@ Currently there are only two tabs: **The OHI Story** and **Mariculture**. To cre
 
 Arguments: Provide the name of the tab (e.g. **"Fisheries"**) and provide a unique ID in `tabName`. This must match the `tabName` in `tabItem( )` in the next section. I'd stick with the lower-case, OHI goal abbreviations.
 
-```
+```{r, eval=FALSE}
   dashboardSidebar(
     
     sidebarMenu(
@@ -241,7 +241,7 @@ Function: `tabItem( )`
 
 Arguments: The only thing you need to do is specify `tabName` with a unique ID (I would stick with the lower-case OHI abbreviations for each goal and sub-goal)
 
-```
+```{r, eval=FALSE}
 tabItems(
 
  ## Fisheries ##
@@ -273,7 +273,7 @@ Function: `tab_title_ui( )`
 * Type in the `goal_description`, a one-liner that draws people's interest
 * Type in the OHI `definition` for the goal and give a bit more context about how it's calculated. 
 
-```
+```{r, eval=FALSE}
 tabItems(
  ## Mariculture ##
     tabItem(tabName = "mar",
@@ -306,7 +306,7 @@ For full description of argument, see **modules/summary_stats_card.R**
 * Set the `id`, the unique id for this summary statistics shiny element (Ex: "mar_stats", "fis_stats"). This must match the id for this module on the server side (see next slide)
 * Set the `number_boxes`, the number of summary statistics you want to display
 
-```
+```{r, eval=FALSE}
 tabItems(
  ## Mariculture ##
     tabItem(tabName = "mar",
@@ -327,7 +327,7 @@ Function: `summary_stats( )`, `callModule( )`
 
 Change `statistic` and corresponding `text` for each iteration to allow for multiple flexibility. I used the **test/summary_stats.Rmd** script to wrangle and derive the statistics for Mariculture.
 
-```
+```{r, eval=FALSE}
 function(input, output, session) {
 
 ## Mariculture Baseline Metrics ##
@@ -363,7 +363,7 @@ For full description of arguments see **modules/map_card.R**.
 * `select_choices` is a vector of the categories in the column **type**
 * `source_text` is to list the source of the data
 
-```
+```{r, eval=FALSE}
 ## Mariculture Global Map
           map_ui(id = "mar_global_map",
                  title_text = paste0("Global Map of Mariculture Production in ", data_yr),
@@ -389,7 +389,7 @@ Function: `card_map( )`, `callModule( )`
 
 The global map module can take multiple types of data to plot as long as the data table is set up right. Make sure you have a column called **type** that lists the categories of data you want to plot. See how the `mar_global_map` was created in **dataprep/mar.R**.
 
-```
+```{r, eval=FALSE}
 ## Mariculture Global Map ##
   callModule(card_map, "mar_global_map",
              data = mar_global_map,
@@ -411,7 +411,7 @@ The wrangling of the mariculture data was done in **dataprep/mar.R**. Create a n
 
 Test `leaflet` map code in **test/test_global_map.Rmd**.
 
-```
+```{r, eval=FALSE}
 > head(mar_global_map, 15)
 # A tibble: 15 x 6
    rgn_id country           type     map_data units Taxon    
@@ -453,7 +453,7 @@ For full description of argument definitions, see **modules/chart_card.R**.
 * `select_location` options are **below** or **above**
 * `select_choices` is a vector of values that you want the user to be able to selet from (e.g. list of countries)
 
-```
+```{r, eval=FALSE}
 card_ui(id = "mar_prod",
         title_text = "Tonnes of Species Harvested by Country",
         sub_title_text = "Start exploring! Select or type in a country of interest. Click on names of species you want to remove from the plot. Hover over the points to view tonnes and species harvested.",
@@ -479,7 +479,7 @@ This is the module that creates plots. The current options for plots include: ba
 
 For a **bar chart**, set `plot_type` to **"bar"**, for a **line graph**, set `mode` to **"lines+markers"**, and for a **scatter**, set `mode` to **"markers"**
 
-```
+```{r, eval=FALSE}
 ## Mariculture Production ##
   callModule(card_plot, "mar_prod",
              df = mar_harvest,
@@ -502,7 +502,7 @@ For a **bar chart**, set `plot_type` to **"bar"**, for a **line graph**, set `mo
 
 Check out how `mar_harvest` was set up in **dataprep/mar.R**. 
 
-```
+```{r, eval=FALSE}
 > head(mar_harvest,15)
    rgn_id country           species Taxon_code year tonnes Taxon
 1      82 Albania  European seabass          F 2006   87.0  Fish
