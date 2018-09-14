@@ -57,14 +57,14 @@ mar_harvest <- read.csv("int/mar_harvest.csv")
 mar_global_map <- read.csv("int/mar_global_map.csv")
 
 # ## Top Producing Countries (Seafood/Capita)
-# mar_pop <- read.csv(paste0("https://rawgit.com/OHI-Science/", prep_repo,"/master/globalprep/mar_prs_population/", assess_yr, "/output/mar_pop_25mi.csv")) %>% 
+# mar_pop <- read.csv(paste0("https://rawgit.com/OHI-Science/", prep_repo,"/master/globalprep/mar_prs_population/", assess_yr, "/output/mar_pop_25mi.csv")) %>%
 #   na.omit()
 # 
 # ## Join coastal population and mariculture production tables
 # mar_harvest$tonnes <- as.numeric(mar_harvest$tonnes) # turn it back to numeric
-# food_pop <- mar_harvest %>% 
-#   mutate(pounds = tonnes*2204.62) %>% 
-#   left_join(mar_pop, by=c("rgn_id","year")) %>% 
+# food_pop <- mar_harvest %>%
+#   mutate(pounds = tonnes*2204.62) %>%
+#   left_join(mar_pop, by=c("rgn_id","year")) %>%
 #   na.omit()
 # 
 # ## Summarize all production per country-year, production/capita for each country-year
@@ -76,29 +76,30 @@ mar_global_map <- read.csv("int/mar_global_map.csv")
 # 
 # 
 # ## Add missing regions back into food production data frame
-# temp_rgns <- rgns_leaflet %>% 
+# temp_rgns <- rgns_leaflet %>%
 #   select(rgn_id, rgn_nam)
 # st_geometry(temp_rgns) <- NULL # remove geometry so it is just a data frame
 # 
-# food_all_countries <- summary_food %>% 
+# food_all_countries <- summary_food %>%
 #   full_join(temp_rgns, by = "rgn_id") %>% # add in all regions from temp
-#   mutate(rgn_nam = as.character(rgn_nam)) %>% 
-#   mutate(country = ifelse(is.na(country), rgn_nam, country)) %>% 
+#   mutate(rgn_nam = as.character(rgn_nam)) %>%
+#   mutate(country = as.character(country)) %>% 
+#   mutate(country = ifelse(is.na(country), rgn_nam, country)) %>%
 #   select(-rgn_nam)
 # 
 # ## Tidy data into long format so it's ready for plotting
 # yr_range <- min(food_all_countries$year,na.rm=T):max(food_all_countries$year,na.rm=T)
 # 
-# mar_global_map <- food_all_countries %>% 
+# mar_global_map <- food_all_countries %>%
 #   complete(year = yr_range, nesting(country, rgn_id)) %>% # add in all years even if no value reported
-#   gather(type,map_data,c(prodTonnesAll, prodPerCap)) %>% 
+#   gather(type,map_data,c(prodTonnesAll, prodPerCap)) %>%
 #   mutate(units = case_when(
 #     type == "prodTonnesAll" ~ "tonnes",
 #     type == "prodPerCap" ~ "lb/person"
 #   )) %>%
 #   filter(year == data_yr) %>% # plotting only 2016 data
-#   select(rgn_id, country, type, map_data, units, Taxon) %>% 
-#   distinct() %>% 
+#   select(rgn_id, country, type, map_data, units, Taxon) %>%
+#   distinct() %>%
 #   mutate(map_data = as.numeric(format(round(map_data, 2), nsmall=2))) %>%   # round to two decimal places
 #   mutate(map_data = ifelse(map_data == 0, NA, map_data)) # so visually values < 0.1 are greyed out
 # 
