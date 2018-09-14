@@ -45,6 +45,7 @@ class: middle, center
 
 # Intro to the Global Dashboard
 
+.footnote[Back to [Table of Contents](https://mazu.nceas.ucsb.edu/rstudio/files/github/global-dashboard/slidedeck/modules_slidedeck.html#3)]
 ---
 
 ## How to Use this Slide Deck
@@ -71,13 +72,12 @@ To prepare your OHI goal data for map or plot visualization, open a new script i
 
 To see how you would need to format your data table, check out sections [9](https://mazu.nceas.ucsb.edu/rstudio/files/github/global-dashboard/slidedeck/modules_slidedeck.html#map) & [10](https://mazu.nceas.ucsb.edu/rstudio/files/github/global-dashboard/slidedeck/modules_slidedeck.html#chart).
 
-.footnote[Back to [Table of Contents](https://mazu.nceas.ucsb.edu/rstudio/files/github/global-dashboard/slidedeck/modules_slidedeck.html#3)]
 
 ---
 
 ## What are all these files and folders?!
 
-Hint: read the `README.md`.
+Hint: read the [`README.md`](https://github.com/OHI-Science/global-dashboard/blob/master/README.md).
 
 ---
 name: modules
@@ -85,6 +85,7 @@ class: middle, center
 
 # The 3 Shiny Modules
 
+.footnote[Back to [Table of Contents](https://mazu.nceas.ucsb.edu/rstudio/files/github/global-dashboard/slidedeck/modules_slidedeck.html#3)]
 ---
 
 ## Modules: Map, Chart, and Summary Statistics
@@ -131,6 +132,8 @@ class: middle, center
 
 # Sneak Peak: User Interface
 
+
+.footnote[Back to [Table of Contents](https://mazu.nceas.ucsb.edu/rstudio/files/github/global-dashboard/slidedeck/modules_slidedeck.html#3)]
 ---
 
 ## There's a lot in the UI
@@ -172,6 +175,8 @@ class: middle, center
 
 # Sneak Peak: Server
 
+
+.footnote[Back to [Table of Contents](https://mazu.nceas.ucsb.edu/rstudio/files/github/global-dashboard/slidedeck/modules_slidedeck.html#3)]
 ---
 
 ## Server, Simplified
@@ -195,6 +200,8 @@ class: middle, center
 
 # Add New Goal Section to the Sidebar
 
+
+.footnote[Back to [Table of Contents](https://mazu.nceas.ucsb.edu/rstudio/files/github/global-dashboard/slidedeck/modules_slidedeck.html#3)]
 ---
 
 ## First add the sidebar tab name
@@ -221,7 +228,6 @@ Arguments: Provide the name of the tab (e.g. **"Fisheries"**) and provide a uniq
   )
 ```
 
-.footnote[Back to [Table of Contents](https://mazu.nceas.ucsb.edu/rstudio/files/github/global-dashboard/slidedeck/modules_slidedeck.html#3)]
 
 ---
 
@@ -254,6 +260,8 @@ class: middle, center
 
 # Add Header Content
 
+
+.footnote[Back to [Table of Contents](https://mazu.nceas.ucsb.edu/rstudio/files/github/global-dashboard/slidedeck/modules_slidedeck.html#3)]
 ---
 
 ## Don't need a module for this one
@@ -284,6 +292,8 @@ class: middle, center
 
 # Add Summary Statistics Module
 
+
+.footnote[Back to [Table of Contents](https://mazu.nceas.ucsb.edu/rstudio/files/github/global-dashboard/slidedeck/modules_slidedeck.html#3)]
 ---
 
 ## UI Module
@@ -337,6 +347,8 @@ class: middle, center
 
 # Add a Global Map!
 
+
+.footnote[Back to [Table of Contents](https://mazu.nceas.ucsb.edu/rstudio/files/github/global-dashboard/slidedeck/modules_slidedeck.html#3)]
 ---
 
 ## UI Module
@@ -427,6 +439,8 @@ class: middle, center
 
 # Add a Plot
 
+
+.footnote[Back to [Table of Contents](https://mazu.nceas.ucsb.edu/rstudio/files/github/global-dashboard/slidedeck/modules_slidedeck.html#3)]
 ---
 
 ## UI Module
@@ -507,3 +521,8 @@ Check out how `mar_harvest` was set up in **dataprep/mar.R**.
 14     82 Albania Gilthead seabream          F 2003  250.0  Fish
 15     82 Albania Gilthead seabream          F 2004  400.0  Fish
 ```
+---
+name: conclude
+class: middle, center
+
+# Enjoy!

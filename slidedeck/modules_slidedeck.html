@@ -46,6 +46,7 @@ class: middle, center
 
 # Intro to the Global Dashboard
 
+.footnote[Back to [Table of Contents](https://mazu.nceas.ucsb.edu/rstudio/files/github/global-dashboard/slidedeck/modules_slidedeck.html#3)]
 ---
 
 ## How to Use this Slide Deck
@@ -72,13 +73,12 @@ To prepare your OHI goal data for map or plot visualization, open a new script i
 
 To see how you would need to format your data table, check out sections [9](https://mazu.nceas.ucsb.edu/rstudio/files/github/global-dashboard/slidedeck/modules_slidedeck.html#map) &amp; [10](https://mazu.nceas.ucsb.edu/rstudio/files/github/global-dashboard/slidedeck/modules_slidedeck.html#chart).
 
-.footnote[Back to [Table of Contents](https://mazu.nceas.ucsb.edu/rstudio/files/github/global-dashboard/slidedeck/modules_slidedeck.html#3)]
 
 ---
 
 ## What are all these files and folders?!
 
-Hint: read the `README.md`.
+Hint: read the [`README.md`](https://github.com/OHI-Science/global-dashboard/blob/master/README.md).
 
 ---
 name: modules
@@ -86,6 +86,7 @@ class: middle, center
 
 # The 3 Shiny Modules
 
+.footnote[Back to [Table of Contents](https://mazu.nceas.ucsb.edu/rstudio/files/github/global-dashboard/slidedeck/modules_slidedeck.html#3)]
 ---
 
 ## Modules: Map, Chart, and Summary Statistics
@@ -132,6 +133,8 @@ class: middle, center
 
 # Sneak Peak: User Interface
 
+
+.footnote[Back to [Table of Contents](https://mazu.nceas.ucsb.edu/rstudio/files/github/global-dashboard/slidedeck/modules_slidedeck.html#3)]
 ---
 
 ## There's a lot in the UI
@@ -173,6 +176,8 @@ class: middle, center
 
 # Sneak Peak: Server
 
+
+.footnote[Back to [Table of Contents](https://mazu.nceas.ucsb.edu/rstudio/files/github/global-dashboard/slidedeck/modules_slidedeck.html#3)]
 ---
 
 ## Server, Simplified
@@ -196,6 +201,8 @@ class: middle, center
 
 # Add New Goal Section to the Sidebar
 
+
+.footnote[Back to [Table of Contents](https://mazu.nceas.ucsb.edu/rstudio/files/github/global-dashboard/slidedeck/modules_slidedeck.html#3)]
 ---
 
 ## First add the sidebar tab name
@@ -222,7 +229,6 @@ Arguments: Provide the name of the tab (e.g. **"Fisheries"**) and provide a uniq
   )
 ```
 
-.footnote[Back to [Table of Contents](https://mazu.nceas.ucsb.edu/rstudio/files/github/global-dashboard/slidedeck/modules_slidedeck.html#3)]
 
 ---
 
@@ -255,6 +261,8 @@ class: middle, center
 
 # Add Header Content
 
+
+.footnote[Back to [Table of Contents](https://mazu.nceas.ucsb.edu/rstudio/files/github/global-dashboard/slidedeck/modules_slidedeck.html#3)]
 ---
 
 ## Don't need a module for this one
@@ -285,9 +293,15 @@ class: middle, center
 
 # Add Summary Statistics Module
 
+
+.footnote[Back to [Table of Contents](https://mazu.nceas.ucsb.edu/rstudio/files/github/global-dashboard/slidedeck/modules_slidedeck.html#3)]
 ---
 
 ## UI Module
+
+Function: `summary_stats_ui( )`
+
+For full description of argument, see **modules/summary_stats_card.R**
 
 * Go to **ui.R**, `tabItems( )`, `tabItem( )`
 * Set the `id`, the unique id for this summary statistics shiny element (Ex: "mar_stats", "fis_stats"). This must match the id for this module on the server side (see next slide)
@@ -309,6 +323,8 @@ tabItems(
 ---
 
 ## Server Module
+
+Function: `summary_stats( )`, `callModule( )`
 
 Change `statistic` and corresponding `text` for each iteration to allow for multiple flexibility. I used the **test/summary_stats.Rmd** script to wrangle and derive the statistics for Mariculture.
 
@@ -332,9 +348,13 @@ class: middle, center
 
 # Add a Global Map!
 
+
+.footnote[Back to [Table of Contents](https://mazu.nceas.ucsb.edu/rstudio/files/github/global-dashboard/slidedeck/modules_slidedeck.html#3)]
 ---
 
 ## UI Module
+
+Function: `map_ui( )`
 
 For full description of arguments see **modules/map_card.R**.
 
@@ -365,6 +385,8 @@ For full description of arguments see **modules/map_card.R**.
 ---
 
 ## Server Module
+
+Function: `card_map( )`, `callModule( )`
 
 The global map module can take multiple types of data to plot as long as the data table is set up right. Make sure you have a column called **type** that lists the categories of data you want to plot. See how the `mar_global_map` was created in **dataprep/mar.R**.
 
@@ -418,9 +440,15 @@ class: middle, center
 
 # Add a Plot
 
+
+.footnote[Back to [Table of Contents](https://mazu.nceas.ucsb.edu/rstudio/files/github/global-dashboard/slidedeck/modules_slidedeck.html#3)]
 ---
 
 ## UI Module
+
+Function: `card_ui( )`
+
+For full description of argument definitions, see **modules/chart_card.R**.
 
 * `select_type` options are **radio**, **drop_down**, **select**, or **search**
 * `select_location` options are **below** or **above**
@@ -443,12 +471,14 @@ card_ui(id = "mar_prod",
 
 ## Server Module
 
+Function: `card_plot( )`, `callModule( )`
 This is the module that creates plots. The current options for plots include: bar graph, line graph, or scatterplot. This can be customized in the **modules** folder.
 
 * `df` is the name of the wrangled data table
 * `filter_field` is the column that gets filtered when the user is selecting different options. Should match with `select_choices`
 * `colors` is a set color palette defined in **global.R**
-* For a **bar chart**, set `plot_type` to **"bar"**, for a **line graph**, set `mode` to **"lines+markers"**, and for a **scatter**, set `mode` to **"markers"**
+
+For a **bar chart**, set `plot_type` to **"bar"**, for a **line graph**, set `mode` to **"lines+markers"**, and for a **scatter**, set `mode` to **"markers"**
 
 ```
 ## Mariculture Production ##
@@ -471,6 +501,7 @@ This is the module that creates plots. The current options for plots include: ba
 
 ## Set-up of data table
 
+Check out how `mar_harvest` was set up in **dataprep/mar.R**. 
 
 ```
 &gt; head(mar_harvest,15)
@@ -491,6 +522,11 @@ This is the module that creates plots. The current options for plots include: ba
 14     82 Albania Gilthead seabream          F 2003  250.0  Fish
 15     82 Albania Gilthead seabream          F 2004  400.0  Fish
 ```
+---
+name: conclude
+class: middle, center
+
+# Enjoy!
     </textarea>
 <script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
 <script>var slideshow = remark.create({
