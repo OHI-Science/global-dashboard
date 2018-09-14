@@ -38,7 +38,8 @@ library(assertthat)
 #' \itemize{
 #'   \item "radio"
 #'   \item "drop_down"
-#'   \item "checkboxes"
+#'   \item "search"
+#'   \item "select"
 #'   \item NULL
 #' }
 #' @seealso \url{https://shiny.rstudio.com/reference/shiny/latest/selectInput.html}, 
@@ -70,7 +71,7 @@ library(assertthat)
 card_ui <- function(id, 
                     title_text = NULL,
                     sub_title_text = NULL,
-                    select_type = c(NULL, "radio", "drop_down", "checkboxes"),
+                    select_type = c(NULL, "radio", "drop_down", "search", "select"),
                     select_location = c(NULL, "above", "below"),
                     select_choices = c(""),
                     select_label = NULL, 

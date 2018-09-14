@@ -1,7 +1,7 @@
 # global-dashboard
 
 ui.R, server.R
-Main components of the shiny dashboard. Defines user interface and server separately.
+Main components of the shiny dashboard. The UI is the user interface for the shiny app, including layout and text elements. The server for shiny app is where you add custom, interactive charts and maps for each goal.
 
 global.R
 Contains global set-up, libraries, color palettes, and final wrangling.
