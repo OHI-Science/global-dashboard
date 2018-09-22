@@ -127,3 +127,17 @@ leaflet(data_shp,
       setView(-9.718568, 34.331989, zoom = 2)
 ```
 
+***
+
+## Filter for Seaweed in `mar_global_map`
+```{r}
+
+mar_global_map <- read.csv("int/mar_global_map.csv")
+
+country <- mar_global_map %>% select(rgn_id,country) %>% distinct() %>% mutate(type = "prodPerCap")
+mar_global_map <- mar_global_map %>% 
+  filter(Taxon == "Seaweed") %>% 
+  full_join(country, by = c("rgn_id", "country","type"))
+
+```
+

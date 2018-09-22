@@ -10,7 +10,8 @@ data_yr <- 2016
 
 
 ## MARICULTURE PRODUCTION TIME SERIES ##
-mar_harvest <- read.csv("int/mar_harvest.csv")
+mar_harvest <- read.csv("int/mar_harvest.csv") %>% 
+  filter(Taxon == "Seaweed")
 
 # # Prepare time-series data for graphing annual production per country; read in gapfilled and tidied mariculture production data set
 # mar_out <- read.csv(paste0("https://rawgit.com/OHI-Science/", prep_repo, "/master/globalprep/mar/", assess_yr, "/output/MAR_FP_data.csv"))
