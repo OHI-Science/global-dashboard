@@ -17,9 +17,9 @@ dashboardPage(
       # menuItem("Sense of Place", tabName = "sop"),
       # menuItem("Artisanal Opportunities", tabName = "ao"),
       # menuItem("Food Provision", tabName = "fp"),
-      menuItem("Mariculture", tabName = "mar")
+      menuItem("Mariculture", tabName = "mar"),
+      menuItem("Fisheries", tabName = "fis")
       #,
-      # menuItem("Fisheries", tabName = "fis"),
       # menuItem("Coastal Protection", tabName = "cp"),
       # menuItem("Carbon Storage", tabName = "cs")
   ),
@@ -165,28 +165,40 @@ dashboardPage(
                     source_text = list(
                       p("Sources:"),
                       p(tags$sup("1."), tags$a(href="http://www.fao.org/fishery/statistics/software/fishstatj/en", "Food and Agriculture Organization"), ", Global Aquaculture Production Quantity (March 2018)"))
-                      
                      )
 
+            ),
+    
+    
+    
+    
+    
+    
+    ## Fisheries ##
+
+    tabItem(tabName = "fis",
+
+            ## Fisheries Tab Title ##
+            tab_title_ui(goal_text = "FISHERIES",
+                         goal_description = "sustainably wild-caught seafood from fisheries",
+                         definition = list("the sustainable harvest of seafood from wild-caught fisheries")),
+    
+            ## Annual Fisheries Production ##
+            card_ui(id = "fis_prod",
+                    title_text = "Tonnes of Species Harvested by Country",
+                    sub_title_text = "Start exploring! Select or type in a country of interest. Click on names of species you want to remove from the plot. Hover over the points to view tonnes and species harvested.",
+                    select_type = "search",
+                    select_location = "above",
+                    select_choices = unique(fis_harvest$country),
+                    select_label = NULL,
+                    source_text = list(
+                      p("Sources:"),
+                      p(tags$sup("1."), tags$a(href="http://www.fao.org/fishery/statistics/software/fishstatj/en", "Food and Agriculture Organization"), ", Global Aquaculture Production Quantity (March 2018)"))
             )
+    )
+    
     #,
-    
-    
-    
-    
-    
-    
-    # ## Fisheries ##
-    # 
-    # tabItem(tabName = "fis",
-    #         
-    #         ## Fisheries tab title ##
-    #         tab_title_ui(goal_text = "FISHERIES",
-    #                      definition = "the sustainable harvest of seafood from wild-caught fisheries",
-    #                      goal_description = "sustainably wild-caught seafood from fisheries")
-    #         
-    # ),
-    # 
+
     # ## Coastal Protection ##
     # 
     # tabItem(tabName = "cp",

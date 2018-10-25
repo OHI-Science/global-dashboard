@@ -2,9 +2,10 @@ frontp = function()
   div(class = "frontp",
       
       # Create homepage title banner and image
-      div(class = "front-banner-test",
+      div(class = "front-banner",
           tags$img(src = "img/home-banner-crop.jpg", style="width:100%"),
-          div(class = "content", ("Explore the Data Behind the Global Ocean Health Index"))
+          div(class = "content-box", 
+              tags$p(class = "text", "Explore the Data Behind the Global Ocean Health Index"))
         ),
       
       
