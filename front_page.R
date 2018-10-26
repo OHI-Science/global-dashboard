@@ -1,5 +1,5 @@
 frontp = function() 
-  div(class = "frontp",
+  div(class = "master",
       
       # Create homepage title banner and image
       div(class = "front-banner",

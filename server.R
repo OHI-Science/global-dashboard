@@ -2,19 +2,19 @@
 function(input, output, session) {
   
   ## Fisheries Production ##
-  callModule(card_plot, "fis_prod",
-             df = fis_harvest,
-             x = "year",
-             y = "bbmsy",
-             color_group = "stock_id",
-             filter_field = "country",
-             colors = cols,
-             plot_type = "scatter",
-             mode = "lines+markers",
-             tooltip_text = ~paste("Tonnes:", round(bbmsy, digits = 1), 
-                                   "<br>Species:", str_replace(str_extract(fis_harvest$stock_id, "^(\\w+)_(\\w+)"),"_"," "), sep=" "),
-             xaxis_label = "Year",
-             yaxis_label = "Biomass / Max Sustainable Yield")
+  # callModule(card_plot, "fis_prod",
+  #            df = fis_harvest,
+  #            x = "year",
+  #            y = "bbmsy",
+  #            color_group = "stock_id",
+  #            filter_field = "country",
+  #            colors = cols,
+  #            plot_type = "scatter",
+  #            mode = "lines+markers",
+  #            tooltip_text = ~paste("Tonnes:", round(bbmsy, digits = 1), 
+  #                                  "<br>Species:", str_replace(str_extract(fis_harvest$stock_id, "^(\\w+)_(\\w+)"),"_"," "), sep=" "),
+  #            xaxis_label = "Year",
+  #            yaxis_label = "Biomass / Max Sustainable Yield")
   
   ## Mariculture Production ##
   callModule(card_plot, "mar_prod",

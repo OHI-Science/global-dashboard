@@ -1,5 +1,10 @@
 @import url('//fonts.googleapis.com/css?family=Rokkitt|Lato:400,700');
 
+/* master settings */
+.master {
+  max-width: 700px;
+}
+
 /* main text elements */
 h1, h2, h3, h4{
   font-family: 'Lato', sans-serif;
@@ -59,15 +64,11 @@ h1, h2, h3, h4{
 
 
 
-/* front page */
-.frontp {
-  max-width: 610px;
-}
 
 /* Testing front banner style, front-banner works and creates height of section */
 .front-banner {
    position: relative;
-   max-width: 610px; /* width of banner image */
+   max-width: 700px; /* width of banner image */
    margin: 0 auto; /* Center it */
 }
 
