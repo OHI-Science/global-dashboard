@@ -35,8 +35,8 @@ assess_yr <- "v2018"
 ## SOURCE EXTERNAL SCRIPTS ##
 
 ## source OHI scripts
-source(paste0("https://raw.githubusercontent.com/OHI-Science/", prep_repo, "/master/src/R/fao_fxn.R"))
-source(paste0("https://raw.githubusercontent.com/OHI-Science/", prep_repo, "/master/globalprep/mar/", assess_yr, "/mar_fxs.R"))
+source(paste0("http://ohi-science.org/", prep_repo, "/src/R/fao_fxn.R"))
+source(paste0("http://ohi-science.org/", prep_repo, "/globalprep/mar/", assess_yr, "/mar_fxs.R"))
 
 ## source modules
 source("modules/chart_card.R")
