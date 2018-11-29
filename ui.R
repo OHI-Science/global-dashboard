@@ -26,7 +26,7 @@ dashboardPage(
   ),
   
   # Footer tag, include hyperlink
-  tags$a(href="http://ohi-science.org/globalfellows/fellows.html", 
+  tags$a(href="https://iwensu0313.github.io/", 
   tags$footer("\u00a9 Iwen Su, OHI Global Fellow", align = "right", style = "
               position:absolute;
               bottom:0;
